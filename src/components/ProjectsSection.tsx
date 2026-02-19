@@ -22,7 +22,7 @@ const projects = [
     description: "A strategic consulting firm delivering transformative business solutions and operational excellence to help organizations reach their full potential.",
     tags: ["React", "Vite", "Framer Motion", "TypeScript"],
     image: bPlanLogo,
-    link: "https://b-plan-sigma.vercel.app/",
+    link: "https://b-plan-consulting.vercel.app/",
     github: "https://github.com/TosinISOGUN/B-PLAN",
     color: "from-[hsl(180,70%,45%)] to-[hsl(200,80%,50%)]",
   },

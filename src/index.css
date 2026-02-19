@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root, .light {
+    --background: 0 0% 98%;
+    --foreground: 220 20% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 15%;
+
+    --primary: 250 80% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 20% 94%;
+    --secondary-foreground: 220 20% 30%;
+
+    --muted: 220 14% 92%;
+    --muted-foreground: 220 10% 45%;
+
+    --accent: 250 80% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 14% 88%;
+    --input: 220 14% 88%;
+    --ring: 250 80% 60%;
+
+    --radius: 0.75rem;
+
+    /* Section alternating backgrounds */
+    --section-alt: 220 20% 95%;
+    
+    /* Custom tokens */
+    --glow: 250 80% 60%;
+    --surface: 0 0% 100%;
+    --surface-hover: 220 20% 96%;
+    --text-dim: 220 10% 55%;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 220 20% 30%;
+    --sidebar-primary: 250 80% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 20% 95%;
+    --sidebar-accent-foreground: 220 20% 30%;
+    --sidebar-border: 220 14% 90%;
+    --sidebar-ring: 250 80% 60%;
+  }
+
+  .dark {
+    --background: 220 20% 6%;
+    --foreground: 0 0% 95%;
+
+    --card: 220 18% 10%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 220 18% 10%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 250 80% 65%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 16% 16%;
+    --secondary-foreground: 0 0% 85%;
+
+    --muted: 220 14% 14%;
+    --muted-foreground: 220 10% 55%;
+
+    --accent: 250 80% 65%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 14% 18%;
+    --input: 220 14% 18%;
+    --ring: 250 80% 65%;
+
+    --radius: 0.75rem;
+
+    --section-alt: 220 18% 8%;
+
+    --glow: 250 80% 65%;
+    --surface: 220 18% 12%;
+    --surface-hover: 220 16% 16%;
+    --text-dim: 220 10% 45%;
+
+    --sidebar-background: 220 20% 8%;
+    --sidebar-foreground: 0 0% 85%;
+    --sidebar-primary: 250 80% 65%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 16% 14%;
+    --sidebar-accent-foreground: 0 0% 85%;
+    --sidebar-border: 220 14% 18%;
+    --sidebar-ring: 250 80% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased transition-colors duration-300;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Playfair Display', serif;
+  }
+
+  .font-body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 20px hsl(250 80% 60% / 0.4), 0 0 40px hsl(250 80% 60% / 0.2);
+  }
+
+  .dark .text-glow {
+    text-shadow: 0 0 20px hsl(250 80% 65% / 0.5), 0 0 40px hsl(250 80% 65% / 0.25);
+  }
+
+  .glow-border {
+    box-shadow: 0 0 15px hsl(250 80% 60% / 0.15), inset 0 0 15px hsl(250 80% 60% / 0.05);
+  }
+
+  .glow-dot {
+    box-shadow: 0 0 8px hsl(250 80% 60% / 0.6);
+  }
+
+  .section-padding {
+    @apply py-20 md:py-28 px-6 md:px-12 lg:px-20;
+  }
+
+  .section-alt {
+    background-color: hsl(var(--section-alt));
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-[hsl(300,70%,60%)];
+  }
+
+  .skill-card {
+    @apply bg-card border border-border rounded-xl p-5 transition-all duration-300 hover:border-primary/40 hover:shadow-lg;
+  }
+}

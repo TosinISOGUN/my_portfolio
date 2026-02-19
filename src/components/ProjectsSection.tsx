@@ -5,14 +5,25 @@ import { ExternalLink, Github, Globe } from "lucide-react";
 import bPlanLogo from "@/assets/b-plan.png";
 import oyoLogo from "@/assets/oyo-state-logo.png";
 import aftLogo from "@/assets/aft-website-logo.png";
+import lcLogo from "@/assets/LC_logo.png";
 
 const projects = [
+  {
+    title: "Learncity",
+    description: "A premium tech education platform offering career-focused programs in Software Engineering, Product Design, and Data Science, designed to empower the next generation of tech talent.",
+    tags: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Shadcn UI", "Vite"],
+    image: lcLogo,
+    link: "https://learncity-aft.vercel.app/",
+    github: "https://github.com/TosinISOGUN/learncity",
+    color: "from-[hsl(180,70%,45%)] to-[hsl(200,80%,50%)]",
+  },
   {
     title: "B-PLAN Consulting",
     description: "A strategic consulting firm delivering transformative business solutions and operational excellence to help organizations reach their full potential.",
     tags: ["React", "Vite", "Framer Motion", "TypeScript"],
     image: bPlanLogo,
     link: "https://b-plan-sigma.vercel.app/",
+    github: "https://github.com/TosinISOGUN/B-PLAN",
     color: "from-[hsl(180,70%,45%)] to-[hsl(200,80%,50%)]",
   },
   {
@@ -21,6 +32,7 @@ const projects = [
     tags: ["React", "Vite", "Tailwind CSS", "Vercel"],
     image: oyoLogo,
     link: "https://oyo-booking-black.vercel.app/",
+    github: "https://github.com/TosinISOGUN/oyo_booking.com",
     color: "from-[hsl(25,90%,55%)] to-[hsl(45,80%,60%)]",
   },
   {
@@ -29,6 +41,7 @@ const projects = [
     tags: ["React", "Vite", "Tailwind CSS", "TypeScript"],
     image: aftLogo,
     link: "https://www.adaptive-future.com/",
+    github: "https://github.com/TosinISOGUN/adaptive_future_technologies",
     color: "from-[hsl(210,90%,55%)] to-[hsl(250,80%,60%)]",
   },
 ];
@@ -68,15 +81,28 @@ const ProjectsSection = () => {
                     <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
                       {project.title}
                     </h3>
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all transform hover:rotate-12"
-                      title="View Project"
-                    >
-                      <ExternalLink size={18} />
-                    </a>
+                    <div className="flex gap-2">
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-white transition-all transform hover:-rotate-12"
+                          title="View Repository"
+                        >
+                          <Github size={18} />
+                        </a>
+                      )}
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all transform hover:rotate-12"
+                        title="View Project"
+                      >
+                        <ExternalLink size={18} />
+                      </a>
+                    </div>
                   </div>
 
                   <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-1">

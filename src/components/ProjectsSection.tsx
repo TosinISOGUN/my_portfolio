@@ -23,7 +23,7 @@ const projects = [
     tags: ["React", "Vite", "Framer Motion", "TypeScript"],
     image: bPlanLogo,
     link: "https://b-plan-consulting.vercel.app/",
-    github: "https://github.com/TosinISOGUN/B-PLAN",
+    github: "https://github.com/TosinISOGUN/B-PLAN-Consulting",
     color: "from-[hsl(180,70%,45%)] to-[hsl(200,80%,50%)]",
   },
   {

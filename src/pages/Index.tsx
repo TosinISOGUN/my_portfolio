@@ -1,12 +1,14 @@
+import { lazy, Suspense } from "react";
 import Sidebar from "@/components/Sidebar";
 import HeroSlider from "@/components/HeroSlider";
-import AboutSection from "@/components/AboutSection";
-import CoreStacksSection from "@/components/CoreStacksSection";
-import SkillsSection from "@/components/SkillsSection";
-import ProjectsSection from "@/components/ProjectsSection";
-import ExperienceSection from "@/components/ExperienceSection";
-import EducationSection from "@/components/EducationSection";
-import ContactSection from "@/components/ContactSection";
+
+const AboutSection = lazy(() => import("@/components/AboutSection"));
+const CoreStacksSection = lazy(() => import("@/components/CoreStacksSection"));
+const SkillsSection = lazy(() => import("@/components/SkillsSection"));
+const ProjectsSection = lazy(() => import("@/components/ProjectsSection"));
+const ExperienceSection = lazy(() => import("@/components/ExperienceSection"));
+const EducationSection = lazy(() => import("@/components/EducationSection"));
+const ContactSection = lazy(() => import("@/components/ContactSection"));
 
 const Index = () => {
   return (
@@ -14,13 +16,15 @@ const Index = () => {
       <Sidebar />
       <main className="lg:ml-20">
         <HeroSlider />
-        <AboutSection />
-        <CoreStacksSection />
-        <SkillsSection />
-        <ProjectsSection />
-        <ExperienceSection />
-        <EducationSection />
-        <ContactSection />
+        <Suspense fallback={<div className="h-screen flex items-center justify-center">Loading...</div>}>
+          <AboutSection />
+          <CoreStacksSection />
+          <SkillsSection />
+          <ProjectsSection />
+          <ExperienceSection />
+          <EducationSection />
+          <ContactSection />
+        </Suspense>
       </main>
     </div>
   );

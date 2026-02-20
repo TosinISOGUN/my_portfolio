@@ -32,6 +32,7 @@ const AboutSection = () => {
               <img
                 src={myPhoto}
                 alt="Oluwatomisin Isogun"
+                loading="lazy"
                 className="relative rounded-full w-full aspect-square object-cover shadow-2xl border border-white/10"
               />
             </div>

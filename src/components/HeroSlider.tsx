@@ -8,19 +8,19 @@ import { Button } from "./ui/button";
 
 const slides = [
   {
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=2070",
+    image: heroBg1,
     subtitle: "Hello, I'm",
     title: "Oluwatomisin Isogun",
     role: "Frontend Web Developer",
   },
   {
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=2069",
+    image: heroBg2,
     subtitle: "I Craft",
     title: "Fluid & Interactive UX",
     role: "React · TypeScript · Framer Motion",
   },
   {
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=2070",
+    image: heroBg3,
     subtitle: "Building",
     title: "Scalable Web Apps",
     role: "Vite · Tailwind · TanStack Query",
@@ -50,10 +50,11 @@ const HeroSlider = () => {
           exit={{ opacity: 0 }}
           transition={{ duration: 1.2, ease: "easeInOut" }}
           className="absolute inset-0"
+          style={{ willChange: "transform, opacity" }}
         >
           <div
             className="absolute inset-0 bg-cover bg-center animate-ken-burns"
-            style={{ backgroundImage: `url(${slides[current].image})` }}
+            style={{ backgroundImage: `url(${slides[current].image})`, willChange: "transform" }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/60" />
         </motion.div>
@@ -69,6 +70,7 @@ const HeroSlider = () => {
             exit={{ opacity: 0, y: -30 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="max-w-6xl"
+            style={{ willChange: "transform, opacity" }}
           >
             <p className="mb-4 text-sm md:text-base font-mono tracking-[0.4em] uppercase text-primary font-bold">
               {slides[current].subtitle}

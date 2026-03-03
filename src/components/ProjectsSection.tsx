@@ -6,6 +6,8 @@ import bPlanLogo from "@/assets/b-plan.png";
 import oyoLogo from "@/assets/oyo-state-logo.png";
 import aftLogo from "@/assets/aft-website-logo.png";
 import lcLogo from "@/assets/LC_logo.png";
+import chomesLogo from "@/assets/c-homes.svg";
+import infinitativeLogo from "@/assets/infinitative.svg";
 
 const projects = [
   {
@@ -16,6 +18,24 @@ const projects = [
     link: "https://learncity-aft.vercel.app/",
     github: "https://github.com/TosinISOGUN/learncity",
     color: "from-[hsl(180,70%,45%)] to-[hsl(200,80%,50%)]",
+  },
+  {
+    title: "C-HOMES",
+    description: "A specialized housing platform for NYSC corps members in Ibadan, providing verified and affordable apartment listings to ensure a smooth service year.",
+    tags: ["React", "Sanity CMS", "Tailwind CSS", "Vite"],
+    image: chomesLogo,
+    link: "https://c-homes.vercel.app/",
+    github: "https://github.com/TosinISOGUN/c-homes",
+    color: "from-[#1a3a4a] to-[#2c5364]",
+  },
+  {
+    title: "Infinitative",
+    description: "A premium e-commerce marketplace featuring high-end electronics, fashion, and home goods from global vendors with a focus on a seamless shopping experience.",
+    tags: ["React", "TypeScript", "Tailwind CSS", "Vite"],
+    image: infinitativeLogo,
+    link: "https://infinitative-aft.vercel.app/",
+    github: "https://github.com/TosinISOGUN/infinitative",
+    color: "from-[#5581F7] to-[#2b4fa3]",
   },
   {
     title: "B-PLAN Consulting",

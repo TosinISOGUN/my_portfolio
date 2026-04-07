@@ -8,11 +8,41 @@ import aftLogo from "@/assets/aft-website-logo.png";
 import lcLogo from "@/assets/LC_logo.png";
 import chomesLogo from "@/assets/c-homes.svg";
 import infinitativeLogo from "@/assets/infinitative.svg";
+import shemtLogo from "@/assets/shemt-logo.png";
+import cleanHomesLogo from "@/assets/clean-homes-logo.png";
+import samsoniLogo from "@/assets/samsoni-logo.png";
 
 const projects = [
   {
+    title: "Shemt",
+    description: "Empowering growth teams with interactive insights into revenue, users, and performance metrics through an advanced AI-driven analytics dashboard.",
+    tags: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "AI Integration"],
+    image: shemtLogo,
+    link: "https://shemt.vercel.app/",
+    github: "https://github.com/TosinISOGUN/Shemt",
+    color: "from-[hsl(280,70%,45%)] to-[hsl(300,80%,50%)]",
+  },
+  {
+    title: "CleanHomes",
+    description: "Professional cleaning solutions in Ibadan, offering a high-end booking experience for residential and office spaces with a focus on reliability.",
+    tags: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Formspree"],
+    image: cleanHomesLogo,
+    link: "https://cleanhomes-iota.vercel.app/",
+    github: "https://github.com/TosinISOGUN/cleanhomes",
+    color: "from-[hsl(140,70%,35%)] to-[hsl(160,80%,40%)]",
+  },
+  {
+    title: "Samsoni",
+    description: "Streamlined alkaline water delivery and subscription service providing high-quality hydration solutions with a professional brand identity.",
+    tags: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Subscription System"],
+    image: samsoniLogo,
+    link: "https://samsoni.vercel.app/",
+    github: "https://github.com/TosinISOGUN/samsoni",
+    color: "from-[hsl(200,90%,55%)] to-[hsl(220,80%,60%)]",
+  },
+  {
     title: "Learncity",
-    description: "A premium tech education platform offering career-focused programs in Software Engineering, Product Design, and Data Science, designed to empower the next generation of tech talent.",
+    description: "High-impact tech education platform offering career-focused programs in engineering, design, and data science to empower the next generation of talent.",
     tags: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Shadcn UI", "Vite"],
     image: lcLogo,
     link: "https://learncity-aft.vercel.app/",
@@ -30,7 +60,7 @@ const projects = [
   },
   {
     title: "Infinitative",
-    description: "A premium e-commerce marketplace featuring high-end electronics, fashion, and home goods from global vendors with a focus on a seamless shopping experience.",
+    description: "Sophisticated e-commerce marketplace featuring high-end electronics and fashion from global vendors with a focus on seamless user experience.",
     tags: ["React", "TypeScript", "Tailwind CSS", "Vite"],
     image: infinitativeLogo,
     link: "https://infinitative-aft.vercel.app/",

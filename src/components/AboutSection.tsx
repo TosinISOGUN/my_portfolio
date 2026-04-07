@@ -2,7 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import SectionHeading from "./SectionHeading";
 import { Code2, Sparkles, Zap, GraduationCap } from "lucide-react";
-import myPhoto from "@/assets/my-photo.jpg";
+import profilePic from "@/assets/profile-pic.jpg";
 
 const AboutSection = () => {
   const ref = useRef(null);
@@ -30,7 +30,7 @@ const AboutSection = () => {
             <div className="relative group">
               <div className="absolute -inset-2 bg-gradient-to-r from-primary/50 to-[hsl(300,70%,60%)] rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
               <img
-                src={myPhoto}
+                src={profilePic}
                 alt="Oluwatomisin Isogun"
                 loading="lazy"
                 className="relative rounded-full w-full aspect-square object-cover shadow-2xl border border-white/10"

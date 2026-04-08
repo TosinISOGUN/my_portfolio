@@ -46,7 +46,7 @@ const HeroSlider = () => {
       {/* Background images */}
       <AnimatePresence mode="wait">
         <motion.div
-          key={current}
+          key="hero-bg"
           initial={{ opacity: 0, scale: 1.1 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
@@ -54,12 +54,7 @@ const HeroSlider = () => {
           className="absolute inset-0 will-change-[transform,opacity]"
         >
           <div
-            className={cn(
-              "absolute inset-0 bg-cover bg-center animate-ken-burns will-change-transform",
-              current === 0 && "bg-hero-0",
-              current === 1 && "bg-hero-1",
-              current === 2 && "bg-hero-2"
-            )}
+            className="absolute inset-0 bg-cover bg-center animate-ken-burns will-change-transform bg-hero-2"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/60" />
         </motion.div>
@@ -163,9 +158,7 @@ const HeroSlider = () => {
               }`}
           />
         ))}
-      </div>
-
-      {/* Scroll down indicator */}
+      </div>      {/* Scroll down indicator */}
       <motion.a
         href="#about"
         animate={{ y: [0, 8, 0] }}

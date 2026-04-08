@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Home, User, Layers, Wrench, Mail, Menu, X, Briefcase, GraduationCap, FolderOpen, Sun, Moon } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
-import myPhoto from "@/assets/my-photo.jpg";
+import profilePic from "@/assets/profile-pic.jpg";
 
 const navItems = [
   { id: "home", label: "Home", icon: Home },
@@ -95,7 +95,7 @@ const Sidebar = () => {
         {/* Logo */}
         <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/20 mb-6 group cursor-pointer hover:border-primary transition-all duration-300" onClick={() => scrollTo('home')}>
           <img
-            src={myPhoto}
+            src={profilePic}
             alt="OI"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />

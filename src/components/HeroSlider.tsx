@@ -1,10 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 import heroBg1 from "@/assets/hero-bg-1.jpg";
 import heroBg2 from "@/assets/hero-bg-2.jpg";
 import heroBg3 from "@/assets/hero-bg-3.jpg";
 import { ChevronDown, Github, Linkedin, Mail, FileText, ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
+import resumePdf from "@/assets/Resume_Oluwatomisin_Isogun.pdf";
 
 const slides = [
   {
@@ -49,12 +51,15 @@ const HeroSlider = () => {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.2, ease: "easeInOut" }}
-          className="absolute inset-0"
-          style={{ willChange: "transform, opacity" }}
+          className="absolute inset-0 will-change-[transform,opacity]"
         >
           <div
-            className="absolute inset-0 bg-cover bg-center animate-ken-burns"
-            style={{ backgroundImage: `url(${slides[current].image})`, willChange: "transform" }}
+            className={cn(
+              "absolute inset-0 bg-cover bg-center animate-ken-burns will-change-transform",
+              current === 0 && "bg-hero-0",
+              current === 1 && "bg-hero-1",
+              current === 2 && "bg-hero-2"
+            )}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/60" />
         </motion.div>
@@ -69,8 +74,7 @@ const HeroSlider = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -30 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="max-w-6xl"
-            style={{ willChange: "transform, opacity" }}
+            className="max-w-6xl will-change-[transform,opacity]"
           >
             <p className="mb-4 text-sm md:text-base font-mono tracking-[0.4em] uppercase text-primary font-bold">
               {slides[current].subtitle}
@@ -99,11 +103,14 @@ const HeroSlider = () => {
                 Get in Touch
               </Button>
               <Button
-                variant="ghost"
-                className="text-white/80 hover:text-white hover:bg-white/10 font-bold px-6 h-11 text-base rounded-lg transition-all"
+                asChild
+                variant="outline"
+                className="bg-background/10 backdrop-blur-sm border-white/20 hover:border-white/40 hover:bg-white/10 text-white/90 hover:text-white font-bold px-6 h-11 text-base rounded-lg transition-all"
               >
-                <FileText className="mr-2 h-4 w-4" />
-                Resume
+                <a href={resumePdf} download="Oluwatomisin_Isogun_Resume.pdf">
+                  <FileText className="mr-2 h-4 w-4" />
+                  Resume
+                </a>
               </Button>
             </div>
 
@@ -148,6 +155,8 @@ const HeroSlider = () => {
           <button
             key={i}
             onClick={() => setCurrent(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            title={`Go to slide ${i + 1}`}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${i === current
               ? "bg-primary glow-dot scale-110"
               : "bg-muted-foreground/30 hover:bg-muted-foreground/50"

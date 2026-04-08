@@ -161,4 +161,8 @@
   .skill-card {
     @apply bg-card border border-border rounded-xl p-5 transition-all duration-300 hover:border-primary/40 hover:shadow-lg;
   }
+
+  .bg-hero-0 { background-image: url("./assets/hero-bg-1.jpg"); }
+  .bg-hero-1 { background-image: url("./assets/hero-bg-2.jpg"); }
+  .bg-hero-2 { background-image: url("./assets/hero-bg-3.jpg"); }
 }

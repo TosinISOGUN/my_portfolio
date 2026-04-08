@@ -74,15 +74,15 @@ const HeroSlider = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -30 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="max-w-6xl will-change-[transform,opacity]"
+            className="max-w-5xl will-change-[transform,opacity]"
           >
             <p className="mb-4 text-sm md:text-base font-mono tracking-[0.4em] uppercase text-primary font-bold">
               {slides[current].subtitle}
             </p>
-            <h1 className="font-display text-5xl md:text-8xl lg:text-9xl font-black mb-6 text-white drop-shadow-[0_10px_15px_rgba(0,0,0,0.6)] leading-[1]">
+            <h1 className="font-display text-4xl md:text-7xl lg:text-8xl font-black mb-6 text-white drop-shadow-[0_10px_15px_rgba(0,0,0,0.6)] leading-[1]">
               {slides[current].title}
             </h1>
-            <p className="text-xl md:text-3xl lg:text-4xl text-white/90 font-medium tracking-wide drop-shadow-md mb-10">
+            <p className="text-lg md:text-2xl lg:text-3xl text-white/90 font-medium tracking-wide drop-shadow-md mb-10">
               {slides[current].role}
             </p>
 

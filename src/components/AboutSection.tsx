@@ -16,7 +16,7 @@ const AboutSection = () => {
 
   return (
     <section id="about" className="section-padding section-alt" ref={ref}>
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <SectionHeading title="About Me" subtitle="Who I Am" />
 
         <div className="grid lg:grid-cols-12 gap-12 items-center">
@@ -44,10 +44,10 @@ const AboutSection = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="lg:col-span-8"
           >
-            <p className="text-secondary-foreground leading-relaxed mb-6 text-xl">
+            <p className="text-secondary-foreground leading-relaxed mb-6 text-lg">
               I'm <span className="text-primary font-bold">Oluwatomisin Isogun</span>, a Computer Science graduate and Frontend Engineer.
             </p>
-            <div className="space-y-4 text-muted-foreground leading-relaxed text-lg">
+            <div className="space-y-4 text-muted-foreground leading-relaxed text-base">
               <p>
                 My journey started with a curiosity for how websites work, which led me to study Computer Science. Today, I focus on creating digital experiences that aren't just functional, but feel "alive" through smooth interactions and thoughtful design.
               </p>

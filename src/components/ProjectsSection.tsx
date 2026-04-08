@@ -102,7 +102,7 @@ const ProjectsSection = () => {
 
   return (
     <section id="projects" className="section-padding section-alt" ref={ref}>
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <SectionHeading title="Featured Projects" subtitle="My Work" />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

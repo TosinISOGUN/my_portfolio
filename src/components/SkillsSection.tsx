@@ -76,10 +76,10 @@ const SkillsSection = () => {
 
   return (
     <section id="skills" className="section-padding" ref={ref}>
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <SectionHeading title="Skills & Technologies" subtitle="My Toolbox" />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {skillCategories.map((cat, catIdx) => (
             <motion.div
               key={cat.title}

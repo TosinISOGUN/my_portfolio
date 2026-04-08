@@ -17,7 +17,7 @@ const CoreStacksSection = () => {
 
   return (
     <section id="stacks" className="section-padding" ref={ref}>
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <SectionHeading title="Signature Technologies" subtitle="Core Stacks" />
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

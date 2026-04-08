@@ -81,7 +81,7 @@ const ContactSection = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+            <p className="text-muted-foreground text-base mb-8 leading-relaxed">
               I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
             </p>
 
@@ -101,6 +101,8 @@ const ContactSection = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-12 h-12 rounded-xl bg-secondary border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-all duration-300"
+                title="GitHub"
+                aria-label="GitHub Profile"
               >
                 <Github size={20} />
               </a>
@@ -109,6 +111,8 @@ const ContactSection = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-12 h-12 rounded-xl bg-secondary border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-all duration-300"
+                title="LinkedIn"
+                aria-label="LinkedIn Profile"
               >
                 <Linkedin size={20} />
               </a>
@@ -128,8 +132,8 @@ const ContactSection = () => {
                 className="skill-card flex flex-col items-center justify-center h-full min-h-[300px] text-center"
               >
                 <CheckCircle size={48} className="text-primary mb-4" />
-                <h3 className="text-xl font-semibold text-foreground mb-2">Message Sent!</h3>
-                <p className="text-muted-foreground">I'll get back to you soon.</p>
+                <h3 className="text-lg font-semibold text-foreground mb-2">Message Sent!</h3>
+                <p className="text-muted-foreground text-sm">I'll get back to you soon.</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">

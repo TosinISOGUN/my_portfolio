@@ -45,7 +45,7 @@ const projects = [
     description: "High-impact tech education platform offering career-focused programs in engineering, design, and data science to empower the next generation of talent.",
     tags: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Shadcn UI", "Vite"],
     image: lcLogo,
-    link: "https://learncity-aft.vercel.app/",
+    link: "https://learncityacademy.com/",
     github: "https://github.com/TosinISOGUN/learncity",
     color: "from-[hsl(180,70%,45%)] to-[hsl(200,80%,50%)]",
   },

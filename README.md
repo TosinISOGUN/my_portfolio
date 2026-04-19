@@ -1,56 +1,52 @@
-# Professional Portfolio | Oluwatomisin Isogun
+# Engineering Portfolio | Oluwatomisin Isogun
 
-A high-performance, fluid, and interactive personal portfolio showcasing the work and skills of **Oluwatomisin Isogun**, a Frontend Engineer specializing in modern web technologies.
+A premium, high-performance digital portfolio architected for **Oluwatomisin Isogun**, a Frontend Engineer specializing in building scalable web applications with structural integrity.
 
-## 🚀 Live Demo
-**[http://localhost:8080/](http://localhost:8080/)** (Local Preview)
+## 🚀 Overview
+This project represents a strategic visual and structural revamp, shifting from a traditional portfolio to an impact-focused engineering showcase. It prioritizes performance, type-safe architecture, and a minimalist monochromatic aesthetic that centers on technical excellence.
 
 ## ✨ Key Features
+- **Signature Monochromatic Theme**: A custom-engineered grayscale design system optimized for high contrast and accessibility.
+- **Architectural Hero Section**: Impact-focused branding with integrated profile identification and clear technical positioning.
+- **Dynamic Project Case Studies**: Outcome-oriented narratives focusing on the "Problem-Approach-Result" engineering methodology.
+- **Advanced UX Interaction**: Fluid animations and layout transitions powered by Framer Motion for a sophisticated feel.
+- **Modular Component Architecture**: Built using a dry, scalable approach with Shadcn UI and Radix primitives.
 
-- **Fluid UX/UI**: Smooth entrance animations and interactive elements using Framer Motion.
-- **Responsive Design**: Fully optimized for mobile, tablet, and desktop experiences.
-- **Dynamic Projects Section**: Showcasing a diverse range of 6+ specialized applications.
-- **Automated Contact Form**: Integrated with Formspree for real-time email delivery.
-- **Modern Tech Stack**: Built with precision using the latest frontend standards.
-- **Theme Support**: Seamless Dark/Light mode transitions with Dark mode as default.
+## 🛠️ Engineering Stack
+- **Core Framework**: [React.js](https://reactjs.org/) (v18+)
+- **Build Orchestration**: [Vite](https://vitejs.dev/)
+- **Type Safety**: [TypeScript](https://www.typescriptlang.org/)
+- **System Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Motion Interaction**: [Framer Motion](https://www.framer.com/motion/)
+- **Component Library**: [shadcn/ui](https://ui.shadcn.com/)
+- **State & Forms**: [Zod](https://zod.dev/) + [React Hook Form](https://react-hook-form.com/)
 
-## 🛠️ Tech Stack
-
-- **Core**: [React](https://reactjs.org/) + [Vite](https://vitejs.dev/)
-- **Logic**: [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **UI Components**: [shadcn/ui](https://ui.shadcn.com/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Form Handling**: [Zod](https://zod.dev/) + [React Hook Form](https://react-hook-form.com/)
-
-## 📦 Installation & Setup
+## 📦 Local Development
 
 1. **Clone the repository**
    ```bash
    git clone https://github.com/TosinISOGUN/my_portfolio.git
    ```
 
-2. **Navigate to the project**
+2. **Install dependencies** (recommended: npm)
    ```bash
-   cd oluwatomisin-s-fluid-portfolio
+   npm install
    ```
 
-3. **Install dependencies**
-   ```bash
-   npm i
-   ```
-
-4. **Start the development server**
+3. **Start the development server**
    ```bash
    npm run dev
    ```
 
-## 📬 Contact
+4. **Production Build**
+   ```bash
+   npm run build
+   ```
 
+## 📬 Professional Contact
 - **Email**: [oluwatomisinisogun@gmail.com](mailto:oluwatomisinisogun@gmail.com)
 - **LinkedIn**: [Oluwatomisin Isogun](https://www.linkedin.com/in/oluwatomisin-isogun-a38740356/)
 - **GitHub**: [@TosinISOGUN](https://github.com/TosinISOGUN)
 
 ---
-Designed & Developed by **Oluwatomisin Isogun** © 2024
+Architected & Developed by **Oluwatomisin Isogun** © 2026

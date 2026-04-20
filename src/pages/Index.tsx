@@ -23,7 +23,7 @@ const Index = () => {
           <EducationSection />
           <ContactSection />
           {/* Global Bottom Spacer for Mobile Browser Controls */}
-          <div className="h-16 md:h-10 lg:h-0 w-full" style={{ paddingBottom: 'env(safe-area-inset-bottom, 1.5rem)' }} />
+          <div className="h-16 md:h-10 lg:h-0 w-full safe-area-bottom" />
         </Suspense>
       </main>
     </div>

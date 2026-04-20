@@ -169,4 +169,8 @@
   .bg-hero-0 { background-image: url("./assets/hero-bg-1.jpg"); }
   .bg-hero-1 { background-image: url("./assets/hero-bg-2.jpg"); }
   .bg-hero-2 { background-image: url("./assets/hero-bg-3.jpg"); }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 1.5rem);
+  }
 }

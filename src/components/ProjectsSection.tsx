@@ -138,7 +138,7 @@ const ProjectsSection = () => {
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-white transition-all transform hover:-rotate-12"
+                          className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all transform hover:-rotate-12"
                           title="View Repository"
                         >
                           <Github size={18} />
@@ -148,7 +148,7 @@ const ProjectsSection = () => {
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all transform hover:rotate-12"
+                        className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all transform hover:rotate-12"
                         title="View Project"
                       >
                         <ExternalLink size={18} />

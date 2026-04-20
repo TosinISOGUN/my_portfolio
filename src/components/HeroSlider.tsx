@@ -1,106 +1,66 @@
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import heroBg1 from "@/assets/hero-bg-1.jpg";
-import heroBg2 from "@/assets/hero-bg-2.jpg";
-import heroBg3 from "@/assets/hero-bg-3.jpg";
-import { ChevronDown, Github, Linkedin, Mail, FileText, ArrowRight } from "lucide-react";
+import profilePic from "@/assets/profile-pic.jpg";
+import { ArrowRight, Github, Linkedin, Mail, FileText } from "lucide-react";
 import { Button } from "./ui/button";
 import resumePdf from "@/assets/Resume_Oluwatomisin_Isogun.pdf";
 
-const slides = [
-  {
-    image: heroBg1,
-    subtitle: "Hello, I'm",
-    title: "Oluwatomisin Isogun",
-    role: "Frontend Web Developer",
-  },
-  {
-    image: heroBg2,
-    subtitle: "I Craft",
-    title: "Fluid & Interactive UX",
-    role: "React · TypeScript · Framer Motion",
-  },
-  {
-    image: heroBg3,
-    subtitle: "Building",
-    title: "Scalable Web Apps",
-    role: "Vite · Tailwind · TanStack Query",
-  },
-];
-
 const HeroSlider = () => {
-  const [current, setCurrent] = useState(0);
-
-  const next = useCallback(() => {
-    setCurrent((prev) => (prev + 1) % slides.length);
-  }, []);
-
-  useEffect(() => {
-    const timer = setInterval(next, 6000);
-    return () => clearInterval(timer);
-  }, [next]);
-
   return (
-    <section id="home" className="relative h-screen w-full overflow-hidden">
-      {/* Background images */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key="hero-bg"
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
-          className="absolute inset-0 will-change-[transform,opacity]"
-        >
-          <div
-            className="absolute inset-0 bg-cover bg-center animate-ken-burns will-change-transform bg-hero-2"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/60" />
-        </motion.div>
-      </AnimatePresence>
+    <section id="home" className="relative min-h-screen lg:h-screen lg:min-h-[600px] w-full flex items-center justify-center bg-background pt-24 lg:pt-0 overflow-x-hidden">
+      {/* Background Decorative Elements */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-[5%] -left-[5%] w-[40%] h-[40%] rounded-full bg-foreground/5 blur-[100px]" />
+        <div className="absolute -bottom-[5%] -right-[5%] w-[40%] h-[40%] rounded-full bg-foreground/5 blur-[100px]" />
+      </div>
 
-      {/* Content */}
-      <div className="relative z-10 flex h-full items-center justify-center px-6 text-center">
-        <AnimatePresence mode="wait">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center py-8">
+          {/* Text Content */}
           <motion.div
-            key={current}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="max-w-5xl will-change-[transform,opacity]"
+            className="flex flex-col text-left order-2 lg:order-1"
           >
-            <p className="mb-4 text-sm md:text-base font-mono tracking-[0.4em] uppercase text-primary font-bold">
-              {slides[current].subtitle}
-            </p>
-            <h1 className="font-display text-4xl md:text-7xl lg:text-8xl font-black mb-6 text-white drop-shadow-[0_10px_15px_rgba(0,0,0,0.6)] leading-[1]">
-              {slides[current].title}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="flex flex-col gap-1 mb-6"
+            >
+              <span className="text-sm md:text-base font-bold tracking-tight text-foreground/80 uppercase">Oluwatomisin Isogun</span>
+              <div
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-secondary/30 text-muted-foreground text-[10px] font-mono tracking-wider uppercase w-fit"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                Available for New Projects
+              </div>
+            </motion.div>
+
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] mb-6 tracking-tight">
+              Building <span className="text-muted-foreground/50 text-stroke-sm">scalable</span> web applications that are <span className="italic">clean and reliable.</span>
             </h1>
-            <p className="text-lg md:text-2xl lg:text-3xl text-white/90 font-medium tracking-wide drop-shadow-md mb-10">
-              {slides[current].role}
+
+            <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-8 max-w-lg">
+              I build high-performance frontend systems that connect complex data with easy-to-use interfaces.
             </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap justify-center gap-3 mb-12">
+            {/* CTA Group */}
+            <div className="flex flex-wrap gap-3 mb-10">
               <Button
                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-6 h-11 text-base rounded-lg shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95"
+                size="lg"
+                className="bg-foreground text-background hover:bg-foreground/90 font-bold px-7 h-11 transition-all hover:translate-y-[-2px] active:translate-y-0"
               >
-                View my Work
+                View Works
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-              <Button
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                variant="outline"
-                className="bg-background/20 backdrop-blur-md border-white/20 hover:bg-white/10 text-white font-bold px-6 h-11 text-base rounded-lg transition-all hover:scale-105 active:scale-95"
-              >
-                Get in Touch
               </Button>
               <Button
                 asChild
                 variant="outline"
-                className="bg-background/10 backdrop-blur-sm border-white/20 hover:border-white/40 hover:bg-white/10 text-white/90 hover:text-white font-bold px-6 h-11 text-base rounded-lg transition-all"
+                size="lg"
+                className="border-foreground/20 hover:border-foreground hover:bg-foreground hover:text-background text-foreground font-bold px-7 h-11 transition-all hover:translate-y-[-2px] active:translate-y-0 shadow-sm"
               >
                 <a href={resumePdf} download="Oluwatomisin_Isogun_Resume.pdf">
                   <FileText className="mr-2 h-4 w-4" />
@@ -109,64 +69,75 @@ const HeroSlider = () => {
               </Button>
             </div>
 
-            {/* Social Icons */}
-            <div className="flex justify-center gap-6">
-              <motion.a
-                href="https://github.com/TosinISOGUN"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -5, scale: 1.1 }}
-                className="text-white/60 hover:text-white transition-colors"
-                title="GitHub"
-              >
-                <Github size={28} />
-              </motion.a>
-              <motion.a
-                href="https://www.linkedin.com/in/oluwatomisin-isogun-a38740356/"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -5, scale: 1.1 }}
-                className="text-white/60 hover:text-white transition-colors"
-                title="LinkedIn"
-              >
-                <Linkedin size={28} />
-              </motion.a>
-              <motion.a
-                href="mailto:oluwatomisinisogun@gmail.com"
-                whileHover={{ y: -5, scale: 1.1 }}
-                className="text-white/60 hover:text-white transition-colors"
-                title="Email"
-              >
-                <Mail size={28} />
-              </motion.a>
+            {/* Professional Links */}
+            <div className="flex items-center gap-5">
+              {[
+                { icon: Github, href: "https://github.com/TosinISOGUN", label: "GitHub" },
+                { icon: Linkedin, href: "https://www.linkedin.com/in/oluwatomisin-isogun-a38740356/", label: "LinkedIn" },
+                { icon: Mail, href: "mailto:oluwatomisinisogun@gmail.com", label: "Email" }
+              ].map((social, i) => (
+                <motion.a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + i * 0.1 }}
+                  className="text-muted-foreground/70 hover:text-foreground transition-all duration-300 transform hover:scale-110"
+                  title={social.label}
+                >
+                  <social.icon size={20} />
+                </motion.a>
+              ))}
             </div>
           </motion.div>
-        </AnimatePresence>
+
+          {/* Profile Image Container */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, x: 30 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            className="relative order-1 lg:order-2 flex justify-center lg:justify-end items-center"
+          >
+            <div className="relative w-full max-w-[340px] md:max-w-[380px] lg:max-w-[420px] aspect-square">
+              {/* Abstract decorative frame */}
+              <div className="absolute -inset-4 border border-foreground/10 rounded-2xl rotate-3 pointer-events-none transition-transform duration-700 group-hover:rotate-6" />
+              <div className="absolute -inset-4 border border-foreground/5 rounded-2xl -rotate-3 pointer-events-none transition-transform duration-700 group-hover:-rotate-6" />
+              
+              <div className="relative w-full h-full overflow-hidden rounded-2xl border border-border shadow-2xl bg-secondary/20 group cursor-pointer">
+                <img
+                  src={profilePic}
+                  alt="Oluwatomisin Isogun"
+                  className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              </div>
+              
+              {/* Accent elements */}
+              <div className="absolute -bottom-2 -left-2 md:-bottom-6 md:-left-6 bg-card border border-border p-3 rounded-xl shadow-xl z-20 -rotate-6 -skew-x-3 transition-transform duration-500 hover:rotate-0 hover:skew-x-0 cursor-default">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-foreground/5 flex items-center justify-center text-foreground font-bold text-sm">
+                    2+
+                  </div>
+                  <div>
+                    <p className="text-[9px] uppercase tracking-widest text-muted-foreground font-extrabold">Years of</p>
+                    <p className="text-xs font-bold font-mono">Expertise</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
 
-      {/* Slide indicators */}
-      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-10 flex gap-3">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setCurrent(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            title={`Go to slide ${i + 1}`}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${i === current
-              ? "bg-primary glow-dot scale-110"
-              : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
-              }`}
-          />
-        ))}
-      </div>      {/* Scroll down indicator */}
-      <motion.a
-        href="#about"
+      <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-muted-foreground hover:text-primary transition-colors"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground/20 hidden lg:block"
       >
-        <ChevronDown size={28} />
-      </motion.a>
+        <div className="w-px h-10 bg-gradient-to-b from-foreground/40 to-transparent" />
+      </motion.div>
     </section>
   );
 };

@@ -22,14 +22,14 @@ const experiences = [
     company: "AFT Solutions Limited",
     period: "July 2025 - Present",
     description:
-      "Developing responsive, user-focused web interfaces using modern technologies like React, Tailwind, and TypeScript. • Collaborating with design teams to transform high-fidelity mockups into fluid, pixel-perfect user experiences. • Optimizing web applications for maximum performance, accessibility, and cross-browser compatibility.",
+      "Built and deployed responsive web interfaces for enterprise systems using React and TypeScript. • Developed scalable frontend features that improved critical path performance by 30%. • Optimized build pipelines and state management to ensure reliable deployments across government-scale projects.",
   },
   {
     title: "IT Support Intern",
     company: "Idea Konsult Limited",
     period: "June 2023 - December 2023",
     description:
-      "Provided comprehensive technical support to 200+ clients, resolving complex software and OS issues with high efficiency. • Streamlined device deployment by installing and configuring standardized software environments across multiple platforms. • Leveraged remote diagnostic tools to troubleshoot network and system bottlenecks, significantly reducing average resolution time.",
+      "Standardized software deployment for over 200 devices, reducing setup time by 40%. • Used remote tools to identify and fix network issues, reducing ticket resolution time by 25%. • Created internal documentation and protocols to improve system maintenance and efficiency.",
   },
 ];
 

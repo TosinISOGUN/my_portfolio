@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Home, User, Layers, Wrench, Mail, Menu, X, Briefcase, GraduationCap, FolderOpen, Sun, Moon } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
-import profilePic from "@/assets/profile-pic.jpg";
 
 const navItems = [
   { id: "home", label: "Home", icon: Home },
@@ -89,16 +88,14 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <nav
-        className={`fixed top-0 left-0 z-40 h-full w-20 bg-card/80 backdrop-blur-md border-r border-border flex-col items-center py-6 gap-1 transition-transform duration-300
+        className={`fixed top-0 left-0 z-40 h-full w-20 bg-card/80 backdrop-blur-md border-r border-border flex flex-col items-center py-10 transition-transform duration-300
           lg:flex ${mobileOpen ? "flex" : "hidden"}`}
       >
-        {/* Logo */}
-        <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/20 mb-6 group cursor-pointer hover:border-primary transition-all duration-300" onClick={() => scrollTo('home')}>
-          <img
-            src={profilePic}
-            alt="OI"
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          />
+        {/* Logo / Branding */}
+        <div className="mb-10 text-center">
+          <span className="text-[10px] font-black tracking-[0.2em] font-mono [writing-mode:vertical-lr] rotate-180 uppercase text-foreground/40">
+            O. Isogun
+          </span>
         </div>
 
         <div className="flex flex-col gap-0.5 flex-1 justify-center overflow-y-auto">
@@ -110,7 +107,7 @@ const Sidebar = () => {
                 key={item.id}
                 onClick={() => scrollTo(item.id)}
                 className={`group relative flex flex-col items-center justify-center w-14 h-12 rounded-lg mx-auto transition-all duration-300 ${isActive
-                  ? "bg-primary/10 text-primary"
+                  ? "bg-foreground/10 text-foreground"
                   : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                   }`}
               >
@@ -119,7 +116,7 @@ const Sidebar = () => {
                 {isActive && (
                   <motion.div
                     layoutId="sidebar-indicator"
-                    className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-primary rounded-r"
+                    className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-foreground rounded-r"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}

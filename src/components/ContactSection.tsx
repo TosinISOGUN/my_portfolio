@@ -72,7 +72,7 @@ const ContactSection = () => {
   return (
     <section id="contact" className="section-padding" ref={ref}>
       <div className="max-w-4xl mx-auto">
-        <SectionHeading title="Get In Touch" subtitle="Contact" />
+        <SectionHeading title="Contact Me" subtitle="Connect" />
 
         <div className="grid md:grid-cols-2 gap-12">
           {/* Contact Info */}
@@ -81,8 +81,8 @@ const ContactSection = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <p className="text-muted-foreground text-base mb-8 leading-relaxed">
-              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+            <p className="text-muted-foreground text-lg mb-8 leading-relaxed max-w-md">
+              I am open to discussing new opportunities with product teams. If you are looking for a frontend engineer who focuses on building high-quality and reliable web applications, let's connect.
             </p>
 
             <div className="space-y-4 mb-8">

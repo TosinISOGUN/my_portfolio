@@ -90,7 +90,7 @@ const projects = [
     description: "A regional hotel booking platform. I built a localized system that is easy to use and integrates effectively with the backend to help people book stays and support regional tourism.",
     tags: ["React", "API Integration", "UI Accessibility"],
     image: oyoLogo,
-    link: "https://oyo-booking-black.vercel.app/",
+    link: "https://oyo-booking-phi.vercel.app/",
     github: "https://github.com/TosinISOGUN/oyo_booking.com",
     color: "from-neutral-200 to-neutral-100",
   },

@@ -5,8 +5,7 @@ import HeroSlider from "@/components/HeroSlider";
 const AboutSection = lazy(() => import("@/components/AboutSection"));
 const TechnicalProficiency = lazy(() => import("@/components/TechnicalProficiency"));
 const ProjectsSection = lazy(() => import("@/components/ProjectsSection"));
-const ExperienceSection = lazy(() => import("@/components/ExperienceSection"));
-const EducationSection = lazy(() => import("@/components/EducationSection"));
+const JourneySection = lazy(() => import("@/components/JourneySection"));
 const ContactSection = lazy(() => import("@/components/ContactSection"));
 
 const Index = () => {
@@ -19,8 +18,7 @@ const Index = () => {
           <AboutSection />
           <TechnicalProficiency />
           <ProjectsSection />
-          <ExperienceSection />
-          <EducationSection />
+          <JourneySection />
           <ContactSection />
           {/* Global Bottom Spacer for Mobile Browser Controls */}
           <div className="h-16 md:h-10 lg:h-0 w-full safe-area-bottom" />

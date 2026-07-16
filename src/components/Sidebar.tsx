@@ -1,16 +1,14 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Home, User, Layers, Wrench, Mail, Menu, X, Briefcase, GraduationCap, FolderOpen, Sun, Moon } from "lucide-react";
+import { Home, User, Wrench, Mail, Menu, X, Compass, FolderOpen, Sun, Moon } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
 const navItems = [
   { id: "home", label: "Home", icon: Home },
   { id: "about", label: "About", icon: User },
-  { id: "stacks", label: "Stacks", icon: Layers },
-  { id: "skills", label: "Skills", icon: Wrench },
+  { id: "tech-stack", label: "Skills", icon: Wrench },
   { id: "projects", label: "Projects", icon: FolderOpen },
-  { id: "experience", label: "Work", icon: Briefcase },
-  { id: "education", label: "Education", icon: GraduationCap },
+  { id: "journey", label: "Journey", icon: Compass },
   { id: "contact", label: "Contact", icon: Mail },
 ];
 
@@ -107,7 +105,7 @@ const Sidebar = () => {
                 key={item.id}
                 onClick={() => scrollTo(item.id)}
                 className={`group relative flex flex-col items-center justify-center w-14 h-12 rounded-lg mx-auto transition-all duration-300 ${isActive
-                  ? "bg-foreground/10 text-foreground"
+                  ? "bg-primary/10 text-primary"
                   : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                   }`}
               >
@@ -116,7 +114,7 @@ const Sidebar = () => {
                 {isActive && (
                   <motion.div
                     layoutId="sidebar-indicator"
-                    className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-foreground rounded-r"
+                    className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-primary rounded-r"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}

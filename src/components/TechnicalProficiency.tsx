@@ -44,8 +44,8 @@ const TechnicalProficiency = () => {
               className="relative pl-8 group"
             >
               {/* Vertical Accent Line */}
-              <div className="absolute left-0 top-0 bottom-0 w-[1px] bg-border group-hover:bg-foreground transition-colors duration-500" />
-              <div className="absolute left-0 top-0 w-[4px] h-8 bg-foreground -translate-x-[1.5px] rounded-full scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top" />
+              <div className="absolute left-0 top-0 bottom-0 w-[1px] bg-border group-hover:bg-primary transition-colors duration-500" />
+              <div className="absolute left-0 top-0 w-[4px] h-8 bg-primary -translate-x-[1.5px] rounded-full scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top" />
 
               <div className="mb-6">
                 <h3 className="text-xl font-bold text-foreground mb-2 group-hover:tracking-wide transition-all duration-300">

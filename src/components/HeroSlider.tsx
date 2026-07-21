@@ -140,14 +140,8 @@ const HeroSlider = () => {
                 <img
                   src={profilePic}
                   alt="Oluwatomisin Isogun"
-                  className="relative z-10 w-full h-full object-contain drop-shadow-[0_30px_40px_rgba(0,0,0,0.45)]"
-                  style={{
-                    WebkitMaskImage: "radial-gradient(circle at 50% 42%, black 62%, transparent 92%)",
-                    maskImage: "radial-gradient(circle at 50% 42%, black 62%, transparent 92%)",
-                  }}
+                  className="relative z-10 w-full h-full object-cover rounded-full drop-shadow-[0_30px_40px_rgba(0,0,0,0.45)]"
                 />
-                {/* Fades the cutout's bottom edge into the page background so no hard outline shows */}
-                <div className="absolute inset-x-0 bottom-0 h-10 md:h-14 lg:h-16 z-20 pointer-events-none bg-gradient-to-t from-background to-transparent" />
               </motion.div>
 
               {/* Floating badge */}

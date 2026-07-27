@@ -1,9 +1,14 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import SectionHeading from "./SectionHeading";
-import { Building2, Database, Layout, Zap } from "lucide-react";
+import { Rocket, Building2, Database, Zap } from "lucide-react";
 
 const focusAreas = [
+  {
+    icon: Rocket,
+    title: "Shipping Full Products, Not Just Screens",
+    description: "Frontend to backend logic, SEO, and go-to-market, for a live commercial app on the Atlassian Marketplace.",
+  },
   {
     icon: Building2,
     title: "Enterprise & Government-Scale Systems",
@@ -13,11 +18,6 @@ const focusAreas = [
     icon: Database,
     title: "Data-Dense Dashboards & AI Interfaces",
     description: "Turning complex, fast-changing data into views people can read at a glance.",
-  },
-  {
-    icon: Layout,
-    title: "CMS & Content-Driven Platforms",
-    description: "Structuring content models so non-technical teams can update sites without breaking them.",
   },
   {
     icon: Zap,
@@ -43,20 +43,25 @@ const AboutSection = () => {
           >
             <div className="space-y-6 text-muted-foreground leading-relaxed text-lg">
               <p className="text-foreground font-medium text-xl leading-snug">
-                I'm a Frontend Engineer who spends most of my time turning dense, business-critical
-                data into interfaces people can actually use — from government transformation
-                platforms to AI-powered dashboards.
+                I'm the founder of Isogun Labs, an independent studio building small, focused apps
+                for the tools teams already use, starting with Recap, a one-click status-report
+                app now live on the Atlassian Marketplace. Alongside that I work as a
+                Frontend/Product Engineer, turning dense, business-critical data into interfaces
+                people can actually use.
               </p>
               <p>
-                My work spans enterprise and government software at AFT Solutions, CMS-driven
-                property marketplaces, subscription e-commerce, and regional booking platforms —
-                each with its own constraints around data volume, reliability, and edge cases that
-                don't show up in a design file.
+                Running Isogun Labs end to end means I don't just write the frontend. I've shipped
+                the product, built the backend logic, handled SEO and growth, and managed the
+                go-to-market for a live commercial app. That full-loop experience, from React
+                components to what makes a product actually get adopted, is what I bring to a team.
               </p>
               <p>
-                I build with React and TypeScript, favor systems that stay maintainable as they
-                grow, and care as much about how an interface performs under real data as how it
-                looks in a mockup.
+                My engineering work spans enterprise and government software at AFT Solutions,
+                CMS-driven property marketplaces, subscription e-commerce, and regional booking
+                platforms, each with its own constraints around data volume, reliability, and edge
+                cases that don't show up in a design file. I build with React and TypeScript, and
+                care as much about how an interface performs under real data as how it looks in a
+                mockup.
               </p>
             </div>
           </motion.div>

@@ -6,6 +6,14 @@ import { Briefcase, GraduationCap } from "lucide-react";
 const journey = [
   {
     type: "work" as const,
+    title: "Founder & Product Engineer",
+    org: "Isogun Labs",
+    period: "2026 - Present",
+    description:
+      "Founded an independent software studio building small, focused apps for Atlassian and Jira. • Designed, built, and shipped Recap, a one-click Jira status-report app, from backend resolver logic to UI, now live on the Atlassian Marketplace. • Owned SEO, technical marketing, and go-to-market execution across the product's website and Marketplace listing.",
+  },
+  {
+    type: "work" as const,
     title: "Frontend Web Developer",
     org: "AFT Solutions Limited",
     period: "July 2025 - Present",

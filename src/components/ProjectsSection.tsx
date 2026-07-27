@@ -1,7 +1,8 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import SectionHeading from "./SectionHeading";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, Store } from "lucide-react";
+import recapLogo from "@/assets/recap-logo.svg";
 import bPlanLogo from "@/assets/b-plan.png";
 import oyoLogo from "@/assets/oyo-state-logo.png";
 import aftLogo from "@/assets/aft-website-logo.png";
@@ -13,7 +14,29 @@ import cleanHomesLogo from "@/assets/clean-homes-logo.png";
 import samsoniLogo from "@/assets/samsoni-logo.png";
 import nachieMaridadiLogo from "@/assets/nachie_maridadi_favicon.png";
 
-const featuredProjects = [
+type FeaturedProject = {
+  title: string;
+  image: string;
+  tags: string[];
+  link: string;
+  github?: string;
+  marketplace?: string;
+  problem: string;
+  approach: string;
+  result: string;
+};
+
+const featuredProjects: FeaturedProject[] = [
+  {
+    title: "Recap (Isogun Labs)",
+    image: recapLogo,
+    tags: ["React", "Atlassian Forge", "Product Strategy", "SEO"],
+    link: "https://recap.isogunlabs.com/",
+    marketplace: "https://marketplace.atlassian.com/2146687861",
+    problem: "Teams on Jira lose real time every reporting cycle manually chasing down completed work and writing it up into a status update, with no built-in way to turn that work into a report.",
+    approach: "As founder of Isogun Labs, I designed and built Recap end to end: the Atlassian Forge resolver logic that pulls and summarizes completed Jira work, the UI, the marketing site, and the Marketplace listing and SEO that brought it to market.",
+    result: "A live, commercially available Jira app on the Atlassian Marketplace that turns a manual reporting chore into a one-click report, shipped and marketed by a team of one.",
+  },
   {
     title: "OYOBOOKING",
     image: oyoLogo,
@@ -150,6 +173,17 @@ const ProjectsSection = () => {
                         title="View Repository"
                       >
                         <Github size={18} />
+                      </a>
+                    )}
+                    {project.marketplace && (
+                      <a
+                        href={project.marketplace}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all transform hover:-rotate-12"
+                        title="View on Atlassian Marketplace"
+                      >
+                        <Store size={18} />
                       </a>
                     )}
                     <a

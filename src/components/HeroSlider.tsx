@@ -54,20 +54,28 @@ const HeroSlider = () => {
               className="flex flex-col gap-1 mb-6"
             >
               <span className="text-sm md:text-base font-bold tracking-tight text-foreground/80 uppercase">Oluwatomisin Isogun</span>
-              <div
-                className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-secondary/30 text-muted-foreground text-[10px] font-mono tracking-wider uppercase w-fit"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                Available for New Projects
+              <div className="flex flex-wrap items-center gap-2">
+                <a
+                  href="https://isogunlabs.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-[10px] font-mono tracking-wider uppercase w-fit hover:bg-primary/20 transition-colors"
+                >
+                  Founder, Isogun Labs
+                </a>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-secondary/30 text-muted-foreground text-[10px] font-mono tracking-wider uppercase w-fit">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                  Available for New Projects
+                </div>
               </div>
             </motion.div>
 
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] mb-6 tracking-tight">
-              I build <span className="text-primary">frontend systems</span> for products that can't afford to <span className="italic">break.</span>
+              I build <span className="text-primary">frontend systems</span>, and ship real products that people actually <span className="italic">use.</span>
             </h1>
 
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-8 max-w-lg">
-              From enterprise dashboards to AI-driven interfaces, I turn dense data and demanding requirements into products that feel effortless to use.
+              Founder of Isogun Labs, where I shipped Recap, a status-report app now live on the Atlassian Marketplace. As a Frontend/Product Engineer, I turn dense data and demanding requirements into interfaces that feel effortless to use, from enterprise dashboards to AI-driven tools.
             </p>
 
             {/* CTA Group */}

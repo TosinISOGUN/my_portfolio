@@ -23,7 +23,6 @@
   <!-- Bing Webmaster Tools: verified via HTML meta tag. -->
   <meta name="msvalidate.01" content="B763854E989D3089E737F531F7833BE5" />
 
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -75,8 +74,16 @@
 
 <body>
   <div id="root">
-    <h1>I build frontend systems, and ship real products that people actually use.</h1>
-    <p>Oluwatomisin Isogun, founder of Isogun Labs and Frontend/Product Engineer.</p>
+    <section class="min-h-screen w-full flex items-center bg-background">
+      <div class="max-w-7xl mx-auto px-6 py-24">
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] mb-6 tracking-tight text-foreground max-w-3xl">
+          I build frontend systems, and ship real products that people actually use.
+        </h1>
+        <p class="text-base md:text-lg text-muted-foreground leading-relaxed max-w-lg">
+          Oluwatomisin Isogun, founder of Isogun Labs and Frontend/Product Engineer.
+        </p>
+      </div>
+    </section>
   </div>
   <script type="module" src="/src/main.tsx"></script>
 </body>

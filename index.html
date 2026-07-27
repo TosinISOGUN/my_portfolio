@@ -3,6 +3,16 @@
 
 <head>
   <meta charset="UTF-8" />
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem("theme") || "dark";
+        document.documentElement.classList.add(theme);
+      } catch (e) {
+        document.documentElement.classList.add("dark");
+      }
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Oluwatomisin Isogun | Founder, Isogun Labs &amp; Frontend/Product Engineer</title>
   <meta name="description"

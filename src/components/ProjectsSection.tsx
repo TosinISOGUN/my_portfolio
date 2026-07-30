@@ -145,7 +145,7 @@ const ProjectsSection = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="group skill-card overflow-hidden grid md:grid-cols-[300px_1fr]"
+              className="group skill-card overflow-hidden grid grid-cols-1 md:grid-cols-[300px_1fr]"
             >
               <div className="relative h-56 md:h-full overflow-hidden bg-secondary/20">
                 <img

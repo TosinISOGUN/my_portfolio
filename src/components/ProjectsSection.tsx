@@ -4,7 +4,7 @@ import SectionHeading from "./SectionHeading";
 import { ExternalLink, Github, Store } from "lucide-react";
 import recapLogo from "@/assets/recap-logo.svg";
 import bPlanLogo from "@/assets/b-plan.png";
-import oyoLogo from "@/assets/oyo-state-logo.png";
+import oyoLogo from "@/assets/oyo-state-logo-card.png";
 import aftLogo from "@/assets/aft-website-logo.png";
 import lcLogo from "@/assets/LC_logo.png";
 import chomesLogo from "@/assets/c-homes.svg";

@@ -41,7 +41,7 @@ const featuredProjects: FeaturedProject[] = [
     title: "OYOBOOKING",
     image: oyoLogo,
     tags: ["React", "API Integration", "UI Accessibility"],
-    link: "https://oyo-booking-ten.vercel.app/",
+    link: "https://oyobooking.ng",
     github: "https://github.com/TosinISOGUN/oyo_booking.com",
     problem: "Regional travelers needed a straightforward way to book hotel stays, but the existing process wasn't localized or accessible enough for the market it served.",
     approach: "I built a booking interface focused on accessibility and integrated it tightly with the backend so availability and reservations stay accurate in real time, tailoring the experience to a regional audience.",

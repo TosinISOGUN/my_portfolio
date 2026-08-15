@@ -94,7 +94,7 @@ const HeroSlider = () => {
                 size="lg"
                 className="border-foreground/20 hover:border-foreground hover:bg-foreground hover:text-background text-foreground font-bold px-7 h-11 transition-all hover:translate-y-[-2px] active:translate-y-0 shadow-sm"
               >
-                <a href={resumePdf} download="Oluwatomisin_Isogun_Resume.pdf">
+                <a href={resumePdf} download="Oluwatomisin_Isogun_CV.pdf">
                   <FileText className="mr-2 h-4 w-4" />
                   Resume
                 </a>

@@ -159,7 +159,7 @@ const HeroSlider = () => {
               >
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
-                    2+
+                    4
                   </div>
                   <div>
                     <p className="text-[9px] uppercase tracking-widest text-muted-foreground font-extrabold">Years of</p>

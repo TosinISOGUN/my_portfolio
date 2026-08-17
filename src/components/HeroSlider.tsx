@@ -3,7 +3,7 @@ import { useRef } from "react";
 import profilePic from "@/assets/profile-pic.png";
 import { ArrowRight, Github, Linkedin, Mail, FileText } from "lucide-react";
 import { Button } from "./ui/button";
-import resumePdf from "@/assets/Resume_Oluwatomisin_Isogun.pdf";
+import resumePdf from "@/assets/Oluwatomisin_Isogun_CV.pdf";
 
 const HeroSlider = () => {
   const heroRef = useRef<HTMLElement>(null);

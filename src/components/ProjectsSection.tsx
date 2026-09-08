@@ -1,5 +1,6 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
+import { useReducedMotion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 import { ExternalLink, Github, Store, ChevronDown, TrendingUp, Users, Clock, Zap } from "lucide-react";
 import recapLogo from "@/assets/recap-logo.svg";
@@ -9,6 +10,7 @@ import chomesLogo from "@/assets/c-homes.svg";
 import aftLogo from "@/assets/aft-website-logo.png";
 import lcLogo from "@/assets/LC_logo.png";
 import nachieMaridadiLogo from "@/assets/nachie_maridadi_favicon.png";
+import infinitativeLogo from "@/assets/infinitative.svg";
 
 type Metric = {
   icon: typeof TrendingUp;
@@ -138,7 +140,7 @@ const moreProjects: { title: string; description: string; tags: string[]; image:
     title: "Infinitative",
     description: "A global e-commerce marketplace for electronics and fashion, with a high-performance search and filtering engine for large vendor catalogs.",
     tags: ["React", "TypeScript", "E-commerce"],
-    image: aftLogo,
+    image: infinitativeLogo,
     link: "https://infinitative-aft.vercel.app/",
     github: "https://github.com/TosinISOGUN/infinitative",
     category: "Experimental",
@@ -150,7 +152,8 @@ const categories: ProjectCategory[] = ["All", "Commercial", "Client Work", "Expe
 const ProjectsSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const [expandedCaseStudy, setExpandedCaseStudy] = useState(false);
+  const [expandedCaseStudy, setExpandedCaseStudy] = useState<string | null>(null);
+  const prefersReducedMotion = useReducedMotion();
   const [activeCategory, setActiveCategory] = useState<ProjectCategory>("All");
 
   const filteredProjects = activeCategory === "All"
@@ -167,9 +170,9 @@ const ProjectsSection = () => {
           {featuredProjects.map((project, i) => (
             <motion.div
               key={project.title}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: prefersReducedMotion ? 0.01 : 0.7, delay: prefersReducedMotion ? 0 : i * 0.15, ease: [0.22, 1, 0.36, 1] }}
               className="group skill-card overflow-hidden grid grid-cols-1 md:grid-cols-[300px_1fr]"
             >
               <div className="relative h-56 md:h-full overflow-hidden bg-secondary/20">
@@ -262,17 +265,17 @@ const ProjectsSection = () => {
                 {project.caseStudy && (
                   <div className="mb-6">
                     <button
-                      onClick={() => setExpandedCaseStudy(!expandedCaseStudy)}
+                      onClick={() => setExpandedCaseStudy(expandedCaseStudy === project.title ? null : project.title)}
                       className="flex items-center gap-2 text-sm font-bold text-primary hover:text-primary/80 transition-colors"
                     >
                       <ChevronDown
                         size={16}
-                        className={`transition-transform duration-300 ${expandedCaseStudy ? "rotate-180" : ""}`}
+                        className={`transition-transform duration-300 ${expandedCaseStudy === project.title ? "rotate-180" : ""}`}
                       />
-                      {expandedCaseStudy ? "Hide case study" : "Read case study"}
+                      {expandedCaseStudy === project.title ? "Hide case study" : "Read case study"}
                     </button>
                     <AnimatePresence>
-                      {expandedCaseStudy && (
+                      {expandedCaseStudy === project.title && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
@@ -345,10 +348,10 @@ const ProjectsSection = () => {
             {filteredProjects.map((project, i) => (
               <motion.div
                 key={project.title}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ y: -6 }}
+                transition={{ duration: prefersReducedMotion ? 0.01 : 0.5, delay: prefersReducedMotion ? 0 : i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={prefersReducedMotion ? undefined : { y: -6 }}
                 className="group skill-card overflow-hidden h-full flex flex-col"
               >
                 <div className="relative h-32 overflow-hidden bg-secondary/20">

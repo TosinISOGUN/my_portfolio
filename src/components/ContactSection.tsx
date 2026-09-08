@@ -19,6 +19,7 @@ const ContactSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const { toast } = useToast();
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [honeypot, setHoneypot] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -38,11 +39,16 @@ const ContactSection = () => {
     }
 
     setLoading(true);
+    if (honeypot) {
+      setSubmitted(true);
+      setLoading(false);
+      return;
+    }
     try {
       const response = await fetch("https://formspree.io/f/xaqdjlrk", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, _subject: "Portfolio contact form" }),
       });
 
       if (response.ok) {
@@ -155,6 +161,16 @@ const ContactSection = () => {
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
+                <input
+                  type="text"
+                  name="company"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  className="absolute opacity-0 pointer-events-none -z-10"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                />
                 <div>
                   <Input
                     placeholder="Your Name"

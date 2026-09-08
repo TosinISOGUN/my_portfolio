@@ -6,8 +6,13 @@
   <script>
     (function () {
       try {
-        var theme = localStorage.getItem("theme") || "dark";
-        document.documentElement.classList.add(theme);
+        var stored = localStorage.getItem("theme");
+        if (stored) {
+          document.documentElement.classList.add(stored);
+        } else {
+          var prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+          document.documentElement.classList.add(prefersLight ? "light" : "dark");
+        }
       } catch (e) {
         document.documentElement.classList.add("dark");
       }
@@ -73,21 +78,69 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Featured Projects by Oluwatomisin Isogun",
+    "url": "https://portfolio.isogunlabs.com/#projects",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "SoftwareApplication",
+          "name": "Recap",
+          "url": "https://recap.isogunlabs.com/",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Atlassian Cloud",
+          "description": "One-click Jira status-report app on the Atlassian Marketplace.",
+          "author": { "@type": "Person", "name": "Oluwatomisin Isogun" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "WebApplication",
+          "name": "OYOBOOKING",
+          "url": "https://oyobooking.ng",
+          "applicationCategory": "TravelApplication",
+          "description": "Regional hotel booking platform with real-time availability.",
+          "author": { "@type": "Person", "name": "Oluwatomisin Isogun" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "WebApplication",
+          "name": "Shemt",
+          "url": "https://shemt.vercel.app/",
+          "applicationCategory": "BusinessApplication",
+          "description": "AI-integrated analytics dashboard unifying multiple data sources.",
+          "author": { "@type": "Person", "name": "Oluwatomisin Isogun" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "item": {
+          "@type": "WebApplication",
+          "name": "C-HOMES",
+          "url": "https://c-homes.vercel.app/",
+          "applicationCategory": "RealEstateApplication",
+          "description": "CMS-driven verified housing marketplace.",
+          "author": { "@type": "Person", "name": "Oluwatomisin Isogun" }
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 
 <body>
-  <div id="root">
-    <section class="min-h-screen w-full flex items-center bg-background">
-      <div class="max-w-7xl mx-auto px-6 py-24">
-        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] mb-6 tracking-tight text-foreground max-w-3xl">
-          I build frontend systems, and ship real products that people actually use.
-        </h1>
-        <p class="text-base md:text-lg text-muted-foreground leading-relaxed max-w-lg">
-          Oluwatomisin Isogun, founder of Isogun Labs and Frontend/Product Engineer.
-        </p>
-      </div>
-    </section>
-  </div>
+  <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
 </body>
 

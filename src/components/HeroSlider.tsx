@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useSpring, useTransform, useScroll } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, useScroll, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import profilePic from "@/assets/profile-pic.png";
 import { ArrowRight, Github, Linkedin, Mail, FileText } from "lucide-react";
@@ -7,18 +7,19 @@ import resumePdf from "@/assets/Oluwatomisin_Isogun_CV.pdf";
 
 const HeroSlider = () => {
   const heroRef = useRef<HTMLElement>(null);
+  const prefersReducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const scrollDrift = useTransform(scrollYProgress, [0, 1], [0, 90]);
+  const scrollDrift = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [0, 90]);
   const pageProgress = useSpring(useScroll().scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, { stiffness: 150, damping: 20 });
   const springY = useSpring(mouseY, { stiffness: 150, damping: 20 });
-  const rotateX = useTransform(springY, [-0.5, 0.5], [8, -8]);
-  const rotateY = useTransform(springX, [-0.5, 0.5], [-8, 8]);
-  const driftX = useTransform(springX, [-0.5, 0.5], [-14, 14]);
-  const driftY = useTransform(springY, [-0.5, 0.5], [-14, 14]);
+  const rotateX = useTransform(springY, [-0.5, 0.5], prefersReducedMotion ? [0, 0] : [8, -8]);
+  const rotateY = useTransform(springX, [-0.5, 0.5], prefersReducedMotion ? [0, 0] : [-8, 8]);
+  const driftX = useTransform(springX, [-0.5, 0.5], prefersReducedMotion ? [0, 0] : [-14, 14]);
+  const driftY = useTransform(springY, [-0.5, 0.5], prefersReducedMotion ? [0, 0] : [-14, 14]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -86,7 +87,7 @@ const HeroSlider = () => {
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-7 h-11 transition-all hover:translate-y-[-2px] active:translate-y-0"
               >
-                View Works
+                See My Work
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button
@@ -173,13 +174,15 @@ const HeroSlider = () => {
         </div>
       </div>
 
-      <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground/20 hidden lg:block"
-      >
-        <div className="w-px h-10 bg-gradient-to-b from-foreground/40 to-transparent" />
-      </motion.div>
+      {!prefersReducedMotion && (
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground/20 hidden lg:block"
+        >
+          <div className="w-px h-10 bg-gradient-to-b from-foreground/40 to-transparent" />
+        </motion.div>
+      )}
 
       {/* Scroll progress bar */}
       <motion.div

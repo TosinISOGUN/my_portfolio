@@ -40,7 +40,12 @@ const Sidebar = () => {
   }, []);
 
   const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    const el = document.getElementById(id);
+    if (el) {
+      const offset = 80;
+      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
     setMobileOpen(false);
   };
 
@@ -88,17 +93,17 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <nav
-        className={`fixed top-0 left-0 z-40 h-full w-20 bg-card/80 backdrop-blur-md border-r border-border flex flex-col items-center py-10 transition-transform duration-300
+        className={`fixed top-0 left-0 z-40 h-full w-20 bg-card/80 backdrop-blur-md border-r border-border flex flex-col items-center py-6 transition-transform duration-300
           lg:flex ${mobileOpen ? "flex" : "hidden"}`}
       >
         {/* Logo / Branding */}
-        <div className="mb-10 text-center">
+        <div className="mb-6 text-center">
           <span className="text-[10px] font-black tracking-[0.2em] font-mono [writing-mode:vertical-lr] rotate-180 uppercase text-foreground/40">
             O. Isogun
           </span>
         </div>
 
-        <div className="flex flex-col gap-0.5 flex-1 justify-center overflow-y-auto">
+        <div className="flex flex-col gap-0 flex-1 justify-center overflow-y-auto no-scrollbar">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = active === item.id;
@@ -106,13 +111,13 @@ const Sidebar = () => {
               <button
                 key={item.id}
                 onClick={() => scrollTo(item.id)}
-                className={`group relative flex flex-col items-center justify-center w-14 h-12 rounded-lg mx-auto transition-all duration-300 ${isActive
+                className={`group relative flex flex-col items-center justify-center w-14 h-11 rounded-lg mx-auto transition-all duration-300 ${isActive
                   ? "bg-primary/10 text-primary"
                   : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                   }`}
               >
-                <Icon size={18} />
-                <span className="text-[9px] mt-0.5 font-medium">{item.label}</span>
+                <Icon size={16} />
+                <span className="text-[8px] mt-0.5 font-medium">{item.label}</span>
                 {isActive && (
                   <motion.div
                     layoutId="sidebar-indicator"

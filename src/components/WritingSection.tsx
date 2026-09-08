@@ -5,6 +5,12 @@ import { ArrowUpRight, FileText } from "lucide-react";
 
 const posts = [
   {
+    title: "Three Apps Live on the Atlassian Marketplace",
+    description: "Passdown is approved — Isogun Labs now has three apps live on the Marketplace. Notes on what got easier the third time through review, and what still caught us off guard.",
+    url: "https://isogunlabs.com/blog/three-apps-live-on-marketplace",
+    date: "Sep 8, 2026",
+  },
+  {
     title: "What the \"Runs on Atlassian\" Badge Actually Guarantees",
     description: "It's not a quality stamp or a security audit. What the badge checks, what it explicitly doesn't cover, and what to look at before installing any Jira app.",
     url: "https://isogunlabs.com/blog/runs-on-atlassian-badge-buyers-guide",

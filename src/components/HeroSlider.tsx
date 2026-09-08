@@ -36,8 +36,8 @@ const HeroSlider = () => {
     <section ref={heroRef} id="home" className="relative min-h-screen lg:min-h-screen w-full flex items-center justify-center bg-background pt-24 lg:pt-0 overflow-x-hidden">
       {/* Background Decorative Elements */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-[5%] -left-[5%] w-[40%] h-[40%] rounded-full bg-primary/20 blur-[100px]" />
-        <div className="absolute -bottom-[5%] -right-[5%] w-[40%] h-[40%] rounded-full bg-primary/15 blur-[100px]" />
+        <div className="absolute -top-[5%] -left-[5%] w-[40%] h-[40%] rounded-full bg-primary/10 blur-[120px]" />
+        <div className="absolute -bottom-[5%] -right-[5%] w-[40%] h-[40%] rounded-full bg-primary/8 blur-[120px]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
@@ -61,11 +61,11 @@ const HeroSlider = () => {
                   href="https://isogunlabs.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-[10px] font-mono tracking-wider uppercase w-fit hover:bg-primary/20 transition-colors"
+                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-medium tracking-normal w-fit hover:bg-primary/20 transition-colors"
                 >
                   Founder, Isogun Labs
                 </a>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-secondary/30 text-muted-foreground text-[10px] font-mono tracking-wider uppercase w-fit">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-secondary/30 text-muted-foreground text-xs font-medium tracking-normal w-fit">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                   Available for New Projects
                 </div>
@@ -73,11 +73,11 @@ const HeroSlider = () => {
             </motion.div>
 
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] mb-6 tracking-tight">
-              I shipped a <span className="text-primary">Jira app</span> to the Atlassian Marketplace as a <span className="italic">team of one.</span>
+              I shipped <span className="text-primary">Jira apps</span> to the Atlassian Marketplace as a <span className="italic">team of one.</span>
             </h1>
 
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-8 max-w-lg">
-              Frontend/Product Engineer and founder of Isogun Labs. I built Recap, a one-click status-report app now live on the Atlassian Marketplace, from the React UI to the backend resolver logic, SEO, and go-to-market. I bring that same full-loop ownership to every team I join.
+              Frontend/Product Engineer and founder of Isogun Labs. I built Recap and Field Hygiene, two apps now live on the Atlassian Marketplace, from the React UI to the backend resolver logic, SEO, and go-to-market. I bring that same full-loop ownership to every team I join.
             </p>
 
             {/* CTA Group */}

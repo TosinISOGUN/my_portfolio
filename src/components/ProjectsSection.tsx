@@ -45,9 +45,9 @@ const featuredProjects: FeaturedProject[] = [
     marketplace: "https://marketplace.atlassian.com/2146687861",
     problem: "Teams on Jira lose real time every reporting cycle manually chasing down completed work and writing it up into a status update, with no built-in way to turn that work into a report.",
     approach: "As founder of Isogun Labs, I designed and built Recap end to end: the Atlassian Forge resolver logic that pulls and summarizes completed Jira work, the UI, the marketing site, and the Marketplace listing and SEO that brought it to market.",
-    result: "A live, commercially available Jira app on the Atlassian Marketplace that turns a manual reporting chore into a one-click report, shipped and marketed by a team of one.",
+    result: "A live, commercially available Jira app on the Atlassian Marketplace that turns a manual reporting chore into a one-click report, shipped and marketed by a team of one. One of two apps Isogun Labs has live on the Marketplace, with a third in review.",
     metrics: [
-      { icon: Store, label: "Live on Marketplace", value: "1 app" },
+      { icon: Store, label: "Live on Marketplace", value: "2 apps" },
       { icon: Clock, label: "Report writing time saved", value: "~80%" },
       { icon: TrendingUp, label: "Organic traffic in 60 days", value: "1.2K visits" },
     ],

@@ -77,7 +77,7 @@ const HeroSlider = () => {
             </h1>
 
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-8 max-w-lg">
-              Frontend/Product Engineer and founder of Isogun Labs. I built Recap and Field Hygiene, two apps now live on the Atlassian Marketplace, from the React UI to the backend resolver logic, SEO, and go-to-market. I bring that same full-loop ownership to every team I join.
+              Frontend/Product Engineer and founder of Isogun Labs. I built Recap, Field Hygiene, and Passdown — three apps now live on the Atlassian Marketplace, from the React UI to the backend resolver logic, SEO, and go-to-market. I bring that same full-loop ownership to every team I join.
             </p>
 
             {/* CTA Group */}

@@ -43,18 +43,18 @@ const AboutSection = () => {
           >
             <div className="space-y-6 text-muted-foreground leading-relaxed text-lg">
               <p className="text-foreground font-medium text-xl leading-snug">
-                Most frontend engineers write components. I shipped two commercial apps to the
-                Atlassian Marketplace as a team of one, from the React UI to the backend
+                Most frontend engineers write components. I shipped three commercial apps to
+                the Atlassian Marketplace as a team of one, from the React UI to the backend
                 resolver logic, the SEO strategy, the security questionnaire, and the
                 go-to-market plan.
               </p>
               <p>
-                That's Isogun Labs, my independent software studio. Recap and Field Hygiene
-                are both live on the Atlassian Marketplace right now, with a third app
-                (Passdown) in review. I wrote every line of their frontends, designed the
-                Forge resolver architectures, built the marketing sites with structured data
-                that ranks organically, and cleared the Marketplace review process including
-                the security questionnaires.
+                That's Isogun Labs, my independent software studio. Recap, Field Hygiene,
+                and Passdown are all live on the Atlassian Marketplace right now. I wrote
+                every line of their frontends, designed the Forge resolver architectures,
+                built the marketing sites with structured data that ranks organically, and
+                cleared the Marketplace review process including the security
+                questionnaires.
               </p>
               <p>
                 Alongside the studio, I work as a Frontend/Product Engineer at AFT Solutions,

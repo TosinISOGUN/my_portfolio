@@ -9,6 +9,7 @@ const HeroSlider = () => {
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const scrollDrift = useTransform(scrollYProgress, [0, 1], [0, 90]);
+  const pageProgress = useSpring(useScroll().scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -45,7 +46,7 @@ const HeroSlider = () => {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col text-left order-2 lg:order-1"
+            className="flex flex-col text-left order-1 lg:order-1"
           >
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -71,11 +72,11 @@ const HeroSlider = () => {
             </motion.div>
 
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] mb-6 tracking-tight">
-              I build <span className="text-primary">frontend systems</span>, and ship real products that people actually <span className="italic">use.</span>
+              I shipped a <span className="text-primary">Jira app</span> to the Atlassian Marketplace as a <span className="italic">team of one.</span>
             </h1>
 
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-8 max-w-lg">
-              Founder of Isogun Labs, where I shipped Recap, a status-report app now live on the Atlassian Marketplace. As a Frontend/Product Engineer, I turn dense data and demanding requirements into interfaces that feel effortless to use, from enterprise dashboards to AI-driven tools.
+              Frontend/Product Engineer and founder of Isogun Labs. I built Recap, a one-click status-report app now live on the Atlassian Marketplace, from the React UI to the backend resolver logic, SEO, and go-to-market. I bring that same full-loop ownership to every team I join.
             </p>
 
             {/* CTA Group */}
@@ -94,7 +95,7 @@ const HeroSlider = () => {
                 size="lg"
                 className="border-foreground/20 hover:border-foreground hover:bg-foreground hover:text-background text-foreground font-bold px-7 h-11 transition-all hover:translate-y-[-2px] active:translate-y-0 shadow-sm"
               >
-                <a href={resumePdf} download="Oluwatomisin_Isogun_CV.pdf">
+                <a href={resumePdf} target="_blank" rel="noopener noreferrer">
                   <FileText className="mr-2 h-4 w-4" />
                   Resume
                 </a>
@@ -131,7 +132,7 @@ const HeroSlider = () => {
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             style={{ y: scrollDrift }}
-            className="relative order-1 lg:order-2 flex justify-center lg:justify-end items-center"
+            className="relative order-2 lg:order-2 flex justify-center lg:justify-end items-center"
           >
             <div
               onMouseMove={handleMouseMove}
@@ -162,8 +163,8 @@ const HeroSlider = () => {
                     4+
                   </div>
                   <div>
-                    <p className="text-[9px] uppercase tracking-widest text-muted-foreground font-extrabold">Years of</p>
-                    <p className="text-xs font-bold font-mono">Expertise</p>
+                    <p className="text-[9px] uppercase tracking-widest text-muted-foreground font-extrabold">Years</p>
+                    <p className="text-xs font-bold font-mono">Frontend</p>
                   </div>
                 </div>
               </motion.div>
@@ -179,6 +180,12 @@ const HeroSlider = () => {
       >
         <div className="w-px h-10 bg-gradient-to-b from-foreground/40 to-transparent" />
       </motion.div>
+
+      {/* Scroll progress bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[2px] bg-primary z-[60] origin-left"
+        style={{ scaleX: pageProgress }}
+      />
     </section>
   );
 };

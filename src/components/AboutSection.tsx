@@ -6,23 +6,23 @@ import { Rocket, Building2, Database, Zap } from "lucide-react";
 const focusAreas = [
   {
     icon: Rocket,
-    title: "Shipping Full Products, Not Just Screens",
-    description: "Frontend to backend logic, SEO, and go-to-market, for a live commercial app on the Atlassian Marketplace.",
+    title: "Full-Loop Product Ownership",
+    description: "Code, SEO, security questionnaires, Marketplace listings, and go-to-market. I ship products, not just components.",
   },
   {
     icon: Building2,
-    title: "Enterprise & Government-Scale Systems",
-    description: "Frontends built to stay reliable under real organizational weight, not just a demo.",
+    title: "Enterprise-Scale Frontend",
+    description: "Government and enterprise interfaces at AFT Solutions, built to stay reliable under real organizational load.",
   },
   {
     icon: Database,
-    title: "Data-Dense Dashboards & AI Interfaces",
-    description: "Turning complex, fast-changing data into views people can read at a glance.",
+    title: "Data-Dense Interfaces",
+    description: "Analytics dashboards, booking systems, and CMS-driven marketplaces where the hard part is the data, not the styling.",
   },
   {
     icon: Zap,
-    title: "Performance-First React Engineering",
-    description: "Interfaces that stay fast and maintainable as the codebase and the team grow.",
+    title: "Performance-First Engineering",
+    description: "Lighthouse 90+ scores, sub-200ms filter queries, and code splitting that keeps large React apps fast.",
   },
 ];
 
@@ -43,25 +43,27 @@ const AboutSection = () => {
           >
             <div className="space-y-6 text-muted-foreground leading-relaxed text-lg">
               <p className="text-foreground font-medium text-xl leading-snug">
-                I'm the founder of Isogun Labs, an independent studio building small, focused apps
-                for the tools teams already use, starting with Recap, a one-click status-report
-                app now live on the Atlassian Marketplace. Alongside that I work as a
-                Frontend/Product Engineer, turning dense, business-critical data into interfaces
-                people can actually use.
+                Most frontend engineers write components. I shipped a commercial app to the
+                Atlassian Marketplace as a team of one, from the React UI to the backend
+                resolver logic, the SEO strategy, the security questionnaire, and the
+                go-to-market plan.
               </p>
               <p>
-                Running Isogun Labs end to end means I don't just write the frontend. I've shipped
-                the product, built the backend logic, handled SEO and growth, and managed the
-                go-to-market for a live commercial app. That full-loop experience, from React
-                components to what makes a product actually get adopted, is what I bring to a team.
+                That's Isogun Labs, my independent software studio. Recap, the first product,
+                is live on the Atlassian Marketplace right now. I wrote every line of its
+                frontend, designed the Forge resolver architecture, built the marketing site
+                with structured data that ranks organically, and cleared the Marketplace
+                review process including the security questionnaire on the first pass.
               </p>
               <p>
-                My engineering work spans enterprise and government software at AFT Solutions,
-                CMS-driven property marketplaces, subscription e-commerce, and regional booking
-                platforms, each with its own constraints around data volume, reliability, and edge
-                cases that don't show up in a design file. I build with React and TypeScript, and
-                care as much about how an interface performs under real data as how it looks in a
-                mockup.
+                Alongside the studio, I work as a Frontend/Product Engineer at AFT Solutions,
+                building enterprise and government software that has to stay reliable under
+                real organizational weight. That means React and TypeScript at scale, build
+                pipelines that don't break, and interfaces that handle more data than a design
+                file ever shows. The combination of shipping my own products and building for
+                enterprise clients is what I bring to a team: the craft of a product engineer
+                with the discipline of someone who knows what happens when things break in
+                production.
               </p>
             </div>
           </motion.div>

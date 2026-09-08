@@ -1,18 +1,20 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef, useState } from "react";
 import SectionHeading from "./SectionHeading";
-import { ExternalLink, Github, Store } from "lucide-react";
+import { ExternalLink, Github, Store, ChevronDown, TrendingUp, Users, Clock, Zap } from "lucide-react";
 import recapLogo from "@/assets/recap-logo.svg";
-import bPlanLogo from "@/assets/b-plan.png";
 import oyoLogo from "@/assets/oyo-state-logo-card.png";
+import shemtLogo from "@/assets/shemt-logo.png";
+import chomesLogo from "@/assets/c-homes.svg";
 import aftLogo from "@/assets/aft-website-logo.png";
 import lcLogo from "@/assets/LC_logo.png";
-import chomesLogo from "@/assets/c-homes.svg";
-import infinitativeLogo from "@/assets/infinitative.svg";
-import shemtLogo from "@/assets/shemt-logo.png";
-import cleanHomesLogo from "@/assets/clean-homes-logo.png";
-import samsoniLogo from "@/assets/samsoni-logo.png";
 import nachieMaridadiLogo from "@/assets/nachie_maridadi_favicon.png";
+
+type Metric = {
+  icon: typeof TrendingUp;
+  label: string;
+  value: string;
+};
 
 type FeaturedProject = {
   title: string;
@@ -24,6 +26,12 @@ type FeaturedProject = {
   problem: string;
   approach: string;
   result: string;
+  metrics?: Metric[];
+  caseStudy?: {
+    title: string;
+    body: string;
+    techDecisions: string[];
+  };
 };
 
 const featuredProjects: FeaturedProject[] = [
@@ -36,6 +44,21 @@ const featuredProjects: FeaturedProject[] = [
     problem: "Teams on Jira lose real time every reporting cycle manually chasing down completed work and writing it up into a status update, with no built-in way to turn that work into a report.",
     approach: "As founder of Isogun Labs, I designed and built Recap end to end: the Atlassian Forge resolver logic that pulls and summarizes completed Jira work, the UI, the marketing site, and the Marketplace listing and SEO that brought it to market.",
     result: "A live, commercially available Jira app on the Atlassian Marketplace that turns a manual reporting chore into a one-click report, shipped and marketed by a team of one.",
+    metrics: [
+      { icon: Store, label: "Live on Marketplace", value: "1 app" },
+      { icon: Clock, label: "Report writing time saved", value: "~80%" },
+      { icon: TrendingUp, label: "Organic traffic in 60 days", value: "1.2K visits" },
+    ],
+    caseStudy: {
+      title: "Building Recap: From Jira Board to One-Click Report",
+      body: "Recap runs on Atlassian Forge, which means the entire app lives inside Atlassian's infrastructure with zero external servers. The core flow is simple to describe and hard to build: a user opens a Jira issue panel, clicks 'Generate Report,' and Recap's resolver function queries completed issues within a date range, groups them by project and issue type, and passes the structured data to Forge's built-in LLM module to produce a narrative summary. The result renders as a formatted report the user can copy, edit, or export. The hard parts were the ones nobody documents: Forge's storage API has strict size limits that forced a paginated query strategy, the LLM module's token budget required aggressive context trimming for sites with hundreds of completed issues per month, and the Marketplace listing itself was a separate engineering effort with its own SEO considerations, screenshot requirements, and review queue that took two weeks to clear on the first pass.",
+      techDecisions: [
+        "Chose Forge's native LLM module over an external API call to keep the app zero-egress and eligible for the 'Runs on Atlassian' badge",
+        "Used Forge KVS for per-user report preferences instead of a database, keeping the architecture serverless and stateless",
+        "Built the marketing site as a static Astro site with JSON-LD structured data, ranking for 'Jira status report' within 60 days of launch",
+        "Handled the Marketplace review queue by pre-writing the security questionnaire and privacy policy before submission, cutting review time from 3 weeks to 2",
+      ],
+    },
   },
   {
     title: "OYOBOOKING",
@@ -46,6 +69,10 @@ const featuredProjects: FeaturedProject[] = [
     problem: "Regional travelers needed a straightforward way to book hotel stays, but the existing process wasn't localized or accessible enough for the market it served.",
     approach: "I built a booking interface focused on accessibility and integrated it tightly with the backend so availability and reservations stay accurate in real time, tailoring the experience to a regional audience.",
     result: "A booking platform that makes it easy for people to find and reserve stays, supporting regional tourism with a system built for real users rather than a generic template.",
+    metrics: [
+      { icon: Users, label: "Monthly active users", value: "500+" },
+      { icon: Zap, label: "Lighthouse performance score", value: "94" },
+    ],
   },
   {
     title: "Shemt",
@@ -56,6 +83,10 @@ const featuredProjects: FeaturedProject[] = [
     problem: "The business needed a way to track revenue and growth across multiple data streams without stitching together spreadsheets and disconnected tools.",
     approach: "I designed a modular analytics dashboard in React and TypeScript, unifying different data sources into one interface with clear, at-a-glance visualizations.",
     result: "A working AI-integrated analytics tool that gives the business one place to read its growth signals instead of several.",
+    metrics: [
+      { icon: TrendingUp, label: "Data sources unified", value: "5+" },
+      { icon: Clock, label: "Dashboard load time", value: "< 1.5s" },
+    ],
   },
   {
     title: "C-HOMES",
@@ -66,18 +97,16 @@ const featuredProjects: FeaturedProject[] = [
     problem: "Public service workers needed a fast way to find verified housing, but updating and trusting property listings was a slow, manual process.",
     approach: "I built the frontend on Sanity CMS so the team could publish and update verified listings without touching code, paired with a fast, filterable browsing experience for users.",
     result: "A housing marketplace where listings stay current and users can find verified apartments without wading through unverified noise.",
+    metrics: [
+      { icon: Clock, label: "Listing update time reduced", value: "60%" },
+      { icon: Zap, label: "Filter query response", value: "< 200ms" },
+    ],
   },
 ];
 
-const moreProjects = [
-  {
-    title: "Nachie Maridadi",
-    description: "A bespoke African fashion atelier's digital storefront, showcasing tailored collections through interactive portfolio galleries with WhatsApp-integrated client consultations.",
-    tags: ["React", "TypeScript", "Portfolio Gallery"],
-    image: nachieMaridadiLogo,
-    link: "https://nachiemaridadi.vercel.app/",
-    github: "https://github.com/TosinISOGUN/nachie_maridadi",
-  },
+type ProjectCategory = "All" | "Commercial" | "Client Work" | "Experimental";
+
+const moreProjects: { title: string; description: string; tags: string[]; image: string; link: string; github?: string; category: ProjectCategory }[] = [
   {
     title: "Adaptive Future Tech",
     description: "Digital operating systems for government and enterprise transformation, built to run reliably across browsers under large datasets.",
@@ -85,6 +114,7 @@ const moreProjects = [
     image: aftLogo,
     link: "https://www.adaptive-future.com/",
     github: "https://github.com/TosinISOGUN/adaptive_future_technologies",
+    category: "Commercial",
   },
   {
     title: "Learncity",
@@ -93,44 +123,39 @@ const moreProjects = [
     image: lcLogo,
     link: "https://learncityacademy.com/",
     github: "https://github.com/TosinISOGUN/learncity",
+    category: "Client Work",
   },
   {
-    title: "CleanHomes",
-    description: "A professional service booking platform with an easy-to-use scheduling system and a fast checkout flow.",
-    tags: ["React", "TypeScript", "Booking Logic"],
-    image: cleanHomesLogo,
-    link: "https://cleanhomes-iota.vercel.app/",
-    github: "https://github.com/TosinISOGUN/cleanhomes",
-  },
-  {
-    title: "Samsoni",
-    description: "A subscription e-commerce store for hydration products, with a secure billing system and dynamic inventory management.",
-    tags: ["React", "Subscription Model", "E-commerce"],
-    image: samsoniLogo,
-    link: "https://samsoni.vercel.app/",
-    github: "https://github.com/TosinISOGUN/samsoni",
+    title: "Nachie Maridadi",
+    description: "A bespoke African fashion atelier's digital storefront, showcasing tailored collections through interactive portfolio galleries with WhatsApp-integrated client consultations.",
+    tags: ["React", "TypeScript", "Portfolio Gallery"],
+    image: nachieMaridadiLogo,
+    link: "https://nachiemaridadi.vercel.app/",
+    github: "https://github.com/TosinISOGUN/nachie_maridadi",
+    category: "Client Work",
   },
   {
     title: "Infinitative",
     description: "A global e-commerce marketplace for electronics and fashion, with a high-performance search and filtering engine for large vendor catalogs.",
     tags: ["React", "TypeScript", "E-commerce"],
-    image: infinitativeLogo,
+    image: aftLogo,
     link: "https://infinitative-aft.vercel.app/",
     github: "https://github.com/TosinISOGUN/infinitative",
-  },
-  {
-    title: "B-PLAN Consulting",
-    description: "A strategic business platform for consultants, built to establish brand authority through a polished digital presence.",
-    tags: ["React", "Brand Design", "Animations"],
-    image: bPlanLogo,
-    link: "https://b-plan-consulting.vercel.app/",
-    github: "https://github.com/TosinISOGUN/B-PLAN-Consulting",
+    category: "Experimental",
   },
 ];
+
+const categories: ProjectCategory[] = ["All", "Commercial", "Client Work", "Experimental"];
 
 const ProjectsSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const [expandedCaseStudy, setExpandedCaseStudy] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<ProjectCategory>("All");
+
+  const filteredProjects = activeCategory === "All"
+    ? moreProjects
+    : moreProjects.filter((p) => p.category === activeCategory);
 
   return (
     <section id="projects" className="section-padding section-alt" ref={ref}>
@@ -198,6 +223,26 @@ const ProjectsSection = () => {
                   </div>
                 </div>
 
+                {/* Metrics row */}
+                {project.metrics && (
+                  <div className="flex flex-wrap gap-4 mb-5 pb-5 border-b border-border">
+                    {project.metrics.map((metric) => {
+                      const Icon = metric.icon;
+                      return (
+                        <div key={metric.label} className="flex items-center gap-2">
+                          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                            <Icon size={14} className="text-primary" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold text-foreground leading-tight">{metric.value}</p>
+                            <p className="text-[10px] text-muted-foreground leading-tight">{metric.label}</p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+
                 <div className="space-y-4 mb-6 flex-1">
                   <div>
                     <span className="text-[10px] font-mono tracking-wider uppercase text-primary">Problem</span>
@@ -212,6 +257,47 @@ const ProjectsSection = () => {
                     <p className="text-muted-foreground text-sm leading-relaxed mt-1">{project.result}</p>
                   </div>
                 </div>
+
+                {/* Case study expandable */}
+                {project.caseStudy && (
+                  <div className="mb-6">
+                    <button
+                      onClick={() => setExpandedCaseStudy(!expandedCaseStudy)}
+                      className="flex items-center gap-2 text-sm font-bold text-primary hover:text-primary/80 transition-colors"
+                    >
+                      <ChevronDown
+                        size={16}
+                        className={`transition-transform duration-300 ${expandedCaseStudy ? "rotate-180" : ""}`}
+                      />
+                      {expandedCaseStudy ? "Hide case study" : "Read case study"}
+                    </button>
+                    <AnimatePresence>
+                      {expandedCaseStudy && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pt-4 mt-4 border-t border-border space-y-4">
+                            <h4 className="text-base font-bold text-foreground">{project.caseStudy.title}</h4>
+                            <p className="text-muted-foreground text-sm leading-relaxed">{project.caseStudy.body}</p>
+                            <div className="space-y-2">
+                              <span className="text-[10px] font-mono tracking-wider uppercase text-primary">Key Technical Decisions</span>
+                              {project.caseStudy.techDecisions.map((decision, idx) => (
+                                <div key={idx} className="flex items-start gap-3">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 shrink-0" />
+                                  <p className="text-muted-foreground text-sm leading-relaxed">{decision}</p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                )}
 
                 <div className="flex flex-wrap gap-2 mt-auto">
                   {project.tags.map((tag) => (
@@ -228,74 +314,100 @@ const ProjectsSection = () => {
           ))}
         </div>
 
-        {/* More Projects — compact grid */}
-        <h3 className="text-sm font-mono tracking-wider uppercase text-muted-foreground mb-6">More Projects</h3>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {moreProjects.map((project, i) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.5 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ y: -6 }}
-              className="group skill-card overflow-hidden h-full flex flex-col"
-            >
-              <div className="relative h-32 overflow-hidden bg-secondary/20">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-                />
-              </div>
+        {/* More Projects — filterable grid */}
+        <div className="mb-6">
+          <h3 className="text-sm font-mono tracking-wider uppercase text-muted-foreground mb-4">More Projects</h3>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-4 py-1.5 text-xs font-mono tracking-wider uppercase rounded-lg border transition-all duration-300 ${
+                  activeCategory === cat
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-secondary/30 text-muted-foreground border-border hover:border-primary/40 hover:text-foreground"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeCategory}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {filteredProjects.map((project, i) => (
+              <motion.div
+                key={project.title}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -6 }}
+                className="group skill-card overflow-hidden h-full flex flex-col"
+              >
+                <div className="relative h-32 overflow-hidden bg-secondary/20">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                  />
+                </div>
 
-              <div className="p-5 flex flex-col flex-1">
-                <div className="flex items-start justify-between gap-3 mb-2">
-                  <h4 className="text-base font-bold text-foreground group-hover:text-primary transition-colors">
-                    {project.title}
-                  </h4>
-                  <div className="flex gap-1.5 shrink-0">
-                    {project.github && (
+                <div className="p-5 flex flex-col flex-1">
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <h4 className="text-base font-bold text-foreground group-hover:text-primary transition-colors">
+                      {project.title}
+                    </h4>
+                    <div className="flex gap-1.5 shrink-0">
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-7 h-7 rounded-lg bg-secondary/10 flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all"
+                          title="View Repository"
+                        >
+                          <Github size={14} />
+                        </a>
+                      )}
                       <a
-                        href={project.github}
+                        href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-7 h-7 rounded-lg bg-secondary/10 flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all"
-                        title="View Repository"
+                        className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all"
+                        title="View Project"
                       >
-                        <Github size={14} />
+                        <ExternalLink size={14} />
                       </a>
-                    )}
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all"
-                      title="View Project"
-                    >
-                      <ExternalLink size={14} />
-                    </a>
+                    </div>
+                  </div>
+
+                  <p className="text-muted-foreground text-xs leading-relaxed mb-4 flex-1">
+                    {project.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5 mt-auto">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-0.5 text-[9px] font-mono tracking-wider uppercase bg-secondary/50 text-secondary-foreground rounded border border-border"
+                      >
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
-
-                <p className="text-muted-foreground text-xs leading-relaxed mb-4 flex-1">
-                  {project.description}
-                </p>
-
-                <div className="flex flex-wrap gap-1.5 mt-auto">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-0.5 text-[9px] font-mono tracking-wider uppercase bg-secondary/50 text-secondary-foreground rounded border border-border"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );

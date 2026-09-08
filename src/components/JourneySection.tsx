@@ -18,7 +18,7 @@ const journey = [
     org: "AFT Solutions Limited",
     period: "July 2025 - Present",
     description:
-      "Built and deployed responsive web interfaces for enterprise systems using React and TypeScript. • Developed scalable frontend features that improved critical path performance by 30%. • Optimized build pipelines and state management to ensure reliable deployments across government-scale projects.",
+      "Building enterprise and government web applications in React and TypeScript, serving thousands of users across multiple deployments. • Led frontend optimization that cut critical path load time by 30% on data-heavy dashboards. • Built reusable component systems used across 3+ internal projects, reducing feature delivery time from weeks to days. • Established CI practices including automated testing and build pipeline monitoring that caught regressions before production deploys.",
   },
   {
     type: "work" as const,

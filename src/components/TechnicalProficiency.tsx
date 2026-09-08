@@ -4,24 +4,24 @@ import SectionHeading from "./SectionHeading";
 
 const technicalProficiency = [
   {
-    category: "Core Technologies",
-    description: "Building scalable systems that run quickly and efficiently.",
-    items: ["React.js (v18+)", "TypeScript (Strict mode)", "JavaScript (ES6+)", "Vite"],
+    category: "Build Data-Dense Interfaces",
+    description: "Analytics dashboards, booking systems, and CMS-driven marketplaces that stay readable under real data volume.",
+    items: ["React 18+", "TypeScript (strict)", "TanStack Query", "Context API", "REST integration"],
   },
   {
-    category: "Frontend and UI",
-    description: "Creating smooth, accessible, and high-quality user interfaces.",
-    items: ["Tailwind CSS", "Shadcn UI", "Framer Motion", "Radix UI", "Responsive Design"],
+    category: "Ship Polished, Accessible UI",
+    description: "Interfaces that feel good to use and pass accessibility audits without retrofitting.",
+    items: ["Tailwind CSS", "Shadcn UI", "Framer Motion", "Radix UI", "Responsive design"],
   },
   {
-    category: "Data and State",
-    description: "Managing complex data and asynchronous application logic.",
-    items: ["TanStack React Query", "Context API", "RESTful API Integration", "Middleware Architecture"],
+    category: "Keep Large Apps Fast",
+    description: "Code splitting, lazy loading, and build optimization that keeps performance scores high as the codebase grows.",
+    items: ["Vite", "Code splitting", "Lighthouse auditing", "Bundle analysis", "Vercel"],
   },
   {
-    category: "Tools and Testing",
-    description: "Ensuring software quality through testing and performance checks.",
-    items: ["Vitest", "Playwright", "Git / GitHub", "Performance Auditing", "Vercel"],
+    category: "Test and Ship with Confidence",
+    description: "Automated tests and CI practices that catch regressions before a reviewer or a user does.",
+    items: ["Vitest", "Playwright", "Git / GitHub", "CI/CD", "Performance auditing"],
   },
 ];
 

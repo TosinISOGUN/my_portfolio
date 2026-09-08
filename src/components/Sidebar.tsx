@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Home, User, Wrench, Mail, Menu, X, Compass, FolderOpen, Sun, Moon } from "lucide-react";
+import { Home, User, Wrench, Mail, Menu, X, Compass, FolderOpen, Sun, Moon, MessageSquare, PenLine } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
 const navItems = [
@@ -8,6 +8,8 @@ const navItems = [
   { id: "about", label: "About", icon: User },
   { id: "tech-stack", label: "Skills", icon: Wrench },
   { id: "projects", label: "Projects", icon: FolderOpen },
+  { id: "testimonials", label: "Praise", icon: MessageSquare },
+  { id: "writing", label: "Writing", icon: PenLine },
   { id: "journey", label: "Journey", icon: Compass },
   { id: "contact", label: "Contact", icon: Mail },
 ];

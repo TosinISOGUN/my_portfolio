@@ -81,9 +81,27 @@ const ContactSection = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <p className="text-muted-foreground text-lg mb-8 leading-relaxed max-w-md">
+            <p className="text-muted-foreground text-lg mb-6 leading-relaxed max-w-md">
               I am open to discussing new opportunities with product teams. If you are looking for a frontend engineer who focuses on building high-quality and reliable web applications, let's connect.
             </p>
+
+            <div className="skill-card mb-8 max-w-md">
+              <p className="text-[10px] font-mono tracking-wider uppercase text-primary mb-3">What I'm looking for</p>
+              <ul className="space-y-2">
+                <li className="text-sm text-muted-foreground flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 shrink-0" />
+                  Senior frontend or product engineer roles at product-driven teams
+                </li>
+                <li className="text-sm text-muted-foreground flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 shrink-0" />
+                  Contract work on data-dense interfaces, dashboards, or platform tooling
+                </li>
+                <li className="text-sm text-muted-foreground flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 shrink-0" />
+                  Teams that value ownership, performance, and shipping over process theater
+                </li>
+              </ul>
+            </div>
 
             <div className="space-y-4 mb-8">
               <a

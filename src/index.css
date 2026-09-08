@@ -163,10 +163,15 @@
   }
 
   .skill-card {
-    @apply bg-card border border-border rounded-lg p-5 transition-all duration-500 hover:border-primary/30 hover:bg-secondary/30;
+    @apply bg-card border border-border rounded-lg p-5 transition-all duration-500 hover:border-primary/30 hover:bg-secondary/30 hover:shadow-lg hover:shadow-primary/5;
   }
 
   .safe-area-bottom {
     padding-bottom: env(safe-area-inset-bottom, 1.5rem);
+  }
+
+  .stagger-fade {
+    animation: fade-in 0.6s ease-out forwards;
+    opacity: 0;
   }
 }

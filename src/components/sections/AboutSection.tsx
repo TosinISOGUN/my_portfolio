@@ -17,7 +17,6 @@ export function AboutSection() {
           <SectionLabel
             eyebrow="About"
             title="Frontend engineering for products people actually use."
-            copy="The studio work proves ownership, but the core signal is frontend craft: fast interfaces, clear product flows, and React systems that can scale."
           />
 
           <div className="space-y-5 font-sans text-sm leading-7 text-charcoal/78 sm:text-base">

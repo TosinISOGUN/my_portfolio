@@ -11,7 +11,7 @@ export function ForegroundLayer({ y }: { y: MotionValue<string> }) {
         alt=""
         width={1536}
         height={1024}
-        className="pointer-events-none absolute -bottom-[6%] left-[-16%] hidden w-[85%] max-w-[950px] rotate-[-1.4deg] drop-shadow-[0_46px_26px_rgba(42,40,37,0.3)] xl:block"
+        className="pointer-events-none absolute -bottom-[4%] left-[-13%] hidden w-[85%] max-w-[950px] drop-shadow-[0_46px_26px_rgba(42,40,37,0.3)] xl:block"
       />
       <motion.img
         style={{ y }}

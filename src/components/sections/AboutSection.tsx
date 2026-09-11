@@ -1,4 +1,5 @@
 import { aboutParagraphs, experience, focusAreas, skills } from "@/data/portfolio";
+import profilePhoto from "@/assets/profile-photo.png";
 import { RevealSection } from "./RevealSection";
 import { SectionLabel } from "./SectionLabel";
 
@@ -13,16 +14,34 @@ export function AboutSection() {
   return (
     <RevealSection id="about" className="bg-cream px-5 py-16 sm:px-8 sm:py-20 lg:px-14 xl:py-28">
       <div className="mx-auto max-w-[1500px]">
-        <div className="grid gap-8 lg:gap-12 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] xl:gap-20">
+        <div className="grid gap-8 lg:gap-12 xl:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] xl:gap-20">
           <SectionLabel
             eyebrow="About"
-            title="Frontend engineering for products people actually use."
+            title="I am Oluwatomisin Isogun, a frontend developer."
           />
 
-          <div className="space-y-5 font-sans text-sm leading-7 text-charcoal/78 sm:text-base">
-            {aboutParagraphs.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
+          <div className="grid gap-6 md:grid-cols-[minmax(0,0.9fr)_minmax(220px,0.55fr)] md:items-end xl:gap-8">
+            <div className="space-y-5 font-sans text-base leading-7 text-charcoal/78">
+              {aboutParagraphs.map((paragraph, index) => (
+                <p
+                  key={paragraph}
+                  className={index === 0 ? "text-lg font-black leading-7 text-charcoal sm:text-xl sm:leading-8" : undefined}
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+
+            <figure className="relative isolate mx-auto aspect-square w-full max-w-[400px] overflow-hidden rounded-full bg-navy shadow-[0_28px_90px_-64px_var(--color-charcoal)] sm:max-w-[480px] md:max-w-[540px]">
+              <div className="absolute inset-x-0 bottom-0 h-[42%] bg-tangerine" aria-hidden />
+              <img
+                src={profilePhoto}
+                alt="Oluwatomisin Isogun"
+                className="relative z-10 h-full w-full translate-x-[4%] scale-[1.12] object-contain object-bottom"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
           </div>
         </div>
 
@@ -37,7 +56,7 @@ export function AboutSection() {
               </span>
               <div className="mb-8 h-1.5 w-16 rounded-full bg-current opacity-35 transition-all duration-300 group-hover:w-24" />
               <h3 className="max-w-[13rem] font-sans text-xl font-black leading-tight">{area.title}</h3>
-              <p className="mt-5 max-w-sm font-sans text-sm leading-6 opacity-75">{area.copy}</p>
+              <p className="mt-5 max-w-sm font-sans text-base leading-7 opacity-75">{area.copy}</p>
             </article>
           ))}
         </div>
@@ -61,7 +80,7 @@ export function AboutSection() {
                   </div>
                   <ul className="space-y-3">
                     {item.points.map((point) => (
-                      <li key={point} className="font-sans text-sm leading-6 text-charcoal/72">
+                      <li key={point} className="font-sans text-base leading-7 text-charcoal/72">
                         {point}
                       </li>
                     ))}

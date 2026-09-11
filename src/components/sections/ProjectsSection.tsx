@@ -116,13 +116,13 @@ export function ProjectsSection() {
                       <p className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.16em] text-navy">
                         Problem
                       </p>
-                      <p className="mt-2 font-sans text-sm leading-6 text-charcoal/72">{project.problem}</p>
+                      <p className="mt-2 font-sans text-base leading-7 text-charcoal/72">{project.problem}</p>
                     </div>
                     <div>
                       <p className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.16em] text-navy">
                         Result
                       </p>
-                      <p className="mt-2 font-sans text-sm leading-6 text-charcoal/72">{project.result}</p>
+                      <p className="mt-2 font-sans text-base leading-7 text-charcoal/72">{project.result}</p>
                     </div>
                   </div>
 
@@ -172,7 +172,7 @@ export function ProjectsSection() {
                 <h3 className="font-display text-3xl leading-none tracking-normal sm:text-4xl">
                   More Work
                 </h3>
-                <p className="mt-3 max-w-xl font-sans text-sm leading-6 text-cream/68">
+                <p className="mt-3 max-w-xl font-sans text-base leading-7 text-cream/68">
                   Additional shipped interfaces across company sites, academy platforms, commerce surfaces, and exploratory product work.
                 </p>
               </div>

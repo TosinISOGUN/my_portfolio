@@ -14,11 +14,11 @@ export function SectionLabel({ eyebrow, title, copy, tone = "dark" }: SectionLab
       <p className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-tangerine">
         {eyebrow}
       </p>
-      <h2 className={`mt-4 font-display text-[clamp(2rem,8vw,4.8rem)] leading-[0.96] tracking-normal sm:text-[clamp(2.35rem,6vw,5.2rem)] ${titleColor}`}>
+      <h2 className={`mt-4 font-display text-[clamp(1.85rem,6.5vw,3.8rem)] leading-[1] tracking-normal sm:text-[clamp(2.1rem,4.8vw,4.2rem)] ${titleColor}`}>
         {title}
       </h2>
       {copy ? (
-        <p className={`mt-4 max-w-2xl font-sans text-sm leading-6 sm:text-base sm:leading-7 ${copyColor}`}>
+        <p className={`mt-4 max-w-2xl font-sans text-base leading-7 ${copyColor}`}>
           {copy}
         </p>
       ) : null}

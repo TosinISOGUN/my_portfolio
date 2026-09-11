@@ -111,7 +111,7 @@ function ProjectArchivePage() {
                     </span>
                   ))}
                 </div>
-                <p className="mt-5 max-w-2xl font-sans text-sm leading-6 text-charcoal/70">
+                <p className="mt-5 max-w-2xl font-sans text-base leading-7 text-charcoal/70">
                   {project.summary}
                 </p>
                 <div className="mt-6 flex flex-wrap gap-3">

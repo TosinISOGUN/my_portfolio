@@ -22,11 +22,27 @@ function useTravelFactor() {
   return travel;
 }
 
+function useDesktopTextParallax() {
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(min-width: 1280px)");
+    const update = () => setEnabled(query.matches);
+
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
+  return enabled;
+}
+
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const prefersReduced = useReducedMotion();
   const reducedMotion = prefersReduced === true;
   const travel = useTravelFactor();
+  const textParallaxEnabled = useDesktopTextParallax();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -44,7 +60,9 @@ export function Hero() {
   const textY = useTransform(
     progress,
     [0, 1],
-    reducedMotion ? ["0%", "0%"] : [`${parallax.text[0]}%`, `${parallax.text[1]}%`],
+    reducedMotion || !textParallaxEnabled
+      ? ["0%", "0%"]
+      : [`${parallax.text[0]}%`, `${parallax.text[1]}%`],
   );
 
   return (
@@ -53,7 +71,14 @@ export function Hero() {
         <HeroNavigation />
 
         <div className="relative mx-auto flex h-[100svh] max-w-[1600px] flex-col justify-between gap-3 px-5 pb-6 pt-20 sm:px-8 sm:pb-8 sm:pt-28 md:gap-4 xl:grid xl:h-dvh xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] xl:items-center xl:gap-0 xl:px-14 xl:pb-0 xl:pt-0">
-          <motion.div style={{ y: textY }} className="relative z-[70] order-1 w-full xl:order-1">
+          <div className="absolute left-5 top-[88px] z-[70] w-[calc(100%-2.5rem)] sm:left-8 sm:top-[112px] sm:w-[calc(100%-4rem)] xl:hidden">
+            <HeroText />
+          </div>
+
+          <motion.div
+            style={textParallaxEnabled ? { y: textY } : undefined}
+            className="relative z-[70] hidden w-full xl:order-1 xl:block"
+          >
             <HeroText />
           </motion.div>
           <div className="relative z-20 order-2 flex w-full flex-1 items-end xl:order-2 xl:block xl:flex-none">

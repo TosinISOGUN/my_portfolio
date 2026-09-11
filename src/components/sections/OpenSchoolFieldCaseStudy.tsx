@@ -58,7 +58,7 @@ export function OpenSchoolFieldCaseStudy() {
                     {decision.label === "Localization" ? <Languages className="h-4 w-4" aria-hidden /> : null}
                     {decision.label}
                   </div>
-                  <p className="font-sans text-sm leading-6 text-charcoal/72">{decision.value}</p>
+                  <p className="font-sans text-base leading-7 text-charcoal/72">{decision.value}</p>
                 </article>
               ))}
             </div>

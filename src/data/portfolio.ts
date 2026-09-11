@@ -104,9 +104,8 @@ export const focusAreas = [
 ];
 
 export const aboutParagraphs = [
-  "I am a frontend developer focused on React, TypeScript, fast interfaces, and product surfaces that stay usable when the data gets dense. The work spans public booking systems, admin consoles, marketplaces, dashboards, and conversion-focused landing pages.",
-  "At AFT Solutions, I build enterprise and government software that has to stay reliable under real organizational weight. That means component systems, API-backed flows, build pipelines, and interfaces that handle more data than a design file ever shows.",
-  "I also run Isogun Labs, an independent software studio that sharpens the same engineering muscles. Recap, Field Hygiene, and Passdown are live on the Atlassian Marketplace, and I owned the frontend, Forge resolver architecture, SEO, security review, and go-to-market path behind them.",
+  "My work spans booking platforms, admin consoles, marketplaces, dashboards, and conversion-focused landing pages, with a focus on interfaces that stay clear when the data gets dense.",
+  "At AFT Solutions, I build enterprise and government software that has to stay reliable under real organizational weight. I also run Isogun Labs, an independent software studio where I turn the same frontend judgment into focused products.",
 ];
 
 export const experience = [

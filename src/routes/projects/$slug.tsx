@@ -155,7 +155,7 @@ function ProjectCaseStudyPage() {
             {project.decisions.map((decision) => (
               <article key={decision.label} className="rounded-lg bg-cream p-5 shadow-[0_24px_70px_-58px_var(--color-charcoal)]">
                 <h3 className="font-sans text-lg font-black text-charcoal">{decision.label}</h3>
-                <p className="mt-4 font-sans text-sm leading-6 text-charcoal/70">{decision.value}</p>
+                <p className="mt-4 font-sans text-base leading-7 text-charcoal/70">{decision.value}</p>
               </article>
             ))}
           </div>

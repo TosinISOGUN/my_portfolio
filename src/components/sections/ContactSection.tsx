@@ -103,7 +103,7 @@ export function ContactSection() {
               <p className="mt-2 font-display text-[clamp(1.65rem,4vw,2.4rem)] leading-none tracking-normal">
                 {estimate}
               </p>
-              <p className="mt-3 max-w-sm font-sans text-sm leading-6 text-charcoal/62">
+              <p className="mt-3 max-w-sm font-sans text-base leading-7 text-charcoal/62">
                 {isRoleInquiry
                   ? "For hiring teams, this opens a focused email with the role context and your preferred next step."
                   : "A practical early planning range for product work. Final scope depends on data complexity, integrations, and review cycles."}
@@ -131,7 +131,7 @@ export function ContactSection() {
             {isRoleInquiry ? (
               <div className="rounded-lg border border-charcoal/10 bg-white px-4 py-4">
                 <p className="font-sans text-sm font-black text-charcoal">Recruiter path</p>
-                <p className="mt-2 font-sans text-sm leading-6 text-charcoal/64">
+                <p className="mt-2 font-sans text-base leading-7 text-charcoal/64">
                   Best for frontend roles, contract interviews, technical screens, and resume follow-up.
                 </p>
               </div>

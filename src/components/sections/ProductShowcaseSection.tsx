@@ -70,7 +70,7 @@ export function ProductShowcaseSection() {
             <div className="mt-3 flex flex-col gap-3 rounded-lg bg-cream p-4 text-charcoal sm:absolute sm:inset-x-5 sm:bottom-5 sm:mt-0 sm:bg-cream/94 sm:backdrop-blur-sm md:flex-row md:items-end md:justify-between">
               <div>
                 <p className="font-sans text-lg font-black">{activeScreen.project}</p>
-                <p className="mt-1 font-sans text-sm leading-6 text-charcoal/70">
+                <p className="mt-1 font-sans text-base leading-7 text-charcoal/70">
                   {activeScreen.insight}
                 </p>
               </div>

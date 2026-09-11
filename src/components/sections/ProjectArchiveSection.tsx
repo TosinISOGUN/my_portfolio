@@ -42,7 +42,7 @@ export function ProjectArchiveSection() {
                 <h3 className="mt-8 font-display text-[clamp(2.2rem,8vw,4.4rem)] leading-[0.92] tracking-normal sm:text-[clamp(2.6rem,6vw,4.8rem)]">
                   {project.title}
                 </h3>
-                <p className="mt-5 font-sans text-sm leading-6 text-charcoal/70">
+                <p className="mt-5 font-sans text-base leading-7 text-charcoal/70">
                   {project.summary}
                 </p>
               </div>

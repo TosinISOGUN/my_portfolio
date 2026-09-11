@@ -192,6 +192,14 @@ function ScrollManager() {
     if (!hasMounted.current) {
       hasMounted.current = true;
       latestLocation.current = location;
+
+      if (location.pathname === "/" && !location.hash) {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        window.requestAnimationFrame(() => {
+          window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        });
+      }
+
       return;
     }
 

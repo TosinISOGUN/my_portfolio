@@ -48,11 +48,11 @@ export function Hero() {
   );
 
   return (
-    <section ref={containerRef} className="relative h-[820vh] bg-cream xl:h-[900vh]">
-      <div className="sticky top-0 h-dvh overflow-hidden">
+    <section ref={containerRef} className="relative h-[820svh] bg-cream xl:h-[900vh]">
+      <div className="sticky top-0 h-[100svh] overflow-hidden xl:h-dvh">
         <HeroNavigation />
 
-        <div className="relative mx-auto flex h-dvh max-w-[1600px] flex-col justify-between gap-3 px-5 pb-6 pt-20 sm:px-8 sm:pb-8 sm:pt-28 md:gap-4 xl:grid xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] xl:items-center xl:gap-0 xl:px-14 xl:pb-0 xl:pt-0">
+        <div className="relative mx-auto flex h-[100svh] max-w-[1600px] flex-col justify-between gap-3 px-5 pb-6 pt-20 sm:px-8 sm:pb-8 sm:pt-28 md:gap-4 xl:grid xl:h-dvh xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] xl:items-center xl:gap-0 xl:px-14 xl:pb-0 xl:pt-0">
           <motion.div style={{ y: textY }} className="relative z-[70] order-1 w-full xl:order-1">
             <HeroText />
           </motion.div>

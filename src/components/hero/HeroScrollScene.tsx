@@ -22,7 +22,7 @@ export function HeroScrollScene({ progress, travel, reducedMotion }: HeroScrollS
 
   const chairPush = useTransform(
     progress,
-    [0, 0.08, 0.2, 1],
+    [0, 0.03, 0.14, 1],
     reducedMotion ? [0, 0, 0, 0] : [0, 0, 10, 10],
   );
 

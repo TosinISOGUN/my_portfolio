@@ -66,7 +66,7 @@ export function Hero() {
   );
 
   return (
-    <section ref={containerRef} className="relative h-[820svh] bg-cream xl:h-[900vh]">
+    <section ref={containerRef} className="relative h-[620svh] bg-cream xl:h-[900vh]">
       <div className="sticky top-0 h-[100svh] overflow-hidden xl:h-dvh">
         <HeroNavigation />
 

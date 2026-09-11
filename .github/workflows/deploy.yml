@@ -33,10 +33,17 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Prepare GitHub Pages artifact
+        shell: bash
+        run: |
+          cp CNAME .output/public/CNAME
+          touch .output/public/.nojekyll
+          cp .output/public/index.html .output/public/404.html
+
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
-          path: ./dist
+          path: ./.output/public
 
   deploy:
     needs: build

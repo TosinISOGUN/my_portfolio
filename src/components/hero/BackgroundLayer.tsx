@@ -9,7 +9,7 @@ export function BackgroundLayer({ y }: { y: MotionValue<string> }) {
         alt=""
         width={1536}
         height={1024}
-        className="absolute right-[6%] top-[-24%] w-[85%] max-w-[950px] sm:top-[-12%]"
+        className="absolute right-[6%] top-[-24%] w-[85%] max-w-[950px] drop-shadow-[0_28px_24px_rgba(42,40,37,0.26)] sm:top-[-12%]"
       />
     </motion.div>
   );

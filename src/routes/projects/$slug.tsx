@@ -2,7 +2,10 @@ import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
 import { ArrowLeft, ArrowUpRight, Github, Store } from "lucide-react";
 import { projectCaseStudies } from "@/data/portfolio";
 import { prepareCaseStudyReturnRestore } from "@/lib/navigation-memory";
+import { useEffect, useLayoutEffect } from "react";
 import type { CSSProperties } from "react";
+
+const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 export const Route = createFileRoute("/projects/$slug")({
   loader: ({ params }) => {
@@ -30,6 +33,10 @@ function ProjectCaseStudyPage() {
   const carouselStyle = {
     "--gallery-duration": `${Math.max(28, project.gallery.length * 5)}s`,
   } as CSSProperties;
+
+  useIsomorphicLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [project.slug]);
 
   const handleBack = () => {
     if (typeof window !== "undefined" && window.history.length > 1) {

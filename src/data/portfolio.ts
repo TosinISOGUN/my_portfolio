@@ -40,6 +40,14 @@ const cHomesScreens = getScreens(
   }) as ScreenshotModule,
 );
 
+const infinitativeScreens = getScreens(
+  import.meta.glob("../assets/product_showcase/infinitative/*.png", {
+    eager: true,
+    import: "default",
+    query: "?url",
+  }) as ScreenshotModule,
+);
+
 const learncityScreens = getScreens(
   import.meta.glob("../assets/product_showcase/learncity/*.png", {
     eager: true,
@@ -73,6 +81,12 @@ const [osf261, osf263, osf266, osf268, osf270] = [
 ];
 const [oyo258, oyo260] = [oyoBookingScreens[0], oyoBookingScreens[2]];
 const [cHomes274, cHomes276] = [cHomesScreens[0], cHomesScreens[2]];
+const [infinitativeLanding, infinitativeProducts, , , infinitativeCart] = [
+  infinitativeScreens[0],
+  infinitativeScreens[1],
+  infinitativeScreens[2],
+  infinitativeScreens[4],
+];
 const [learncity278, learncity281] = [learncityScreens[0], learncityScreens[3]];
 const [nachie271] = nachieScreens;
 
@@ -105,7 +119,7 @@ export const focusAreas = [
 
 export const aboutParagraphs = [
   "My work spans booking platforms, admin consoles, marketplaces, dashboards, and conversion-focused landing pages, with a focus on interfaces that stay clear when the data gets dense.",
-  "At AFT Solutions, I build enterprise and government software that has to stay reliable under real organizational weight. I also run Isogun Labs, an independent software studio where I turn the same frontend judgment into focused products.",
+  "In my current frontend role, I build enterprise and government software that has to stay reliable under real organizational weight. I am also open to frontend roles, contract builds, and product teams that need polished React and TypeScript execution.",
 ];
 
 export const experience = [
@@ -175,6 +189,19 @@ export const featuredProjects = [
       "A fast, responsive booking experience with API-backed flows, accessible interface patterns, and production-oriented UX.",
   },
   {
+    title: "Infinitative",
+    slug: "infinitative",
+    studio: "Multi-vendor commerce marketplace",
+    logo: infinitativeLogo,
+    tags: ["React", "Marketplace UX", "Cart Flow"],
+    signals: ["Premium commerce landing", "Vendor discovery", "Checkout-ready cart"],
+    link: "https://infinitative-aft.vercel.app/",
+    problem:
+      "Multi-vendor commerce experiences need to present premium products, vendor trust, and shopping actions without making the storefront feel crowded.",
+    result:
+      "A polished marketplace interface with product discovery, vendor surfaces, cart management, checkout summary, and responsive commerce flows.",
+  },
+  {
     title: "C-HOMES",
     slug: "c-homes",
     studio: "CMS-driven property marketplace",
@@ -216,20 +243,6 @@ export const featuredProjects = [
     result:
       "A lightweight, brand-forward storefront experience with strong product presentation and a direct path toward purchase.",
   },
-  {
-    title: "Recap",
-    slug: "recap",
-    studio: "Isogun Labs",
-    logo: recapLogo,
-    tags: ["React", "Atlassian Forge", "Product Strategy", "SEO"],
-    signals: ["Marketplace product", "Forge resolver work", "Solo product ownership"],
-    link: "https://recap.isogunlabs.com/",
-    marketplace: "https://marketplace.atlassian.com/2146687861",
-    problem:
-      "Teams on Jira lose real time every reporting cycle manually chasing completed work and writing it into status updates.",
-    result:
-      "A live Jira app that turns a manual reporting chore into a one-click report, shipped and marketed by a team of one.",
-  },
 ];
 
 export const moreProjects = [
@@ -246,9 +259,10 @@ export const moreProjects = [
     type: "Company website",
   },
   {
-    title: "Infinitative",
-    logo: infinitativeLogo,
-    type: "Product concept",
+    title: "Recap",
+    logo: recapLogo,
+    link: "https://recap.isogunlabs.com/",
+    type: "Atlassian Marketplace app",
   },
 ];
 
@@ -315,6 +329,33 @@ export const showcaseScreens = [
     category: "Booking",
     insight: "Turns facility data into a decision-ready page with clear actions and responsive presentation.",
     link: "https://oyobooking.ng",
+  },
+  {
+    title: "Infinitative landing",
+    project: "Infinitative",
+    image: infinitativeLanding,
+    kind: "Commerce landing",
+    category: "Landing",
+    insight: "A premium marketplace home page built around search, product categories, and vendor trust.",
+    link: "https://infinitative-aft.vercel.app/",
+  },
+  {
+    title: "Infinitative products",
+    project: "Infinitative",
+    image: infinitativeProducts,
+    kind: "Product discovery",
+    category: "Landing",
+    insight: "Product cards, filtering, and shopping actions make the catalog easy to scan and buy from.",
+    link: "https://infinitative-aft.vercel.app/",
+  },
+  {
+    title: "Infinitative cart",
+    project: "Infinitative",
+    image: infinitativeCart,
+    kind: "Cart flow",
+    category: "Booking",
+    insight: "Cart quantity controls and order summary patterns support a checkout-ready commerce path.",
+    link: "https://infinitative-aft.vercel.app/",
   },
   {
     title: "Learncity landing",
@@ -501,6 +542,42 @@ export const projectCaseStudies = [
       },
     ],
     gallery: oyoBookingScreens,
+  },
+  {
+    slug: "infinitative",
+    title: "Infinitative",
+    eyebrow: "Commerce Marketplace",
+    year: "2026",
+    role: "Frontend Developer",
+    liveUrl: "https://infinitative-aft.vercel.app/",
+    cover: infinitativeLanding,
+    summary:
+      "A premium multi-vendor marketplace interface for product discovery, vendor browsing, cart management, and checkout-oriented shopping flows.",
+    challenge:
+      "The marketplace needed to feel premium and trustworthy while keeping products, vendors, search, cart actions, and checkout information easy to understand.",
+    approach:
+      "I built a commerce frontend around strong visual hierarchy, reusable product surfaces, clear navigation, and familiar shopping patterns for cart and vendor journeys.",
+    outcome:
+      "The result is a polished marketplace experience with a premium landing page, product discovery, vendor-facing surfaces, cart management, and responsive checkout-ready flows.",
+    metrics: ["Commerce UX", "Vendor surfaces", "Cart flow", "Responsive storefront"],
+    decisions: [
+      {
+        label: "Product Discovery",
+        value:
+          "Search, category navigation, and product cards work together so shoppers can move from browsing to action quickly.",
+      },
+      {
+        label: "Vendor Trust",
+        value:
+          "Vendor pages and marketplace messaging make the storefront feel like a platform rather than a single-product landing page.",
+      },
+      {
+        label: "Checkout Flow",
+        value:
+          "Cart controls, order summary, and secure checkout cues keep the purchase path familiar and low-friction.",
+      },
+    ],
+    gallery: infinitativeScreens,
   },
   {
     slug: "c-homes",

@@ -21,6 +21,7 @@ export default defineConfig({
       { path: "/projects" },
       { path: "/projects/open-school-field" },
       { path: "/projects/oyobooking" },
+      { path: "/projects/infinitative" },
       { path: "/projects/c-homes" },
       { path: "/projects/learncity" },
       { path: "/projects/nachie-maridadi" },

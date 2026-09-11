@@ -11,10 +11,24 @@ import {
 import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import profilePhoto from "../assets/profile-photo.png";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { restorePendingCaseStudyReturn } from "../lib/navigation-memory";
 
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+const siteUrl = "https://portfolio.isogunlabs.com";
+const profilePhotoUrl = new URL(profilePhoto, siteUrl).toString();
+const earlyScrollScript = `
+try {
+  if ("scrollRestoration" in window.history) {
+    window.history.scrollRestoration = "manual";
+  }
+
+  if (window.location.pathname === "/" && !window.location.hash) {
+    window.scrollTo(0, 0);
+  }
+} catch (_) {}
+`;
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -122,7 +136,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content: "Frontend work across booking platforms, dashboards, and marketplace products.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: siteUrl },
+      { property: "og:image", content: profilePhotoUrl },
+      { property: "og:image:alt", content: "Oluwatomisin Isogun" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: profilePhotoUrl },
+      { name: "twitter:image:alt", content: "Oluwatomisin Isogun" },
     ],
     links: [
       {
@@ -143,6 +162,7 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <script dangerouslySetInnerHTML={{ __html: earlyScrollScript }} />
         <HeadContent />
         <script
           type="application/ld+json"
@@ -193,13 +213,6 @@ function ScrollManager() {
       hasMounted.current = true;
       latestLocation.current = location;
 
-      if (location.pathname === "/" && !location.hash) {
-        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-        window.requestAnimationFrame(() => {
-          window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-        });
-      }
-
       return;
     }
 
@@ -225,6 +238,10 @@ function ScrollManager() {
 
     if (hash) {
       document.getElementById(hash)?.scrollIntoView({ block: "start", behavior: "smooth" });
+      return;
+    }
+
+    if (/^\/projects\/[^/]+$/.test(location.pathname)) {
       return;
     }
 

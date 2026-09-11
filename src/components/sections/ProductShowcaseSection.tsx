@@ -19,7 +19,6 @@ export function ProductShowcaseSection() {
   );
   const activeScreen =
     filteredScreens.find((screen) => screen.title === activeTitle) ?? filteredScreens[0];
-  const carouselScreens = [...filteredScreens, ...filteredScreens];
 
   return (
     <RevealSection className="overflow-hidden bg-cream px-5 py-16 sm:px-8 sm:py-20 lg:px-14 xl:py-28">
@@ -118,27 +117,33 @@ export function ProductShowcaseSection() {
         </div>
       </div>
 
-      <div className="mt-14 flex w-max gap-5 [animation:showcase-marquee_70s_linear_infinite] motion-reduce:[animation:none]">
-        {carouselScreens.map((screen, index) => (
-          <figure
-            key={`${screen.title}-${index}`}
-            className="w-[84vw] max-w-[560px] shrink-0 overflow-hidden rounded-lg bg-white p-3 shadow-[0_22px_90px_-68px_var(--color-charcoal)] sm:w-[58vw] lg:w-[46vw] xl:w-[34vw]"
-          >
-            <img
-              src={screen.image}
-              alt={`${screen.project} ${screen.kind}`}
-              className="aspect-[16/10] w-full rounded-md object-cover object-top"
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption className="flex items-center justify-between gap-4 px-1 pt-3">
-              <span className="font-sans text-sm font-black text-charcoal">{screen.project}</span>
-              <span className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.12em] text-charcoal/48">
-                {screen.kind}
-              </span>
-            </figcaption>
-          </figure>
-        ))}
+      <div className="showcase-carousel mt-14" aria-label="Screens and signals from the build">
+        <div className="showcase-carousel__track">
+          {[0, 1].map((groupIndex) => (
+            <div className="showcase-carousel__group" key={groupIndex} aria-hidden={groupIndex === 1}>
+              {filteredScreens.map((screen) => (
+                <figure
+                  key={`${screen.title}-${groupIndex}`}
+                  className="showcase-carousel__card"
+                >
+                  <img
+                    src={screen.image}
+                    alt={groupIndex === 0 ? `${screen.project} ${screen.kind}` : ""}
+                    className="aspect-[16/10] w-full rounded-md object-cover object-top"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <figcaption className="flex items-center justify-between gap-4 px-1 pt-3">
+                    <span className="font-sans text-sm font-black text-charcoal">{screen.project}</span>
+                    <span className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.12em] text-charcoal/48">
+                      {screen.kind}
+                    </span>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </RevealSection>
   );

@@ -29,7 +29,7 @@ export function HeroScrollScene({ progress, travel, reducedMotion }: HeroScrollS
   return (
     <div className="relative aspect-[4/3] w-[116vw] max-w-none -translate-x-[1vw] sm:w-full sm:translate-x-0 xl:w-full">
       {/* WorkspaceScene - cohesive group, nudged left toward the viewport center */}
-      <div className="absolute inset-0 -translate-x-[3%] -translate-y-[6%] scale-[1.1] sm:-translate-x-[6%] sm:-translate-y-[3%] sm:scale-[1.02] md:-translate-y-[8%] xl:-translate-x-[6%] xl:translate-y-0 xl:scale-[1.02]">
+      <div className="absolute inset-0 -translate-x-[3%] -translate-y-[6%] scale-[1.1] sm:-translate-x-[6%] sm:-translate-y-[3%] sm:scale-[1.02] md:-translate-y-[8%] xl:-translate-x-[6%] xl:translate-y-[4%] xl:scale-[1.02]">
         <BackgroundLayer y={lockedY} />
         <ForegroundLayer y={lockedY} />
         <div className="pointer-events-none absolute inset-0 xl:-translate-x-[150px]">

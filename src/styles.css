@@ -26,6 +26,14 @@
   font-weight: 100 800;
 }
 
+@font-face {
+  font-family: "Caveat";
+  src: url("./assets/fonts/caveat-latin.ttf") format("truetype");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400 700;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 /*
@@ -87,7 +95,10 @@
 
 @theme {
   --font-display: "Archivo Black", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    "SF Pro Display Medium", "SF Pro Display Regular", "SF Pro Display",
+    "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display",
+    "Segoe UI", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   --color-cream: oklch(0.968 0.017 78);
   --color-charcoal: oklch(0.27 0.008 60);
@@ -96,6 +107,10 @@
 }
 
 :root {
+  --sam-font-sans:
+    "SF Pro Display Medium", "SF Pro Display Regular", "SF Pro Display",
+    "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display",
+    "Segoe UI", ui-sans-serif, system-ui, sans-serif;
   --radius: 0.625rem;
   --background: oklch(0.968 0.017 78);
 
@@ -179,12 +194,220 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--sam-font-sans);
   }
+}
+
+.sam-page {
+  font-family: var(--sam-font-sans);
+}
+
+.sam-handwritten {
+  font-family: "Caveat", "Segoe Print", "Bradley Hand ITC", cursive;
+  font-weight: 600;
+  letter-spacing: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+}
+
+.sam-pill {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 31px;
+  padding: 0.55rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.sam-pill:hover {
+  transform: translateY(-1px);
+}
+
+.sam-tilt-button:hover {
+  transform: translateY(-2px) rotate(-2deg);
+}
+
+.sam-tilt-button:nth-child(2):hover {
+  transform: translateY(-2px) rotate(2deg);
+}
+
+.sam-pill:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.sam-icon-button {
+  display: inline-flex;
+  height: 2.4rem;
+  width: 2.4rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #ededed;
+  color: rgb(26 26 26 / 0.62);
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.sam-icon-button:hover {
+  transform: translateY(-1px);
+  background: white;
+  color: #1a1a1a;
+}
+
+.sam-row {
+  display: flex;
+  min-height: 74px;
+  align-items: center;
+  gap: 0.85rem;
+  border-radius: 30px;
+  background: #ededed;
+  padding: 0.75rem;
+  text-decoration: none;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+
+.sam-row:hover {
+  transform: translateY(-1px);
+  background: white;
+}
+
+.sam-social-pill {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #ededed;
+  padding: 0.45rem 0.9rem;
+  color: #1a1a1a;
+  font-size: 0.96rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  text-decoration: none;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+
+.sam-social-pill:hover {
+  transform: translateY(-1px);
+  background: white;
+}
+
+@media (min-width: 1024px) {
+  .sam-page .sam-pill {
+    min-height: 38px;
+    padding: 0.48rem 0.82rem;
+    font-size: 0.88rem;
+  }
+
+  .sam-page .sam-social-pill {
+    min-height: 34px;
+    padding: 0.38rem 0.76rem;
+    font-size: 0.88rem;
+  }
+}
+
+.portfolio-horizontal,
+.portfolio-screen-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+}
+
+.portfolio-horizontal__track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  padding-inline: 1rem;
+  animation: portfolio-horizontal-pan 72s linear infinite;
+  will-change: transform;
+}
+
+.portfolio-horizontal:hover .portfolio-horizontal__track,
+.portfolio-horizontal:focus-within .portfolio-horizontal__track,
+.portfolio-screen-marquee:hover .portfolio-screen-marquee__track,
+.portfolio-screen-marquee:focus-within .portfolio-screen-marquee__track {
+  animation-play-state: paused;
+}
+
+.portfolio-project-card {
+  width: min(86vw, 620px);
+  flex: 0 0 auto;
+  overflow: hidden;
+  border: 1px solid color-mix(in oklch, var(--color-charcoal) 10%, transparent);
+  background: color-mix(in oklch, white 42%, transparent);
+  box-shadow: 0 28px 95px -82px var(--color-charcoal);
+}
+
+.portfolio-screen-marquee__track {
+  display: flex;
+  width: max-content;
+  gap: 0.75rem;
+  animation: portfolio-screen-pan 46s linear infinite;
+  will-change: transform;
+}
+
+@keyframes portfolio-horizontal-pan {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes portfolio-screen-pan {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (min-width: 768px) {
+  .portfolio-project-card {
+    width: min(58vw, 720px);
+  }
+}
+
+@media (min-width: 1280px) {
+  .portfolio-project-card {
+    width: min(38vw, 740px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-horizontal,
+  .portfolio-screen-marquee {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .portfolio-horizontal__track,
+  .portfolio-screen-marquee__track {
+    animation: none;
   }
 }
 

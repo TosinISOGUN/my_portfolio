@@ -72,6 +72,151 @@ const recapScreens = getScreens(
   }) as ScreenshotModule,
 );
 
+const payflowScreens = getScreens(
+  import.meta.glob("../assets/product_showcase/payflow/*.png", {
+    eager: true,
+    import: "default",
+    query: "?url",
+  }) as ScreenshotModule,
+);
+
+const samsoniScreens = getScreens(
+  import.meta.glob("../assets/product_showcase/samsoni/*.png", {
+    eager: true,
+    import: "default",
+    query: "?url",
+  }) as ScreenshotModule,
+);
+
+const thomasonScreens = getScreens(
+  import.meta.glob("../assets/product_showcase/thomason/*.png", {
+    eager: true,
+    import: "default",
+    query: "?url",
+  }) as ScreenshotModule,
+);
+
+const certificationModules = Object.entries(
+  import.meta.glob("../assets/certifications/*.{png,jpeg,jpg}", {
+    eager: true,
+    import: "default",
+    query: "?url",
+  }) as ScreenshotModule,
+).sort(([first], [second]) =>
+  first.localeCompare(second, undefined, { numeric: true, sensitivity: "base" }),
+);
+
+const getCertificateTitle = (path: string) => {
+  const fileName = path.split("/").pop() ?? "Certificate";
+  return fileName
+    .replace(/\.(png|jpe?g)$/i, "")
+    .replace(/^Certificate\s*\(/, "")
+    .replace(/\)$/, "")
+    .replace(/-/g, " ");
+};
+
+const getCertificationMeta = (title: string) => {
+  const lowerTitle = title.toLowerCase();
+
+  if (lowerTitle.includes("deloitte")) {
+    return {
+      issuer: "Deloitte",
+      theme: "Data & Analytics",
+      signal: "Data analysis and forensic technology",
+      proof:
+        "Strengthens the way I reason about data-heavy interfaces, reporting flows, and operational dashboards.",
+    };
+  }
+
+  if (lowerTitle.includes("tata")) {
+    return {
+      issuer: "Tata",
+      theme: "Data & Analytics",
+      signal: "Data visualisation for business decisions",
+      proof:
+        "Supports clearer charting, visual hierarchy, and executive-facing product communication.",
+    };
+  }
+
+  if (lowerTitle.includes("scrum")) {
+    return {
+      issuer: "SCRUMstudy",
+      theme: "Agile & Operations",
+      signal: "Scrum fundamentals",
+      proof:
+        "Adds process discipline for teams shipping iterative product work under changing requirements.",
+    };
+  }
+
+  if (lowerTitle.includes("six sigma")) {
+    return {
+      issuer: "Six Sigma",
+      theme: "Agile & Operations",
+      signal: "Process improvement and quality thinking",
+      proof:
+        "Improves how I think about waste, consistency, and repeatable delivery in product workflows.",
+    };
+  }
+
+  if (lowerTitle.includes("project management")) {
+    return {
+      issuer: "Project Management",
+      theme: "Product & Delivery",
+      signal: "Planning, execution, and delivery control",
+      proof:
+        "Supports stronger ownership across scope, timelines, stakeholder needs, and launch readiness.",
+    };
+  }
+
+  if (lowerTitle.includes("aspire")) {
+    return {
+      issuer: "Aspire Leaders Program",
+      theme: "Product & Delivery",
+      signal: "Leadership and business communication",
+      proof:
+        "Builds the communication side of product work: tradeoffs, clarity, ownership, and decision-making.",
+    };
+  }
+
+  if (lowerTitle.includes("aptech")) {
+    return {
+      issuer: "Aptech",
+      theme: "Technical Foundation",
+      signal: "Network and systems fundamentals",
+      proof:
+        "Gives me better context for performance, connectivity, deployment, and system-level constraints.",
+    };
+  }
+
+  if (lowerTitle.includes("micro1")) {
+    return {
+      issuer: "Micro1",
+      theme: "Technical Foundation",
+      signal: "Technical assessment and software readiness",
+      proof:
+        "Adds a practical validation point for engineering judgment and professional software delivery.",
+    };
+  }
+
+  if (lowerTitle.includes("ai")) {
+    return {
+      issuer: "AI Certs",
+      theme: "AI & Technical Growth",
+      signal: "Applied AI literacy",
+      proof:
+        "Keeps my product thinking current as AI becomes part of modern frontend and workflow design.",
+    };
+  }
+
+  return {
+    issuer: title.includes(" - ") ? title.split(" - ")[0] : title.split(" ")[0],
+    theme: "Technical Growth",
+    signal: "Professional development",
+    proof:
+      "Adds another practical learning signal to the way I approach product and interface work.",
+  };
+};
+
 const [osf261, osf263, osf266, osf268, osf270] = [
   openSchoolFieldScreens[0],
   openSchoolFieldScreens[2],
@@ -89,6 +234,9 @@ const [infinitativeLanding, infinitativeProducts, , , infinitativeCart] = [
 ];
 const [learncity278, learncity281] = [learncityScreens[0], learncityScreens[3]];
 const [nachie271] = nachieScreens;
+const [payflowLanding, payflowPlatform] = [payflowScreens[0], payflowScreens[2]];
+const samsoniLanding = samsoniScreens[1] ?? samsoniScreens[0];
+const thomasonLanding = thomasonScreens[0];
 
 export const profile = {
   name: "Oluwatomisin Isogun",
@@ -147,6 +295,7 @@ export const experience = [
 
 export const skills = [
   "React 18+",
+  "Next.js",
   "TypeScript",
   "TanStack Query",
   "Tailwind CSS",
@@ -159,6 +308,41 @@ export const skills = [
   "REST APIs",
   "CI/CD",
 ];
+
+export const techStackGroups = [
+  {
+    title: "Frontend Core",
+    copy: "The layer I reach for when the interface has to stay fast, typed, and maintainable.",
+    items: ["React 19", "TypeScript", "TanStack Router", "TanStack Query", "Vite"],
+  },
+  {
+    title: "Interface Systems",
+    copy: "Design implementation tools for polished components, responsive layouts, and motion.",
+    items: ["Tailwind CSS", "Shadcn UI", "Radix UI", "Framer Motion", "Lucide"],
+  },
+  {
+    title: "Product Data",
+    copy: "Patterns for API-driven products, content-heavy sites, and admin workflows.",
+    items: ["REST APIs", "Sanity CMS", "Mock API layers", "PWA flows", "Localization"],
+  },
+  {
+    title: "Quality Loop",
+    copy: "The checks that keep real product surfaces stable after launch.",
+    items: ["Vitest", "Playwright", "CI/CD", "Lighthouse", "Accessibility"],
+  },
+];
+
+export const certifications = certificationModules.map(([path, image], index) => {
+  const title = getCertificateTitle(path);
+  const meta = getCertificationMeta(title);
+
+  return {
+    title,
+    image,
+    order: index + 1,
+    ...meta,
+  };
+});
 
 export const featuredProjects = [
   {
@@ -402,6 +586,42 @@ export const showcaseScreens = [
     insight: "A brand-forward commerce page using strong product presentation and direct conversion paths.",
     link: "https://nachiemaridadi.vercel.app/",
   },
+  {
+    title: "Payflow landing",
+    project: "Payflow",
+    image: payflowLanding,
+    kind: "Payroll platform",
+    category: "Landing",
+    insight: "Positions payroll, compliance, and people operations as one calm system for growing teams.",
+    link: "https://payflow-rose-ten.vercel.app/",
+  },
+  {
+    title: "Payflow platform",
+    project: "Payflow",
+    image: payflowPlatform,
+    kind: "Product workflow",
+    category: "Dashboard",
+    insight: "Turns payroll operations into scannable product surfaces with clear actions and trust cues.",
+    link: "https://payflow-rose-ten.vercel.app/",
+  },
+  {
+    title: "Samsoni landing",
+    project: "Samsoni",
+    image: samsoniLanding,
+    kind: "Delivery landing",
+    category: "Landing",
+    insight: "A local delivery brand page built around product clarity, trust, and WhatsApp conversion.",
+    link: "https://samsoni.vercel.app/",
+  },
+  {
+    title: "Thomason landing",
+    project: "Thomason",
+    image: thomasonLanding,
+    kind: "Hospitality landing",
+    category: "Landing",
+    insight: "An atmospheric restaurant surface using photography, restrained motion, and menu discovery.",
+    link: "https://thomason.vercel.app/",
+  },
 ];
 
 export const openSchoolFieldCaseStudy = {
@@ -578,6 +798,114 @@ export const projectCaseStudies = [
       },
     ],
     gallery: infinitativeScreens,
+  },
+  {
+    slug: "payflow",
+    title: "Payflow",
+    eyebrow: "Payroll Platform",
+    year: "2026",
+    role: "Frontend Developer",
+    liveUrl: "https://payflow-rose-ten.vercel.app/",
+    cover: payflowLanding,
+    summary:
+      "A people, payroll, and compliance platform concept designed to make HR operations feel calm, trustworthy, and easy to scan.",
+    challenge:
+      "Payroll and compliance products can feel dense quickly, so the interface needed to communicate operational depth without overwhelming buyers.",
+    approach:
+      "I shaped the experience around strong product positioning, clean navigation, proof-driven sections, pricing clarity, and dashboard-style surfaces.",
+    outcome:
+      "The result is a polished HR/payroll product site with a premium landing page, platform storytelling, pricing surfaces, and responsive product presentation.",
+    metrics: ["Payroll UX", "Compliance messaging", "Pricing flow", "Responsive product site"],
+    decisions: [
+      {
+        label: "Trust First",
+        value:
+          "The page leads with reliability, compliance, and people operations so the product feels credible before asking for action.",
+      },
+      {
+        label: "Product Narrative",
+        value:
+          "Sections move from positioning to platform capabilities and pricing, matching how business buyers evaluate payroll tools.",
+      },
+      {
+        label: "Visual Restraint",
+        value:
+          "The interface uses generous space, calm color, and clear CTAs to keep an operational product from feeling heavy.",
+      },
+    ],
+    gallery: payflowScreens,
+  },
+  {
+    slug: "samsoni",
+    title: "Samsoni",
+    eyebrow: "Local Commerce",
+    year: "2026",
+    role: "Frontend Developer",
+    liveUrl: "https://samsoni.vercel.app/",
+    cover: samsoniLanding,
+    summary:
+      "A water delivery website for product browsing, trust-building, recurring delivery, and WhatsApp-led ordering across Lagos.",
+    challenge:
+      "The brand needed a direct commerce surface that could communicate quality, delivery coverage, and product options quickly.",
+    approach:
+      "I built the page around product cards, quality assurance content, recurring delivery plans, testimonials, and a clear WhatsApp order path.",
+    outcome:
+      "The result is a fast local-business storefront that turns bottled and sachet water supply into a simple, conversion-oriented flow.",
+    metrics: ["Commerce landing", "WhatsApp conversion", "Delivery UX", "Responsive storefront"],
+    decisions: [
+      {
+        label: "Immediate Ordering",
+        value:
+          "The primary path keeps ordering close to WhatsApp because that matches how local customers naturally complete purchases.",
+      },
+      {
+        label: "Quality Proof",
+        value:
+          "Certification, filtration, purification, packaging, and distribution details give the brand more trust than a simple product list.",
+      },
+      {
+        label: "Repeat Supply",
+        value:
+          "Recurring plans make the site useful for homes, offices, and events that need predictable delivery instead of one-off orders.",
+      },
+    ],
+    gallery: samsoniScreens,
+  },
+  {
+    slug: "thomason",
+    title: "Thomason",
+    eyebrow: "Hospitality Website",
+    year: "2026",
+    role: "Frontend Developer",
+    liveUrl: "https://thomason.vercel.app/",
+    cover: thomasonLanding,
+    summary:
+      "An atmospheric coffee and hospitality website focused on mood, menu discovery, and a premium first impression.",
+    challenge:
+      "Hospitality pages need to sell a feeling quickly while still making practical content like the menu easy to reach.",
+    approach:
+      "I leaned into full-bleed imagery, minimal navigation, quiet typography, and focused content sections that keep the brand experience immersive.",
+    outcome:
+      "The result is an editorial-feeling restaurant interface with strong ambience, responsive composition, and direct menu exploration.",
+    metrics: ["Hospitality UX", "Full-bleed imagery", "Menu discovery", "Editorial layout"],
+    decisions: [
+      {
+        label: "Atmosphere",
+        value:
+          "Photography and spacious type carry the first impression so visitors understand the brand mood before reading details.",
+      },
+      {
+        label: "Minimal Navigation",
+        value:
+          "The interface keeps navigation sparse to preserve the immersive feel while still making the menu easy to access.",
+      },
+      {
+        label: "Responsive Mood",
+        value:
+          "The layout keeps the same premium tone across devices instead of collapsing into a generic restaurant template.",
+      },
+    ],
+    gallery: thomasonScreens,
   },
   {
     slug: "c-homes",

@@ -1,4 +1,4 @@
-import { aboutParagraphs, experience, focusAreas, skills } from "@/data/portfolio";
+import { aboutParagraphs, experience, focusAreas } from "@/data/portfolio";
 import profilePhoto from "@/assets/profile-photo.png";
 import { RevealSection } from "./RevealSection";
 import { SectionLabel } from "./SectionLabel";
@@ -61,8 +61,8 @@ export function AboutSection() {
           ))}
         </div>
 
-        <div className="mt-12 grid gap-8 sm:mt-16 xl:grid-cols-[minmax(0,1.25fr)_minmax(260px,0.62fr)] xl:items-start">
-          <div>
+        <div className="mt-12 sm:mt-16">
+          <div className="max-w-5xl">
             <h3 className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-navy">
               Current Work
             </h3>
@@ -89,22 +89,6 @@ export function AboutSection() {
               ))}
             </div>
           </div>
-
-          <aside className="h-fit rounded-lg bg-navy p-5 text-cream sm:p-6">
-            <h3 className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-cream/65">
-              Technical Range
-            </h3>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="rounded-full bg-cream/10 px-3 py-1.5 font-sans text-xs font-bold text-cream"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </aside>
         </div>
       </div>
     </RevealSection>

@@ -12,7 +12,7 @@ export const Route = createFileRoute("/projects/")({
       { title: "Project Archive - Oluwatomisin Isogun" },
       {
         name: "description",
-        content: "Editorial archive of frontend development case studies by Oluwatomisin Isogun.",
+        content: "Minimal archive of frontend development case studies by Oluwatomisin Isogun.",
       },
     ],
   }),
@@ -37,98 +37,95 @@ function ProjectArchivePage() {
   });
 
   return (
-    <main className="min-h-dvh bg-cream px-5 py-6 text-charcoal sm:px-8 sm:py-8 lg:px-14">
-      <div className="mx-auto max-w-[1500px]">
-        <button
-          type="button"
-          onClick={handleBack}
-          className="inline-flex items-center gap-2 rounded-full bg-charcoal px-4 py-2 font-sans text-xs font-black uppercase tracking-[0.1em] text-cream"
-        >
-          <ArrowLeft className="h-4 w-4" aria-hidden />
-          Back
-        </button>
+    <main className="sam-page min-h-dvh bg-[#f7f7f5] px-5 py-6 text-[#111111] sm:px-8 sm:py-8">
+      <div className="mx-auto max-w-[1180px]">
+        <header className="flex items-center justify-between gap-4">
+          <button
+            type="button"
+            onClick={handleBack}
+            className="sam-social-pill gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden />
+            Back
+          </button>
+          <Link to="/" className="text-[0.98rem] font-semibold tracking-[-0.035em] text-[#111111]/46 hover:text-[#111111]">
+            Oluwatomisin
+          </Link>
+        </header>
 
-        <section className="py-12 sm:py-16 lg:py-24">
-          <p className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-tangerine">
-            Project Archive
+        <section className="py-12 sm:py-16">
+          <p className="text-[1rem] font-semibold tracking-[-0.035em] text-[#111111]/45">
+            Project archive
           </p>
-          <h1 className="mt-5 max-w-5xl font-display text-[clamp(2.4rem,10vw,6.8rem)] leading-[0.92] tracking-normal lg:text-[clamp(3rem,8vw,8rem)]">
-            Frontend systems, told as case studies.
+          <h1 className="mt-4 max-w-4xl text-[clamp(3rem,9vw,7.25rem)] font-semibold leading-[0.9] tracking-[-0.09em]">
+            Frontend work, collected.
           </h1>
         </section>
 
-        <div className="grid gap-5 xl:grid-cols-2">
+        <div className="grid gap-5">
           {archiveProjects.map((project) => (
             <article
               key={project.slug}
-              className="group overflow-hidden rounded-lg bg-[#fffaf0] transition-transform hover:-translate-y-1"
+              className="group overflow-hidden rounded-[31px] bg-[#ededed]"
             >
               <Link
                 to="/projects/$slug"
                 params={{ slug: project.slug }}
                 onClick={rememberCaseStudyReturn}
+                className="block"
               >
                 <img
                   src={project.cover}
                   alt=""
-                  className="aspect-[16/9] w-full object-cover object-top"
+                  className="aspect-[2.25/1] w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.01]"
                   loading="lazy"
                   decoding="async"
                 />
               </Link>
-              <div className="p-5 sm:p-7">
-                <div className="font-mono text-xs font-bold uppercase tracking-[0.14em] text-tangerine">
-                  <span>{project.eyebrow}</span>
-                </div>
-                <div className="mt-5 flex items-start justify-between gap-5">
+              <div className="grid gap-6 p-5 sm:p-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+                <div className="min-w-0">
+                  <p className="text-[0.95rem] font-semibold tracking-[-0.035em] text-[#111111]/42">
+                    {project.eyebrow}
+                  </p>
                   <Link
                     to="/projects/$slug"
                     params={{ slug: project.slug }}
                     onClick={rememberCaseStudyReturn}
-                    className="min-w-0"
                   >
-                    <h2 className="font-display text-[clamp(1.9rem,8vw,3.4rem)] leading-[0.92] tracking-normal md:text-[clamp(2.2rem,5vw,4rem)]">
+                    <h2 className="mt-2 text-[clamp(2rem,6vw,4.4rem)] font-semibold leading-[0.95] tracking-[-0.085em]">
                       {project.title}
                     </h2>
                   </Link>
+                  <p className="mt-4 max-w-3xl text-[1rem] font-medium leading-7 tracking-[-0.035em] text-[#111111]/56">
+                    {project.summary}
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {project.metrics.slice(0, 3).map((metric) => (
+                      <span
+                        key={metric}
+                        className="rounded-full bg-white px-3 py-1.5 text-[0.82rem] font-semibold tracking-[-0.02em] text-[#111111]/54"
+                      >
+                        {metric}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-3">
                   <Link
                     to="/projects/$slug"
                     params={{ slug: project.slug }}
                     onClick={rememberCaseStudyReturn}
-                    className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-charcoal text-cream transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
-                    aria-label={`Read ${project.title} case study`}
+                    className="sam-pill bg-[#1a1a1a] text-white hover:bg-black"
                   >
-                    <ArrowUpRight className="h-5 w-5" aria-hidden />
-                  </Link>
-                </div>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {project.metrics.slice(0, 3).map((metric) => (
-                    <span
-                      key={metric}
-                      className="rounded-full border border-charcoal/10 px-3 py-1 font-sans text-xs font-black text-charcoal/72"
-                    >
-                      {metric}
-                    </span>
-                  ))}
-                </div>
-                <p className="mt-5 max-w-2xl font-sans text-base leading-7 text-charcoal/70">
-                  {project.summary}
-                </p>
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <Link
-                    to="/projects/$slug"
-                    params={{ slug: project.slug }}
-                    onClick={rememberCaseStudyReturn}
-                    className="inline-flex items-center gap-2 rounded-full bg-charcoal px-4 py-2 font-sans text-xs font-black uppercase tracking-[0.1em] text-cream"
-                  >
-                    Case Study
+                    Case study
                     <ArrowUpRight className="h-4 w-4" aria-hidden />
                   </Link>
                   <a
                     href={project.liveUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-tangerine px-4 py-2 font-sans text-xs font-black uppercase tracking-[0.1em] text-cream"
+                    className="sam-pill bg-white text-[#111111] hover:bg-[#f7f7f5]"
                   >
                     Live
                     <ArrowUpRight className="h-4 w-4" aria-hidden />
@@ -138,10 +135,10 @@ function ProjectArchivePage() {
                       href={project.githubUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-charcoal/8 px-4 py-2 font-sans text-xs font-black uppercase tracking-[0.1em] text-charcoal"
+                      className="sam-social-pill"
+                      aria-label={`${project.title} source code`}
                     >
                       <Github className="h-4 w-4" aria-hidden />
-                      Code
                     </a>
                   ) : null}
                   {project.marketplaceUrl ? (
@@ -149,10 +146,10 @@ function ProjectArchivePage() {
                       href={project.marketplaceUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-charcoal/8 px-4 py-2 font-sans text-xs font-black uppercase tracking-[0.1em] text-charcoal"
+                      className="sam-social-pill"
+                      aria-label={`${project.title} marketplace listing`}
                     >
                       <Store className="h-4 w-4" aria-hidden />
-                      Marketplace
                     </a>
                   ) : null}
                 </div>

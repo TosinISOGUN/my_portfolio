@@ -11,13 +11,11 @@ import {
 import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import profilePhoto from "../assets/profile-photo.png";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { ogImageUrl, siteUrl } from "../lib/seo";
 import { restorePendingCaseStudyReturn } from "../lib/navigation-memory";
 
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
-const siteUrl = "https://portfolio.isogunlabs.com";
-const profilePhotoUrl = new URL(profilePhoto, siteUrl).toString();
 const earlyScrollScript = `
 try {
   if ("scrollRestoration" in window.history) {
@@ -30,34 +28,56 @@ try {
 } catch (_) {}
 `;
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Oluwatomisin Isogun",
-  jobTitle: "Frontend Developer",
-  email: "mailto:oluwatomisinisogun@gmail.com",
-  url: "https://github.com/TosinISOGUN",
-  sameAs: [
-    "https://github.com/TosinISOGUN",
-    "https://www.linkedin.com/in/oluwatomisin-isogun-a38740356/",
-  ],
-  knowsAbout: [
-    "React",
-    "TypeScript",
-    "Frontend Engineering",
-    "Product Engineering",
-    "Dashboard Interfaces",
-    "Booking Platforms",
-    "Atlassian Forge",
-  ],
-  makesOffer: {
-    "@type": "Offer",
-    itemOffered: {
-      "@type": "Service",
-      name: "Frontend development for product teams",
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Oluwatomisin Isogun",
+    jobTitle: "Frontend Developer",
+    email: "mailto:oluwatomisinisogun@gmail.com",
+    url: siteUrl,
+    sameAs: [
+      "https://github.com/TosinISOGUN",
+      "https://www.linkedin.com/in/oluwatomisin-isogun-a38740356/",
+    ],
+    knowsAbout: [
+      "React",
+      "TypeScript",
+      "Frontend Engineering",
+      "Product Engineering",
+      "Dashboard Interfaces",
+      "Booking Platforms",
+      "Atlassian Forge",
+    ],
+    makesOffer: {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: "Frontend development for product teams",
+      },
     },
   },
-};
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Oluwatomisin Isogun Portfolio",
+    url: siteUrl,
+    publisher: {
+      "@type": "Person",
+      name: "Oluwatomisin Isogun",
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    name: "Oluwatomisin Isogun - Frontend Developer",
+    url: siteUrl,
+    mainEntity: {
+      "@type": "Person",
+      name: "Oluwatomisin Isogun",
+    },
+  },
+];
 
 function NotFoundComponent() {
   return (
@@ -137,10 +157,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: siteUrl },
-      { property: "og:image", content: profilePhotoUrl },
+      { property: "og:image", content: ogImageUrl },
+      { property: "og:image:secure_url", content: ogImageUrl },
+      { property: "og:image:type", content: "image/jpeg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { property: "og:image:alt", content: "Oluwatomisin Isogun" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: profilePhotoUrl },
+      { name: "twitter:title", content: "Oluwatomisin Isogun Portfolio" },
+      {
+        name: "twitter:description",
+        content: "Frontend work across booking platforms, dashboards, and marketplace products.",
+      },
+      { name: "twitter:image", content: ogImageUrl },
       { name: "twitter:image:alt", content: "Oluwatomisin Isogun" },
     ],
     links: [
@@ -149,6 +178,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "canonical", href: siteUrl },
     ],
 
   }),

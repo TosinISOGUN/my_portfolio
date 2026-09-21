@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect } from "react";
 import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
 import { ArrowLeft, ArrowUpRight, Github, Store } from "lucide-react";
 import { projectCaseStudies } from "@/data/portfolio";
+import { absoluteUrl } from "@/lib/seo";
 import { prepareCaseStudyReturnRestore } from "@/lib/navigation-memory";
 
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
@@ -12,17 +13,34 @@ export const Route = createFileRoute("/projects/$slug")({
     if (!project) throw notFound();
     return project;
   },
-  head: ({ loaderData }) => ({
-    meta: [
-      { title: `${loaderData.title} - Case Study - Oluwatomisin Isogun` },
-      {
-        name: "description",
-        content: loaderData.summary,
-      },
-      { property: "og:title", content: `${loaderData.title} - Case Study` },
-      { property: "og:description", content: loaderData.summary },
-    ],
-  }),
+  head: ({ loaderData }) => {
+    const projectUrl = absoluteUrl(`/projects/${loaderData.slug}`);
+    const projectImageUrl = absoluteUrl(loaderData.cover);
+    const title = `${loaderData.title} - Case Study - Oluwatomisin Isogun`;
+
+    return {
+      meta: [
+        { title },
+        {
+          name: "description",
+          content: loaderData.summary,
+        },
+        { property: "og:title", content: title },
+        { property: "og:description", content: loaderData.summary },
+        { property: "og:type", content: "article" },
+        { property: "og:url", content: projectUrl },
+        { property: "og:image", content: projectImageUrl },
+        { property: "og:image:secure_url", content: projectImageUrl },
+        { property: "og:image:alt", content: `${loaderData.title} interface preview` },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: loaderData.summary },
+        { name: "twitter:image", content: projectImageUrl },
+        { name: "twitter:image:alt", content: `${loaderData.title} interface preview` },
+      ],
+      links: [{ rel: "canonical", href: projectUrl }],
+    };
+  },
   component: ProjectCaseStudyPage,
 });
 

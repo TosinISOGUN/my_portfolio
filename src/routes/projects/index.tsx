@@ -1,10 +1,15 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { ArrowLeft, ArrowUpRight, Github, Store } from "lucide-react";
 import { projectCaseStudies } from "@/data/portfolio";
+import { absoluteUrl, ogImageUrl } from "@/lib/seo";
 import {
   prepareCaseStudyReturnRestore,
   rememberCaseStudyReturn,
 } from "@/lib/navigation-memory";
+
+const archiveUrl = absoluteUrl("/projects");
+const archiveDescription =
+  "Project archive of frontend case studies by Oluwatomisin Isogun, covering booking platforms, dashboards, marketplaces, commerce sites, and product interfaces.";
 
 export const Route = createFileRoute("/projects/")({
   head: () => ({
@@ -12,9 +17,25 @@ export const Route = createFileRoute("/projects/")({
       { title: "Project Archive - Oluwatomisin Isogun" },
       {
         name: "description",
-        content: "Minimal archive of frontend development case studies by Oluwatomisin Isogun.",
+        content: archiveDescription,
       },
+      { property: "og:title", content: "Project Archive - Oluwatomisin Isogun" },
+      { property: "og:description", content: archiveDescription },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: archiveUrl },
+      { property: "og:image", content: ogImageUrl },
+      { property: "og:image:secure_url", content: ogImageUrl },
+      { property: "og:image:type", content: "image/jpeg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Oluwatomisin Isogun project archive" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Project Archive - Oluwatomisin Isogun" },
+      { name: "twitter:description", content: archiveDescription },
+      { name: "twitter:image", content: ogImageUrl },
+      { name: "twitter:image:alt", content: "Oluwatomisin Isogun project archive" },
     ],
+    links: [{ rel: "canonical", href: archiveUrl }],
   }),
   component: ProjectArchivePage,
 });

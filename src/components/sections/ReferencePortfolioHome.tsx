@@ -1,4 +1,11 @@
-import { useMemo, useRef, useState, type RefObject } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type RefObject,
+} from "react";
 import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowDownToLine, ArrowUpRight, Calendar, Github, Send } from "lucide-react";
@@ -11,16 +18,25 @@ import {
   projectCaseStudies,
   skills,
 } from "@/data/portfolio";
-import { rememberCaseStudyReturn } from "@/lib/navigation-memory";
+import {
+  getPendingCaseStudyReturnView,
+  rememberCaseStudyReturn,
+} from "@/lib/navigation-memory";
 
 type ViewMode = "samples" | "case-studies" | "certifications";
 
 const bookingUrl = "https://cal.com/oluwatomisin-isogun-disku5/30min?overlayCalendar=true";
+const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 export function ReferencePortfolioHome() {
   const [view, setView] = useState<ViewMode>("samples");
   const contentScrollRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
+
+  useIsomorphicLayoutEffect(() => {
+    const pendingView = getPendingCaseStudyReturnView();
+    if (isViewMode(pendingView)) setView(pendingView);
+  }, []);
 
   const workSamples = useMemo(
     () =>
@@ -57,7 +73,12 @@ export function ReferencePortfolioHome() {
       <div className="grid min-h-screen lg:grid-cols-[22vw_minmax(0,1fr)] xl:grid-cols-[460px_minmax(0,1fr)]">
         <IdentityPanel contentScrollRef={contentScrollRef} />
 
-        <section ref={contentScrollRef} className="min-w-0 border-[#111111]/10 lg:h-screen lg:overflow-y-auto lg:border-l">
+        <section
+          ref={contentScrollRef}
+          data-case-study-scroll-root="home-work"
+          data-case-study-return-view={view}
+          className="min-w-0 border-[#111111]/10 lg:h-screen lg:overflow-y-auto lg:border-l"
+        >
           <div className="sticky top-0 z-20 border-b border-[#111111]/10 bg-[#f7f7f5]/92 px-3 py-4 backdrop-blur-md sm:px-8 sm:py-5 lg:px-8">
             <ViewSwitcher value={view} onChange={setView} />
           </div>
@@ -482,4 +503,8 @@ function getCertificationPriority(title: string) {
   if (lowerTitle.includes("project management")) return 3;
 
   return 10;
+}
+
+function isViewMode(value: unknown): value is ViewMode {
+  return value === "samples" || value === "case-studies" || value === "certifications";
 }

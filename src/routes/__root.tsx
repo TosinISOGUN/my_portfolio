@@ -150,6 +150,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content: "Portfolio of Oluwatomisin Isogun, frontend developer.",
       },
       { name: "author", content: "Oluwatomisin Isogun" },
+      { name: "theme-color", content: "#f7f7f5" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-title", content: "Oluwatomisin" },
       { property: "og:title", content: "Oluwatomisin Isogun Portfolio" },
       {
         property: "og:description",
@@ -178,6 +182,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "apple-touch-icon", href: "/favicon.ico" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "canonical", href: siteUrl },
     ],
 
@@ -202,6 +208,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <body>
         {children}
         <Scripts />
+        <script src="/register-sw.js" defer />
       </body>
     </html>
   );

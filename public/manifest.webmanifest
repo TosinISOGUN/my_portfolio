@@ -1,0 +1,37 @@
+{
+  "name": "Oluwatomisin Isogun - Frontend Developer Portfolio",
+  "short_name": "Oluwatomisin",
+  "description": "Frontend developer portfolio featuring React, TypeScript, product interfaces, dashboards, booking platforms, and case studies.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f7f7f5",
+  "theme_color": "#f7f7f5",
+  "categories": ["portfolio", "productivity", "business"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "Oluwatomisin Isogun portfolio preview"
+    }
+  ]
+}

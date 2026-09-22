@@ -83,7 +83,8 @@ export function ReferencePortfolioHome() {
   };
 
   return (
-    <main className="sam-page min-h-screen bg-[#f7f7f5] text-[#111111] lg:h-screen lg:overflow-hidden">
+    <main className="sam-page min-h-screen bg-white text-[#111111] lg:h-screen lg:overflow-hidden">
+      <PageDoorReveal reduce={reduce} />
       <div className="grid min-h-screen lg:grid-cols-[22vw_minmax(0,1fr)] xl:grid-cols-[460px_minmax(0,1fr)]">
         <IdentityPanel />
 
@@ -93,7 +94,7 @@ export function ReferencePortfolioHome() {
           data-case-study-return-view={view}
           className="min-w-0 border-[#111111]/10 lg:h-screen lg:overflow-y-auto lg:border-l"
         >
-          <div className="sticky top-0 z-20 border-b border-[#111111]/10 bg-[#f7f7f5]/92 px-3 py-4 backdrop-blur-md sm:px-8 sm:py-5 lg:px-8">
+          <div className="sticky top-0 z-20 border-b border-[#111111]/10 bg-white/92 px-3 py-4 backdrop-blur-md sm:px-8 sm:py-5 lg:px-8">
             <ViewSwitcher value={view} onChange={handleViewChange} />
           </div>
 
@@ -182,6 +183,26 @@ export function ReferencePortfolioHome() {
   );
 }
 
+function PageDoorReveal({ reduce }: { reduce: boolean | null }) {
+  if (reduce) return null;
+
+  return (
+    <div className="pointer-events-none fixed inset-0 z-[100] flex" aria-hidden="true">
+      <motion.div
+        className="h-full w-1/2 origin-left bg-white shadow-[12px_0_60px_rgba(17,17,17,0.08)]"
+        initial={{ x: 0 }}
+        animate={{ x: "-101%" }}
+        transition={{ duration: 0.82, ease: [0.76, 0, 0.24, 1], delay: 0.08 }}
+      />
+      <motion.div
+        className="h-full w-1/2 origin-right bg-white shadow-[-12px_0_60px_rgba(17,17,17,0.08)]"
+        initial={{ x: 0 }}
+        animate={{ x: "101%" }}
+        transition={{ duration: 0.82, ease: [0.76, 0, 0.24, 1], delay: 0.08 }}
+      />
+    </div>
+  );
+}
 function IdentityPanel() {
   const reduce = useReducedMotion();
 
@@ -193,11 +214,11 @@ function IdentityPanel() {
       transition={{ duration: 0.75, type: "spring", bounce: 0, stiffness: 90 }}
     >
       <div>
-        <div className="flex justify-end">
+        <div className="sam-status-wrap flex justify-end">
           <StatusBadge />
         </div>
 
-        <div className="mt-7 sm:mt-10 lg:mt-2 xl:mt-5">
+        <div className="sam-profile-block mt-7 sm:mt-10 lg:mt-2 xl:mt-5">
           <figure className="h-[106px] w-[106px] overflow-hidden rounded-full bg-[#ededed] lg:h-[76px] lg:w-[76px] xl:h-[92px] xl:w-[92px]">
             <img
               src={profilePhoto}
@@ -219,7 +240,7 @@ function IdentityPanel() {
             I build React and TypeScript interfaces that feel premium and turn complex workflows into actual product momentum. I care about the small stuff, spacing, states, performance, and the one extra click that should not be there.
           </p>
 
-          <div className="mt-6 max-w-[390px] lg:mt-3 xl:mt-4">
+          <div className="sam-stack-block mt-6 max-w-[390px] lg:mt-3 xl:mt-4">
             <p className="text-[0.84rem] font-semibold tracking-[-0.03em] text-[#111111]/38">
               Core stack
             </p>
@@ -235,7 +256,7 @@ function IdentityPanel() {
             </div>
           </div>
 
-          <div className="mt-9 flex flex-wrap gap-3 lg:mt-4 lg:gap-2 xl:mt-5">
+          <div className="sam-action-row mt-9 flex flex-wrap gap-3 lg:mt-4 lg:gap-2 xl:mt-5">
             <a
               href={bookingUrl}
               target="_blank"
@@ -279,9 +300,7 @@ function IdentityPanel() {
           <a href={`mailto:${profile.email}`} className="sam-social-pill">
             Email
           </a>
-          <Link to="/projects" onClick={rememberCaseStudyReturn} className="sam-social-pill">
-            Archive
-          </Link>
+
         </div>
       </div>
     </motion.aside>
@@ -369,7 +388,7 @@ function DevJokeTicker() {
 }
 function StatusBadge() {
   return (
-    <div className="sam-handwritten inline-flex w-fit items-center gap-2 text-[1.12rem] text-[#111111]/68 lg:text-[1rem]">
+    <div className="sam-status-badge sam-handwritten inline-flex w-fit items-center gap-2 text-[1.12rem] text-[#111111]/68 lg:text-[1rem]">
       <span className="relative flex h-2.5 w-2.5">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-35" />
         <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-600" />
@@ -561,7 +580,7 @@ function CaseStudyCard({
               href={caseStudy?.liveUrl ?? project.link}
               target="_blank"
               rel="noreferrer"
-              className="sam-pill bg-white text-[#111111] hover:bg-[#f7f7f5]"
+              className="sam-pill bg-white text-[#111111] hover:bg-[#f2f2f2]"
             >
               Live site
               <ArrowUpRight className="h-4 w-4" aria-hidden />
@@ -603,6 +622,7 @@ function getCertificationPriority(title: string) {
 function isViewMode(value: unknown): value is ViewMode {
   return value === "samples" || value === "case-studies" || value === "certifications";
 }
+
 
 
 

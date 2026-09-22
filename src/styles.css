@@ -100,7 +100,7 @@
     "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display",
     "Segoe UI", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
-  --color-cream: oklch(0.968 0.017 78);
+  --color-cream: #ffffff;
   --color-charcoal: oklch(0.27 0.008 60);
   --color-navy: oklch(0.32 0.07 262);
   --color-tangerine: oklch(0.72 0.19 52);
@@ -112,7 +112,7 @@
     "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display",
     "Segoe UI", ui-sans-serif, system-ui, sans-serif;
   --radius: 0.625rem;
-  --background: oklch(0.968 0.017 78);
+  --background: #ffffff;
 
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
@@ -311,6 +311,135 @@
   background: white;
 }
 
+
+@keyframes sam-status-breathe {
+  0%, 100% {
+    opacity: 0.28;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1.9);
+  }
+}
+
+@media (max-width: 767px) {
+  .sam-identity-panel {
+    gap: 1.05rem;
+    padding: 0.45rem 1.2rem 1.2rem !important;
+  }
+
+  .sam-status-wrap {
+    margin-top: -0.28rem;
+    margin-right: -0.2rem;
+  }
+
+  .sam-status-badge {
+    gap: 0.32rem;
+    font-size: 0.78rem !important;
+    color: rgb(17 17 17 / 0.6) !important;
+  }
+
+  .sam-status-badge span:first-child {
+    width: 0.52rem;
+    height: 0.52rem;
+  }
+
+  .sam-status-badge span:first-child span:first-child {
+    animation: sam-status-breathe 1.35s ease-in-out infinite;
+    background: #00f06a !important;
+    opacity: 0.55;
+  }
+
+  .sam-status-badge span:first-child span:last-child {
+    width: 0.52rem;
+    height: 0.52rem;
+    background: #00d45a !important;
+    box-shadow: 0 0 16px rgb(0 240 106 / 0.78);
+  }
+
+  .sam-profile-block {
+    margin-top: 0.2rem !important;
+  }
+
+  .sam-profile-block figure {
+    width: 5rem !important;
+    height: 5rem !important;
+  }
+
+  .sam-profile-block h1 {
+    margin-top: 0.72rem !important;
+    font-size: 1.16rem !important;
+  }
+
+  .sam-profile-block h2 {
+    margin-top: 1rem !important;
+    max-width: 20.5rem;
+    font-size: clamp(1.48rem, 6.8vw, 1.95rem) !important;
+    line-height: 1.06 !important;
+  }
+
+  .sam-profile-block > p {
+    margin-top: 0.95rem !important;
+    font-size: 0.94rem !important;
+    line-height: 1.32 !important;
+  }
+
+  .sam-stack-block {
+    margin-top: 0.95rem !important;
+  }
+
+  .sam-stack-block > div {
+    margin-top: 0.55rem !important;
+    gap: 0.42rem !important;
+  }
+
+  .sam-stack-block span {
+    padding: 0.3rem 0.66rem !important;
+    font-size: 0.68rem !important;
+  }
+
+  .sam-action-row {
+    margin-top: 1.15rem !important;
+    gap: 0.55rem !important;
+  }
+
+  .sam-action-row + a {
+    margin-top: 0.72rem !important;
+    font-size: 0.82rem !important;
+  }
+
+  .sam-dev-note {
+    margin-top: 1.15rem !important;
+    max-width: 100% !important;
+    padding-left: 0.75rem !important;
+  }
+
+  .sam-dev-note > div {
+    min-height: 34px !important;
+  }
+
+  .sam-dev-note > div > p {
+    font-size: 0.84rem !important;
+    line-height: 1.26 !important;
+  }
+
+  .sam-contact-footer {
+    margin-top: 1.15rem !important;
+    border-top: 1px solid rgb(17 17 17 / 0.1);
+    padding-top: 1.05rem;
+  }
+
+  .sam-contact-footer p {
+    font-size: 1.05rem !important;
+  }
+
+  .sam-contact-footer > div {
+    margin-top: 0.75rem !important;
+    gap: 0.5rem !important;
+  }
+}
 @media (min-width: 1024px) {
   .sam-page .sam-pill {
     min-height: 38px;
@@ -520,6 +649,7 @@
   }
 }
 
+
 @media (min-width: 1024px) {
   .showcase-carousel__card {
     width: 46vw;
@@ -595,6 +725,7 @@
   }
 }
 
+
 @media (min-width: 1024px) {
   .case-study-carousel__image {
     width: 52vw;
@@ -619,6 +750,7 @@
     padding-bottom: 1.25rem;
   }
 }
+
 
 
 

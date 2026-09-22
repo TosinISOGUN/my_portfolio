@@ -29,7 +29,7 @@ const bookingUrl = "https://cal.com/oluwatomisin-isogun-disku5/30min?overlayCale
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 export function ReferencePortfolioHome() {
-  const [view, setView] = useState<ViewMode>("samples");
+  const [view, setView] = useState<ViewMode>("case-studies");
   const contentScrollRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
 
@@ -88,7 +88,7 @@ export function ReferencePortfolioHome() {
               {view === "samples" ? (
                 <motion.div
                   key="samples"
-                  className="grid gap-8"
+                  className="-mx-1 grid gap-7 sm:-mx-4 lg:-mx-5 xl:-mx-6"
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -14 }}
@@ -306,7 +306,7 @@ function ViewSwitcher({
 }) {
   return (
     <div className="relative flex h-[32px] w-fit min-w-[370px] max-w-full items-center rounded-full bg-[#ededed] p-0 sm:h-[34px] max-[520px]:min-w-0 max-[520px]:w-full">
-      {(["samples", "case-studies", "certifications"] as const).map((item) => {
+      {(["case-studies", "samples", "certifications"] as const).map((item) => {
         const active = value === item;
         const label =
           item === "samples"
@@ -351,7 +351,7 @@ function WorkSampleCard({
 
   return (
     <motion.article
-      className="overflow-hidden rounded-[26px] bg-[#ededed] p-2 sm:p-3"
+      className="overflow-hidden rounded-[24px] bg-[#ededed] p-1 sm:p-2"
       initial={reduce ? false : { opacity: 0, scale: 0.92, y: 46 }}
       whileInView={{ opacity: 1, scale: 1, y: 0 }}
       viewport={{ once: true, amount: 0.34 }}
@@ -379,8 +379,9 @@ function CaseStudyCard({
 }) {
   const reduce = useReducedMotion();
   const caseStudy = project.caseStudy;
-  const previewImages = caseStudy?.gallery.filter(Boolean).slice(0, 3) ?? [];
-  const cover = caseStudy?.cover ?? previewImages[0];
+  const orderedImages = getLandingFirstImages(project);
+  const previewImages = orderedImages.slice(0, 3);
+  const cover = orderedImages[0];
 
   return (
     <motion.article
@@ -494,6 +495,18 @@ function getShuffleRank(value: string) {
   return Array.from(value).reduce((rank, char, index) => rank + char.charCodeAt(0) * (index + 17), 0) % 997;
 }
 
+function getLandingFirstImages(
+  project: (typeof featuredProjects)[number] & {
+    caseStudy?: (typeof projectCaseStudies)[number];
+  },
+) {
+  const preferredCover = project.caseStudy?.cover ?? project.cover;
+  const gallery = project.caseStudy?.gallery.filter(Boolean) ?? [];
+  const remaining = gallery.filter((image) => image !== preferredCover);
+
+  return [preferredCover, ...remaining].filter(Boolean);
+}
+
 function getCertificationPriority(title: string) {
   const lowerTitle = title.toLowerCase();
 
@@ -508,3 +521,7 @@ function getCertificationPriority(title: string) {
 function isViewMode(value: unknown): value is ViewMode {
   return value === "samples" || value === "case-studies" || value === "certifications";
 }
+
+
+
+

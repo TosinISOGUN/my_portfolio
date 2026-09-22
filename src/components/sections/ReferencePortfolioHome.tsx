@@ -4,7 +4,6 @@ import {
   useMemo,
   useRef,
   useState,
-  type RefObject,
 } from "react";
 import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -54,10 +53,11 @@ export function ReferencePortfolioHome() {
         project.gallery.map((image, index) => ({
           image,
           title: `${project.title} interface ${index + 1}`,
+          sortKey: `${project.slug}-${index}`,
         })),
       );
 
-    return screens.sort((first, second) => getShuffleRank(first.image) - getShuffleRank(second.image));
+    return screens.sort((first, second) => getShuffleRank(first.sortKey) - getShuffleRank(second.sortKey));
   }, []);
 
   const orderedCertifications = useMemo(
@@ -68,10 +68,24 @@ export function ReferencePortfolioHome() {
     [],
   );
 
+  const handleViewChange = (nextView: ViewMode) => {
+    if (nextView === view) return;
+
+    setView(nextView);
+
+    window.requestAnimationFrame(() => {
+      contentScrollRef.current?.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+      if (window.innerWidth < 1024) {
+        contentScrollRef.current?.scrollIntoView({ block: "start" });
+      }
+    });
+  };
+
   return (
     <main className="sam-page min-h-screen bg-[#f7f7f5] text-[#111111] lg:h-screen lg:overflow-hidden">
       <div className="grid min-h-screen lg:grid-cols-[22vw_minmax(0,1fr)] xl:grid-cols-[460px_minmax(0,1fr)]">
-        <IdentityPanel contentScrollRef={contentScrollRef} />
+        <IdentityPanel />
 
         <section
           ref={contentScrollRef}
@@ -80,7 +94,7 @@ export function ReferencePortfolioHome() {
           className="min-w-0 border-[#111111]/10 lg:h-screen lg:overflow-y-auto lg:border-l"
         >
           <div className="sticky top-0 z-20 border-b border-[#111111]/10 bg-[#f7f7f5]/92 px-3 py-4 backdrop-blur-md sm:px-8 sm:py-5 lg:px-8">
-            <ViewSwitcher value={view} onChange={setView} />
+            <ViewSwitcher value={view} onChange={handleViewChange} />
           </div>
 
           <div className="px-3 py-4 sm:px-8 sm:py-5 lg:px-8">
@@ -168,25 +182,12 @@ export function ReferencePortfolioHome() {
   );
 }
 
-function IdentityPanel({
-  contentScrollRef,
-}: {
-  contentScrollRef: RefObject<HTMLElement | null>;
-}) {
+function IdentityPanel() {
   const reduce = useReducedMotion();
 
   return (
     <motion.aside
-      className="flex min-h-0 flex-col gap-12 px-8 py-8 sm:px-10 sm:py-10 lg:h-screen lg:min-h-0 lg:justify-between lg:gap-0 lg:overflow-hidden lg:px-8 lg:py-5 xl:px-8"
-      onWheel={(event) => {
-        if (typeof window === "undefined" || window.innerWidth < 1024) return;
-
-        contentScrollRef.current?.scrollBy({
-          top: event.deltaY,
-          left: event.deltaX,
-          behavior: "auto",
-        });
-      }}
+      className="sam-identity-panel flex min-h-0 flex-col gap-12 px-8 py-8 sm:px-10 sm:py-10 lg:h-screen lg:min-h-0 lg:justify-between lg:gap-0 lg:overflow-hidden lg:px-8 lg:py-2 xl:px-8 xl:py-5"
       initial={reduce ? false : { opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.75, type: "spring", bounce: 0, stiffness: 90 }}
@@ -196,8 +197,8 @@ function IdentityPanel({
           <StatusBadge />
         </div>
 
-        <div className="mt-7 sm:mt-10 lg:mt-5">
-          <figure className="h-[106px] w-[106px] overflow-hidden rounded-full bg-[#ededed] lg:h-[84px] lg:w-[84px] xl:h-[92px] xl:w-[92px]">
+        <div className="mt-7 sm:mt-10 lg:mt-2 xl:mt-5">
+          <figure className="h-[106px] w-[106px] overflow-hidden rounded-full bg-[#ededed] lg:h-[76px] lg:w-[76px] xl:h-[92px] xl:w-[92px]">
             <img
               src={profilePhoto}
               alt="Oluwatomisin Isogun"
@@ -205,20 +206,20 @@ function IdentityPanel({
             />
           </figure>
 
-          <h1 className="mt-5 text-[1.45rem] font-semibold leading-none tracking-[-0.06em] text-[#050505] lg:mt-3 lg:text-[1.18rem] xl:text-[1.28rem]">
+          <h1 className="mt-5 text-[1.45rem] font-semibold leading-none tracking-[-0.06em] text-[#050505] lg:mt-2 lg:text-[1.12rem] xl:mt-3 xl:text-[1.28rem]">
             {profile.name}
           </h1>
 
-          <h2 className="mt-8 max-w-[455px] text-[clamp(1.75rem,8vw,2.35rem)] font-semibold leading-[1.16] tracking-[-0.075em] text-[#050505] lg:mt-5 lg:max-w-[360px] lg:text-[1.72rem] xl:max-w-[390px] xl:text-[1.95rem]">
+          <h2 className="mt-8 max-w-[455px] text-[clamp(1.75rem,8vw,2.35rem)] font-semibold leading-[1.16] tracking-[-0.075em] text-[#050505] lg:mt-4 lg:max-w-[360px] lg:text-[1.58rem] xl:mt-5 xl:max-w-[390px] xl:text-[1.95rem]">
             <span className="text-[#111111]/48">Hey, I'm Oluwatomisin, a </span>
             frontend developer for product teams.
           </h2>
 
-          <p className="mt-7 max-w-[445px] text-[1.06rem] font-medium leading-[1.42] tracking-[-0.045em] text-[#111111]/58 lg:mt-5 lg:max-w-[350px] lg:text-[0.88rem] lg:leading-[1.34] xl:max-w-[390px] xl:text-[0.95rem]">
+          <p className="mt-7 max-w-[445px] text-[1.06rem] font-medium leading-[1.42] tracking-[-0.045em] text-[#111111]/58 lg:mt-4 lg:max-w-[350px] lg:text-[0.84rem] lg:leading-[1.3] xl:mt-5 xl:max-w-[390px] xl:text-[0.95rem]">
             I build React and TypeScript interfaces that feel premium and turn complex workflows into actual product momentum. I care about the small stuff, spacing, states, performance, and the one extra click that should not be there.
           </p>
 
-          <div className="mt-6 max-w-[390px] lg:mt-4">
+          <div className="mt-6 max-w-[390px] lg:mt-3 xl:mt-4">
             <p className="text-[0.84rem] font-semibold tracking-[-0.03em] text-[#111111]/38">
               Core stack
             </p>
@@ -234,7 +235,7 @@ function IdentityPanel({
             </div>
           </div>
 
-          <div className="mt-9 flex flex-wrap gap-3 lg:mt-5 lg:gap-2">
+          <div className="mt-9 flex flex-wrap gap-3 lg:mt-4 lg:gap-2 xl:mt-5">
             <a
               href={bookingUrl}
               target="_blank"
@@ -254,19 +255,21 @@ function IdentityPanel({
             href={resumePdf}
             target="_blank"
             rel="noreferrer"
-            className="mt-4 inline-flex items-center gap-2 text-[0.95rem] font-semibold tracking-[-0.035em] text-[#111111]/54 transition-colors hover:text-[#111111] lg:mt-3 lg:text-[0.84rem] xl:text-[0.9rem]"
+            className="mt-4 inline-flex items-center gap-2 text-[0.95rem] font-semibold tracking-[-0.035em] text-[#111111]/54 transition-colors hover:text-[#111111] lg:mt-2 lg:text-[0.82rem] xl:mt-3 xl:text-[0.9rem]"
           >
             <ArrowDownToLine className="h-4 w-4" aria-hidden />
             View resume
           </a>
+
+          <DevJokeTicker />
         </div>
       </div>
 
-      <div className="mt-12 pb-1 lg:mt-5">
+      <div className="sam-contact-footer mt-10 pb-1 lg:mt-3 xl:mt-5">
         <p className="text-[1.35rem] font-semibold leading-tight tracking-[-0.065em] lg:text-[1rem] xl:text-[1.12rem]">
           got a project in mind? let's chat :)
         </p>
-        <div className="mt-6 flex flex-wrap gap-3 lg:mt-3 lg:gap-2">
+        <div className="mt-5 flex flex-wrap gap-3 lg:mt-2 lg:gap-2 xl:mt-3">
           <a href={profile.github} target="_blank" rel="noreferrer" className="sam-social-pill" aria-label="GitHub">
             <Github className="h-4 w-4" aria-hidden />
           </a>
@@ -285,6 +288,85 @@ function IdentityPanel({
   );
 }
 
+const devJokes = [
+  "Frontend is just convincing rectangles to behave.",
+  "I write bugs professionally, then fix them as a service.",
+  "CSS is easy until the div develops ambition.",
+  "Git happens. Ship anyway.",
+  "I center divs and occasionally question reality.",
+  "My code works. I just want to know why.",
+  "React state: because feelings need management too.",
+  "I asked JavaScript for truth. It said maybe.",
+  "Naming things is half the job. The other half is renaming them.",
+  "I do not fear bugs. I have console.log.",
+  "A clean UI is a love letter to future users.",
+  "Cache cleared. Confidence restored.",
+  "This layout was aligned through patience and snacks.",
+  "Production is just staging with witnesses.",
+  "Pixels behave better after coffee.",
+  "If it looks simple, the CSS probably negotiated hard.",
+  "I make buttons feel like they know their purpose.",
+  "The best animation is the one nobody has to wait for.",
+  "Ship small. Learn fast. Refactor kindly.",
+  "Code is poetry until the deadline joins the meeting.",
+  "A div without CSS is just a box with dreams.",
+  "I turn product anxiety into loading states.",
+  "The bug was shy until I shared my screen.",
+  "Responsive design is empathy with breakpoints.",
+  "I trust the process. I also trust the preview build.",
+  "JavaScript said undefined. I felt that.",
+  "A good button should look clickable and feel inevitable.",
+  "I debug in dark mode so the errors respect the mood.",
+  "The DOM remembers everything except why I named it that.",
+  "I measure twice and still inspect element.",
+  "Types save lives, mostly mine at 2am.",
+  "Every pixel has a job. Some need supervision.",
+  "404: Motivation not found. Coffee retry pending.",
+  "I like my components reusable and my margins explainable.",
+  "The console knows what I did last deploy.",
+  "A smooth flow is just fewer tiny betrayals.",
+  "I speak fluent product, CSS, and polite urgency.",
+  "Some days you ship. Some days you teach z-index manners.",
+  "The best UX is invisible until it is missing.",
+  "I make edge cases feel included.",
+];
+
+function DevJokeTicker() {
+  const [index, setIndex] = useState(0);
+  const reduce = useReducedMotion();
+
+  useEffect(() => {
+    if (reduce) return;
+
+    const interval = window.setInterval(() => {
+      setIndex((current) => (current + 1) % devJokes.length);
+    }, 4200);
+
+    return () => window.clearInterval(interval);
+  }, [reduce]);
+
+  return (
+    <div className="sam-dev-note mt-8 max-w-[420px] border-l border-[#111111]/10 pl-4 sm:max-w-[460px] lg:mt-3 lg:max-w-[335px] xl:mt-10 xl:max-w-[355px]">
+      <p className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-[#111111]/28">
+        dev note
+      </p>
+      <div className="relative mt-2 min-h-[44px] overflow-hidden lg:min-h-[34px] xl:min-h-[52px]">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.p
+            key={devJokes[index]}
+            className="text-[0.88rem] font-medium leading-[1.35] tracking-[-0.035em] text-[#111111]/45 lg:text-[0.78rem] lg:leading-[1.25] xl:text-[0.95rem] xl:leading-[1.35]"
+            initial={reduce ? false : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduce ? undefined : { opacity: 0, y: -8 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+          >
+            {devJokes[index]}
+          </motion.p>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
 function StatusBadge() {
   return (
     <div className="sam-handwritten inline-flex w-fit items-center gap-2 text-[1.12rem] text-[#111111]/68 lg:text-[1rem]">
@@ -521,6 +603,14 @@ function getCertificationPriority(title: string) {
 function isViewMode(value: unknown): value is ViewMode {
   return value === "samples" || value === "case-studies" || value === "certifications";
 }
+
+
+
+
+
+
+
+
 
 
 

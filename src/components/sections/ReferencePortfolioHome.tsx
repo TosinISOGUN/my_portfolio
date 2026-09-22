@@ -367,7 +367,7 @@ function DevJokeTicker() {
   return (
     <div className="sam-dev-note mt-8 max-w-[420px] border-l border-[#111111]/10 pl-4 sm:max-w-[460px] lg:mt-3 lg:max-w-[335px] xl:mt-10 xl:max-w-[355px]">
       <p className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-[#111111]/28">
-        dev note
+        dev notes, lol
       </p>
       <div className="relative mt-2 min-h-[44px] overflow-hidden lg:min-h-[34px] xl:min-h-[52px]">
         <AnimatePresence mode="wait" initial={false}>

@@ -244,6 +244,7 @@ export const profile = {
   email: "oluwatomisinisogun@gmail.com",
   github: "https://github.com/TosinISOGUN",
   linkedin: "https://www.linkedin.com/in/oluwatomisin-isogun-a38740356/",
+  upwork: "https://www.upwork.com/freelancers/~0136c2f689158ada21?mp_source=share",
 };
 
 export const focusAreas = [

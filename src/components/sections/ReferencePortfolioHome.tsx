@@ -297,6 +297,9 @@ function IdentityPanel() {
           <a href={profile.linkedin} target="_blank" rel="noreferrer" className="sam-social-pill">
             LinkedIn
           </a>
+          <a href={profile.upwork} target="_blank" rel="noreferrer" className="sam-social-pill">
+            Upwork
+          </a>
           <a href={`mailto:${profile.email}`} className="sam-social-pill">
             Email
           </a>

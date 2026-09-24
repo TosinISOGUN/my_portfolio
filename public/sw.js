@@ -1,5 +1,5 @@
-const CACHE_NAME = "oluwatomisin-portfolio-v1";
-const APP_SHELL = ["/", "/projects", "/favicon.svg", "/favicon.ico", "/manifest.webmanifest", "/og-image.jpg"];
+const CACHE_NAME = "oluwatomisin-portfolio-v2";
+const APP_SHELL = ["/", "/projects", "/favicon.svg", "/favicon.ico", "/favicon-48x48.png", "/apple-touch-icon.png", "/icon-192.png", "/icon-512.png", "/manifest.webmanifest", "/og-image.jpg"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -46,6 +46,10 @@ self.addEventListener("fetch", (event) => {
     url.pathname === "/manifest.webmanifest" ||
     url.pathname === "/favicon.svg" ||
     url.pathname === "/favicon.ico" ||
+    url.pathname === "/favicon-48x48.png" ||
+    url.pathname === "/apple-touch-icon.png" ||
+    url.pathname === "/icon-192.png" ||
+    url.pathname === "/icon-512.png" ||
     url.pathname === "/og-image.jpg" ||
     url.pathname.endsWith(".css") ||
     url.pathname.endsWith(".js") ||

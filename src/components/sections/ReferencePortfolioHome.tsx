@@ -30,7 +30,6 @@ const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : us
 export function ReferencePortfolioHome() {
   const [view, setView] = useState<ViewMode>("case-studies");
   const contentScrollRef = useRef<HTMLElement>(null);
-  const reduce = useReducedMotion();
 
   useIsomorphicLayoutEffect(() => {
     const pendingView = getPendingCaseStudyReturnView();
@@ -84,7 +83,6 @@ export function ReferencePortfolioHome() {
 
   return (
     <main className="sam-page min-h-screen bg-white text-[#111111] lg:h-screen lg:overflow-hidden">
-      <PageDoorReveal reduce={reduce} />
       <div className="grid min-h-screen lg:grid-cols-[22vw_minmax(0,1fr)] xl:grid-cols-[460px_minmax(0,1fr)]">
         <IdentityPanel />
 
@@ -183,26 +181,6 @@ export function ReferencePortfolioHome() {
   );
 }
 
-function PageDoorReveal({ reduce }: { reduce: boolean | null }) {
-  if (reduce) return null;
-
-  return (
-    <div className="pointer-events-none fixed inset-0 z-[100] flex" aria-hidden="true">
-      <motion.div
-        className="h-full w-1/2 origin-left bg-white shadow-[12px_0_60px_rgba(17,17,17,0.08)]"
-        initial={{ x: 0 }}
-        animate={{ x: "-101%" }}
-        transition={{ duration: 0.82, ease: [0.76, 0, 0.24, 1], delay: 0.08 }}
-      />
-      <motion.div
-        className="h-full w-1/2 origin-right bg-white shadow-[-12px_0_60px_rgba(17,17,17,0.08)]"
-        initial={{ x: 0 }}
-        animate={{ x: "101%" }}
-        transition={{ duration: 0.82, ease: [0.76, 0, 0.24, 1], delay: 0.08 }}
-      />
-    </div>
-  );
-}
 function IdentityPanel() {
   const reduce = useReducedMotion();
 

@@ -30,6 +30,7 @@ const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : us
 export function ReferencePortfolioHome() {
   const [view, setView] = useState<ViewMode>("case-studies");
   const contentScrollRef = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
 
   useIsomorphicLayoutEffect(() => {
     const pendingView = getPendingCaseStudyReturnView();

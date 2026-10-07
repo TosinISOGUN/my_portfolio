@@ -59,7 +59,7 @@ function ProjectCaseStudyPage() {
       return;
     }
 
-    void router.navigate({ to: "/projects" });
+    void router.navigate({ to: "/" });
   };
 
   return (

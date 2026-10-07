@@ -14,16 +14,16 @@ export type CaseStudyReturnPoint = {
 const getCurrentUrl = () =>
   `${window.location.pathname}${window.location.search}${window.location.hash}`;
 
-const getScrollRoot = () =>
-  document.querySelector<HTMLElement>("[data-case-study-scroll-root]");
+const getScrollRoot = () => document.querySelector<HTMLElement>("[data-case-study-scroll-root]");
 
 const getScrollRootName = (scrollRoot: HTMLElement) =>
-  scrollRoot.dataset.caseStudyScrollRoot || "primary";
+  scrollRoot.dataset["caseStudyScrollRoot"] || "primary";
 
 const getReturnView = (scrollRoot?: HTMLElement | null) =>
-  scrollRoot?.dataset.caseStudyReturnView ||
-  document.querySelector<HTMLElement>("[data-case-study-return-view]")
-    ?.dataset.caseStudyReturnView;
+  scrollRoot?.dataset["caseStudyReturnView"] ||
+  document.querySelector<HTMLElement>("[data-case-study-return-view]")?.dataset[
+    "caseStudyReturnView"
+  ];
 
 export const rememberCaseStudyReturn = () => {
   if (typeof window === "undefined") return;
@@ -101,7 +101,7 @@ export const restorePendingCaseStudyReturn = ({ persist = false } = {}) => {
       return false;
     }
 
-    window.scrollTo({ top: returnPoint.y, left: returnPoint.x, behavior: "auto" });
+    window.scrollTo({ top: Number(returnPoint.y), left: Number(returnPoint.x), behavior: "auto" });
 
     if (returnPoint.scrollRoot) {
       const scrollRoot = document.querySelector<HTMLElement>(

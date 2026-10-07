@@ -1,5 +1,5 @@
 const CACHE_NAME = "oluwatomisin-portfolio-v2";
-const APP_SHELL = ["/", "/projects", "/favicon.svg", "/favicon.ico", "/favicon-48x48.png", "/apple-touch-icon.png", "/icon-192.png", "/icon-512.png", "/manifest.webmanifest", "/og-image.jpg"];
+const APP_SHELL = ["/", "/favicon.svg", "/favicon.ico", "/favicon-48x48.png", "/apple-touch-icon.png", "/icon-192.png", "/icon-512.png", "/manifest.webmanifest", "/og-image.jpg"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(

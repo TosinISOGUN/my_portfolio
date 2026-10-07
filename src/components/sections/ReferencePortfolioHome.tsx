@@ -145,8 +145,12 @@ export function ReferencePortfolioHome() {
                   exit={{ opacity: 0, y: -14 }}
                   transition={{ duration: 0.25 }}
                 >
-                  {workHistory.map((entry) => (
-                    <WorkHistoryCard key={`${entry.company}-${entry.role}`} entry={entry} />
+                  {workHistory.map((entry, index) => (
+                    <WorkHistoryCard
+                      key={`${entry.company}-${entry.role}`}
+                      entry={entry}
+                      index={index}
+                    />
                   ))}
                 </motion.div>
               ) : (
@@ -467,16 +471,15 @@ function WorkSampleCard({
   );
 }
 
-function WorkHistoryCard({ entry }: { entry: WorkHistoryEntry }) {
+function WorkHistoryCard({ entry, index }: { entry: WorkHistoryEntry; index: number }) {
   const reduce = useReducedMotion();
 
   return (
     <motion.article
       className="overflow-hidden rounded-[26px] bg-[#ededed] p-5 text-[#111111] sm:p-7"
-      initial={reduce ? false : { opacity: 0, y: 42, scale: 0.96 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.28 }}
-      transition={{ duration: 0.68, type: "spring", bounce: 0.1 }}
+      initial={reduce ? false : { opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, delay: index * 0.08, ease: "easeOut" }}
     >
       <div className="flex flex-wrap items-center gap-2">
         <span className="rounded-full bg-white px-3 py-1 text-[0.78rem] font-semibold tracking-[-0.02em] text-[#111111]/55">

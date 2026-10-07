@@ -1,52 +1,69 @@
-# Engineering Portfolio | Oluwatomisin Isogun
+# Portfolio | Oluwatomisin Isogun
 
-A premium, high-performance digital portfolio architected for **Oluwatomisin Isogun**, a Frontend Engineer specializing in building scalable web applications with structural integrity.
+Personal portfolio for Oluwatomisin Isogun, a frontend developer and the founder of Isogun Labs.
+Live at [portfolio.isogunlabs.com](https://portfolio.isogunlabs.com).
 
-## 🚀 Overview
-This project represents a strategic visual and structural revamp, shifting from a traditional portfolio to an impact-focused engineering showcase. It prioritizes performance, type-safe architecture, and a minimalist monochromatic aesthetic that centers on technical excellence.
+## What the site is
 
-## ✨ Key Features
-- **Signature Monochromatic Theme**: A custom-engineered grayscale design system optimized for high contrast and accessibility.
-- **Architectural Hero Section**: Impact-focused branding with integrated profile identification and clear technical positioning.
-- **Dynamic Project Case Studies**: Outcome-oriented narratives focusing on the "Problem-Approach-Result" engineering methodology.
-- **Advanced UX Interaction**: Fluid animations and layout transitions powered by Framer Motion for a sophisticated feel.
-- **Modular Component Architecture**: Built using a dry, scalable approach with Shadcn UI and Radix primitives.
+One home page with four tabs, plus a case-study page per project:
 
-## 🛠️ Engineering Stack
-- **Core Framework**: [React.js](https://reactjs.org/) (v18+)
-- **Build Orchestration**: [Vite](https://vitejs.dev/)
-- **Type Safety**: [TypeScript](https://www.typescriptlang.org/)
-- **System Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Motion Interaction**: [Framer Motion](https://www.framer.com/motion/)
-- **Component Library**: [shadcn/ui](https://ui.shadcn.com/)
-- **State & Forms**: [Zod](https://zod.dev/) + [React Hook Form](https://react-hook-form.com/)
+| Tab | What it shows |
+| --- | --- |
+| Case studies | Every project, newest design first. Each card links to its case-study page. |
+| Work history | Roles at Isogun Labs and AFT Solutions, including the Atlassian Marketplace apps shipped. |
+| Work samples | A shuffled stream of every project screenshot. |
+| Certifications | Certificates, ordered by relevance. |
 
-## 📦 Local Development
+Routes (file-based, TanStack Router):
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/TosinISOGUN/my_portfolio.git
-   ```
+- `/` is the home page (`src/components/sections/ReferencePortfolioHome.tsx`).
+- `/projects/$slug` is a case study (`src/routes/projects/$slug.tsx`).
+- `/projects` redirects to `/`. The old Project Archive page was merged into the Case studies tab.
 
-2. **Install dependencies** (recommended: npm)
-   ```bash
-   npm install
-   ```
+## Stack
 
-3. **Start the development server**
-   ```bash
-   npm run dev
-   ```
+React 19, TypeScript, TanStack Start / Router / Query, Tailwind CSS v4, Framer Motion, Vite.
+Prerendered at build time and deployed to Cloudflare via Nitro.
 
-4. **Production Build**
-   ```bash
-   npm run build
-   ```
+## Develop
 
-## 📬 Professional Contact
-- **Email**: [oluwatomisinisogun@gmail.com](mailto:oluwatomisinisogun@gmail.com)
-- **LinkedIn**: [Oluwatomisin Isogun](https://www.linkedin.com/in/oluwatomisin-isogun-a38740356/)
-- **GitHub**: [@TosinISOGUN](https://github.com/TosinISOGUN)
+```bash
+npm install
+npm run dev          # local dev server
+npm run build        # production build + prerender
+npm run typecheck    # tsc --noEmit
+npm run lint         # eslint
+npm test             # vitest (data integrity checks)
+```
 
----
-Architected & Developed by **Oluwatomisin Isogun** © 2026
+## Content lives in one file
+
+Almost everything you would edit is in `src/data/portfolio.ts`:
+
+- `featuredProjects` sets the **order** of the Case studies tab and the next/previous links.
+- `projectCaseStudies` holds the case-study copy, metrics and screenshot galleries.
+- `workHistory` feeds the Work history tab.
+- `certifications` is built from the files in `src/assets/certifications/`.
+
+`npm test` fails if a project is missing a case study, a gallery or a live link.
+
+## Adding or updating screenshots
+
+1. Drop the PNG screenshots into `src/assets/product_showcase/<project>/`.
+2. Run `npm run optimize:images`. It writes web-sized WebP files next to them and moves the
+   originals to `assets-originals/` (git-ignored, kept locally).
+3. Galleries pick up every `.webp` in the folder automatically. Covers are chosen by file name in
+   `src/data/portfolio.ts` so adding files never shuffles them.
+
+## Adding a project
+
+1. Add a screenshot folder under `src/assets/product_showcase/` and glob it in `portfolio.ts`.
+2. Add an entry to `featuredProjects` (position = order on the site) and `projectCaseStudies`.
+3. Add its `/projects/<slug>` path to `tanstackStart.pages` in `vite.config.ts` and to
+   `public/sitemap.xml` so it is prerendered and indexed.
+
+## Notes
+
+- `public/sw.js` is a small offline service worker. Bump `CACHE_NAME` when you remove or rename
+  cached routes.
+- Line endings: Prettier is set to `endOfLine: "auto"` so Windows checkouts lint cleanly.

@@ -3,7 +3,7 @@ import { ReferencePortfolioHome } from "@/components/sections/ReferencePortfolio
 import { ogImageUrl, siteUrl } from "@/lib/seo";
 
 const homeDescription =
-  "Portfolio of Oluwatomisin Isogun, a frontend developer building booking platforms, landing pages, dashboards, enterprise interfaces, and marketplace products.";
+  "Portfolio of Oluwatomisin Isogun, a frontend developer at AFT Solutions and founder of Isogun Labs, building booking platforms, dashboards, marketplaces, and Atlassian Marketplace apps.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "Selected frontend work across Open School Field, enterprise software, marketplace apps, dashboards, and Isogun Labs products.",
+          "Case studies, work history, and certifications: booking platforms, dashboards, marketplaces, and Atlassian Marketplace apps from Isogun Labs.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: siteUrl },

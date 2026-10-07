@@ -1,10 +1,4 @@
-import {
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowDownToLine, ArrowUpRight, Calendar, Github, Send } from "lucide-react";
@@ -16,13 +10,24 @@ import {
   profile,
   projectCaseStudies,
   skills,
+  workHistory,
+  type WorkHistoryEntry,
 } from "@/data/portfolio";
-import {
-  getPendingCaseStudyReturnView,
-  rememberCaseStudyReturn,
-} from "@/lib/navigation-memory";
+import { getPendingCaseStudyReturnView, rememberCaseStudyReturn } from "@/lib/navigation-memory";
 
-type ViewMode = "samples" | "case-studies" | "certifications";
+type ViewMode = "case-studies" | "work-history" | "samples" | "certifications";
+type CaseStudy = (typeof projectCaseStudies)[number];
+type CaseStudyCardProject = (typeof featuredProjects)[number] & {
+  caseStudy: CaseStudy | undefined;
+};
+
+const viewOrder: ViewMode[] = ["case-studies", "work-history", "samples", "certifications"];
+const viewLabels: Record<ViewMode, string> = {
+  "case-studies": "Case studies",
+  "work-history": "Work history",
+  samples: "Work samples",
+  certifications: "Certifications",
+};
 
 const bookingUrl = "https://cal.com/oluwatomisin-isogun-disku5/30min?overlayCalendar=true";
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
@@ -50,18 +55,21 @@ export function ReferencePortfolioHome() {
     const screens = projectCaseStudies.flatMap((project) =>
       project.gallery.map((image, index) => ({
         image,
-        title: `${project.title} interface ${index + 1}`,
+        title: `${project.title} screenshot ${index + 1} of ${project.gallery.length}`,
         sortKey: `${project.slug}-${index}`,
       })),
     );
 
-    return screens.sort((first, second) => getShuffleRank(first.sortKey) - getShuffleRank(second.sortKey));
+    return screens.sort(
+      (first, second) => getShuffleRank(first.sortKey) - getShuffleRank(second.sortKey),
+    );
   }, []);
 
   const orderedCertifications = useMemo(
     () =>
       [...certifications].sort(
-        (first, second) => getCertificationPriority(first.title) - getCertificationPriority(second.title),
+        (first, second) =>
+          getCertificationPriority(first.title) - getCertificationPriority(second.title),
       ),
     [],
   );
@@ -87,6 +95,10 @@ export function ReferencePortfolioHome() {
 
         <section
           ref={contentScrollRef}
+          id="portfolio-panel"
+          role="tabpanel"
+          aria-labelledby={`tab-${view}`}
+          tabIndex={0}
           data-case-study-scroll-root="home-work"
           data-case-study-return-view={view}
           className="min-w-0 border-[#111111]/10 lg:h-screen lg:overflow-y-auto lg:border-l"
@@ -96,6 +108,7 @@ export function ReferencePortfolioHome() {
           </div>
 
           <div className="px-3 py-4 sm:px-8 sm:py-5 lg:px-8">
+            <h2 className="sr-only">{viewLabels[view]}</h2>
             <AnimatePresence mode="wait">
               {view === "samples" ? (
                 <motion.div
@@ -121,6 +134,19 @@ export function ReferencePortfolioHome() {
                 >
                   {workSamples.map((project, index) => (
                     <CaseStudyCard key={project.title} project={project} index={index} />
+                  ))}
+                </motion.div>
+              ) : view === "work-history" ? (
+                <motion.div
+                  key="work-history"
+                  className="grid gap-8"
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -14 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  {workHistory.map((entry) => (
+                    <WorkHistoryCard key={`${entry.company}-${entry.role}`} entry={entry} />
                   ))}
                 </motion.div>
               ) : (
@@ -194,7 +220,9 @@ function IdentityPanel() {
           </h2>
 
           <p className="mt-7 max-w-[445px] text-[1.06rem] font-medium leading-[1.42] tracking-[-0.045em] text-[#111111]/58 lg:mt-4 lg:max-w-[350px] lg:text-[0.84rem] lg:leading-[1.3] xl:mt-5 xl:max-w-[390px] xl:text-[0.95rem]">
-            I build React and TypeScript interfaces that feel premium and turn complex workflows into actual product momentum. I care about the small stuff, spacing, states, performance, and the one extra click that should not be there.
+            I build React and TypeScript interfaces that feel premium and turn complex workflows
+            into actual product momentum. I care about the small stuff, spacing, states,
+            performance, and the one extra click that should not be there.
           </p>
 
           <div className="sam-stack-block mt-6 max-w-[390px] lg:mt-3 xl:mt-4">
@@ -223,7 +251,10 @@ function IdentityPanel() {
               <Calendar className="h-[18px] w-[18px]" aria-hidden />
               Book a call
             </a>
-            <a href={`mailto:${profile.email}`} className="sam-pill sam-tilt-button bg-[#ededed] text-[#1a1a1a] hover:bg-white">
+            <a
+              href={`mailto:${profile.email}`}
+              className="sam-pill sam-tilt-button bg-[#ededed] text-[#1a1a1a] hover:bg-white"
+            >
               <Send className="h-[18px] w-[18px]" aria-hidden />
               Message me
             </a>
@@ -248,7 +279,13 @@ function IdentityPanel() {
           got a project in mind? let's chat :)
         </p>
         <div className="mt-5 flex flex-wrap gap-3 lg:mt-2 lg:gap-2 xl:mt-3">
-          <a href={profile.github} target="_blank" rel="noreferrer" className="sam-social-pill" aria-label="GitHub">
+          <a
+            href={profile.github}
+            target="_blank"
+            rel="noreferrer"
+            className="sam-social-pill"
+            aria-label="GitHub"
+          >
             <Github className="h-4 w-4" aria-hidden />
           </a>
           <a href={profile.linkedin} target="_blank" rel="noreferrer" className="sam-social-pill">
@@ -260,7 +297,6 @@ function IdentityPanel() {
           <a href={`mailto:${profile.email}`} className="sam-social-pill">
             Email
           </a>
-
         </div>
       </div>
     </motion.aside>
@@ -332,11 +368,11 @@ function DevJokeTicker() {
       <div className="relative mt-2 min-h-[44px] overflow-hidden lg:min-h-[34px] xl:min-h-[52px]">
         <AnimatePresence mode="wait" initial={false}>
           <motion.p
-            key={devJokes[index]}
+            key={devJokes[index] ?? index}
             className="text-[0.88rem] font-medium leading-[1.35] tracking-[-0.035em] text-[#111111]/45 lg:text-[0.78rem] lg:leading-[1.25] xl:text-[0.95rem] xl:leading-[1.35]"
             initial={reduce ? false : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={reduce ? undefined : { opacity: 0, y: -8 }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
           >
             {devJokes[index]}
@@ -366,23 +402,25 @@ function ViewSwitcher({
   onChange: (value: ViewMode) => void;
 }) {
   return (
-    <div className="relative flex h-[32px] w-fit min-w-[370px] max-w-full items-center rounded-full bg-[#ededed] p-0 sm:h-[34px] max-[520px]:min-w-0 max-[520px]:w-full">
-      {(["case-studies", "samples", "certifications"] as const).map((item) => {
+    <div
+      role="tablist"
+      aria-label="Portfolio sections"
+      className="relative flex h-[32px] w-fit min-w-[470px] max-w-full items-center overflow-x-auto rounded-full bg-[#ededed] p-0 sm:h-[34px] max-[520px]:min-w-0 max-[520px]:w-full"
+    >
+      {viewOrder.map((item) => {
         const active = value === item;
-        const label =
-          item === "samples"
-            ? "Work samples"
-            : item === "case-studies"
-              ? "Case studies"
-              : "Certifications";
 
         return (
           <button
             key={item}
+            id={`tab-${item}`}
             type="button"
+            role="tab"
+            aria-selected={active}
+            aria-controls="portfolio-panel"
             onClick={() => onChange(item)}
-            className={`relative z-10 h-full flex-1 rounded-full px-2 text-[0.7rem] font-medium tracking-[-0.035em] transition-colors sm:px-4 sm:text-[0.78rem] ${
-              active ? "text-white" : "text-[#111111]/34 hover:text-[#111111]/70"
+            className={`relative z-10 h-full flex-1 whitespace-nowrap rounded-full px-2 text-[0.7rem] font-medium tracking-[-0.035em] transition-colors sm:px-4 sm:text-[0.78rem] ${
+              active ? "text-white" : "text-[#111111]/50 hover:text-[#111111]/80"
             }`}
           >
             {active ? (
@@ -392,7 +430,7 @@ function ViewSwitcher({
                 transition={{ type: "spring", stiffness: 420, damping: 35 }}
               />
             ) : null}
-            {label}
+            {viewLabels[item]}
           </button>
         );
       })}
@@ -429,15 +467,89 @@ function WorkSampleCard({
   );
 }
 
-function CaseStudyCard({
-  project,
-  index,
-}: {
-  project: (typeof featuredProjects)[number] & {
-    caseStudy?: (typeof projectCaseStudies)[number];
-  };
-  index: number;
-}) {
+function WorkHistoryCard({ entry }: { entry: WorkHistoryEntry }) {
+  const reduce = useReducedMotion();
+
+  return (
+    <motion.article
+      className="overflow-hidden rounded-[26px] bg-[#ededed] p-5 text-[#111111] sm:p-7"
+      initial={reduce ? false : { opacity: 0, y: 42, scale: 0.96 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.28 }}
+      transition={{ duration: 0.68, type: "spring", bounce: 0.1 }}
+    >
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="rounded-full bg-white px-3 py-1 text-[0.78rem] font-semibold tracking-[-0.02em] text-[#111111]/55">
+          {entry.period}
+        </span>
+        <span className="rounded-full bg-white px-3 py-1 text-[0.78rem] font-semibold tracking-[-0.02em] text-[#111111]/55">
+          {entry.role}
+        </span>
+      </div>
+
+      <h3 className="mt-5 text-[clamp(2.15rem,8vw,4.8rem)] font-semibold leading-[0.9] tracking-[-0.085em]">
+        {entry.company}
+      </h3>
+      <p className="mt-5 max-w-3xl text-[1rem] font-medium leading-7 tracking-[-0.035em] text-[#111111]/60 sm:text-[1.08rem]">
+        {entry.summary}
+      </p>
+
+      <ul className="mt-5 flex flex-wrap gap-2" aria-label={`${entry.company} stack`}>
+        {entry.stack.map((item) => (
+          <li
+            key={item}
+            className="rounded-full bg-white px-3 py-1.5 text-[0.82rem] font-semibold tracking-[-0.02em] text-[#111111]/58"
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+
+      <ul className="mt-6 grid max-w-3xl gap-3">
+        {entry.points.map((point) => (
+          <li
+            key={point}
+            className="rounded-[18px] bg-white px-4 py-3 text-[0.95rem] font-medium leading-6 tracking-[-0.03em] text-[#111111]/70"
+          >
+            {point}
+          </li>
+        ))}
+      </ul>
+
+      {entry.products?.length ? (
+        <div className="mt-6">
+          <p className="text-[0.84rem] font-semibold tracking-[-0.03em] text-[#111111]/45">
+            Shipped products
+          </p>
+          <div className="mt-3 flex flex-wrap gap-3">
+            {entry.products.map((product) => (
+              <a
+                key={product.name}
+                href={product.href}
+                target="_blank"
+                rel="noreferrer"
+                className="group grid max-w-sm gap-1 rounded-[18px] bg-white px-4 py-3 transition-transform hover:-translate-y-0.5"
+              >
+                <span className="flex items-center justify-between gap-4 text-[1rem] font-semibold tracking-[-0.04em]">
+                  {product.name}
+                  <ArrowUpRight
+                    className="h-4 w-4 text-[#111111]/50 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    aria-hidden
+                  />
+                </span>
+                <span className="text-[0.88rem] font-medium leading-5 tracking-[-0.03em] text-[#111111]/55">
+                  {product.description}
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      ) : null}
+    </motion.article>
+  );
+}
+
+function CaseStudyCard({ project, index }: { project: CaseStudyCardProject; index: number }) {
   const reduce = useReducedMotion();
   const caseStudy = project.caseStudy;
   const orderedImages = getLandingFirstImages(project);
@@ -461,7 +573,7 @@ function CaseStudyCard({
         {cover ? (
           <img
             src={cover}
-            alt=""
+            alt={`${project.title} interface preview`}
             className="aspect-[1.55/1] w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.015] md:aspect-[2.15/1]"
             loading="lazy"
             decoding="async"
@@ -553,19 +665,18 @@ function CaseStudyCard({
 }
 
 function getShuffleRank(value: string) {
-  return Array.from(value).reduce((rank, char, index) => rank + char.charCodeAt(0) * (index + 17), 0) % 997;
+  return (
+    Array.from(value).reduce((rank, char, index) => rank + char.charCodeAt(0) * (index + 17), 0) %
+    997
+  );
 }
 
-function getLandingFirstImages(
-  project: (typeof featuredProjects)[number] & {
-    caseStudy?: (typeof projectCaseStudies)[number];
-  },
-) {
-  const preferredCover = project.caseStudy?.cover ?? project.cover;
+function getLandingFirstImages(project: CaseStudyCardProject) {
   const gallery = project.caseStudy?.gallery.filter(Boolean) ?? [];
+  const preferredCover = project.caseStudy?.cover ?? gallery[0];
   const remaining = gallery.filter((image) => image !== preferredCover);
 
-  return [preferredCover, ...remaining].filter(Boolean);
+  return [preferredCover, ...remaining].filter((image): image is string => Boolean(image));
 }
 
 function getCertificationPriority(title: string) {
@@ -580,18 +691,5 @@ function getCertificationPriority(title: string) {
 }
 
 function isViewMode(value: unknown): value is ViewMode {
-  return value === "samples" || value === "case-studies" || value === "certifications";
+  return viewOrder.some((item) => item === value);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

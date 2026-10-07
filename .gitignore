@@ -17,6 +17,7 @@ dist-ssr
 *.local
 .lovable
 .env.example
+roadmap.md
 
 # Wrangler / Cloudflare
 .wrangler/

@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   certifications,
   featuredProjects,
+  getHeroRank,
+  getImageSize,
   projectCaseStudies,
   workHistory,
 } from "@/data/portfolio";
@@ -65,5 +67,30 @@ describe("portfolio data", () => {
 
   it("loads the certificates", () => {
     expect(certifications.length).toBeGreaterThan(0);
+  });
+
+  it("knows the size of every screenshot and certificate (run npm run optimize:images if not)", () => {
+    const images = [
+      ...projectCaseStudies.flatMap((study) => study.gallery),
+      ...certifications.map((certificate) => certificate.image),
+    ];
+
+    for (const image of images) {
+      const size = getImageSize(image);
+      expect(size, `size for ${image}`).toBeDefined();
+      expect(size?.width).toBeGreaterThan(0);
+      expect(size?.height).toBeGreaterThan(0);
+    }
+  });
+
+  it("has a hero-section screenshot for every project, ranked in Case Studies order", () => {
+    featuredProjects.forEach((project, order) => {
+      const study = projectCaseStudies.find((item) => item.slug === project.slug);
+      const ranks = (study?.gallery ?? [])
+        .map((image) => getHeroRank(image))
+        .filter((rank): rank is number => rank !== undefined);
+
+      expect(ranks, `${project.slug} hero`).toContain(order);
+    });
   });
 });

@@ -1,12 +1,14 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { ArrowDownToLine, ArrowUpRight, Calendar, Github, Send } from "lucide-react";
 import resumePdf from "@/assets/OLUWATOMISIN_ISOGUN_RESUME.pdf";
+import { SkeletonImage } from "@/components/SkeletonImage";
 import profilePhoto from "@/assets/Photograph - Oluwatomisin Isogun.jpg";
 import {
   certifications,
   featuredProjects,
+  getHeroRank,
   profile,
   projectCaseStudies,
   skills,
@@ -56,13 +58,21 @@ export function ReferencePortfolioHome() {
       project.gallery.map((image, index) => ({
         image,
         title: `${project.title} screenshot ${index + 1} of ${project.gallery.length}`,
+        project: project.title,
+        slug: project.slug,
+        position: index + 1,
+        total: project.gallery.length,
         sortKey: `${project.slug}-${index}`,
       })),
     );
 
-    return screens.sort(
-      (first, second) => getShuffleRank(first.sortKey) - getShuffleRank(second.sortKey),
-    );
+    // Hero sections lead (one per project, then the extra hero variants); the rest are shuffled.
+    return screens.sort((first, second) => {
+      const firstRank = getHeroRank(first.image) ?? Number.POSITIVE_INFINITY;
+      const secondRank = getHeroRank(second.image) ?? Number.POSITIVE_INFINITY;
+      if (firstRank !== secondRank) return firstRank < secondRank ? -1 : 1;
+      return getShuffleRank(first.sortKey) - getShuffleRank(second.sortKey);
+    });
   }, []);
 
   const orderedCertifications = useMemo(
@@ -90,7 +100,7 @@ export function ReferencePortfolioHome() {
 
   return (
     <main className="sam-page min-h-screen bg-white text-[#111111] lg:h-screen lg:overflow-hidden">
-      <div className="grid min-h-screen lg:grid-cols-[22vw_minmax(0,1fr)] xl:grid-cols-[460px_minmax(0,1fr)]">
+      <div className="grid min-h-screen lg:grid-cols-[clamp(300px,26vw,380px)_minmax(0,1fr)] xl:grid-cols-[460px_minmax(0,1fr)]">
         <IdentityPanel />
 
         <section
@@ -157,29 +167,18 @@ export function ReferencePortfolioHome() {
               ) : (
                 <motion.div
                   key="certifications"
-                  className="grid gap-8"
+                  className="grid gap-8 overflow-x-clip py-2"
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -14 }}
                   transition={{ duration: 0.25 }}
                 >
-                  {orderedCertifications.map((certificate) => (
-                    <motion.article
+                  {orderedCertifications.map((certificate, index) => (
+                    <CertificateCard
                       key={certificate.image}
-                      className="overflow-hidden rounded-[26px] bg-[#ededed] p-2 sm:p-3"
-                      initial={reduce ? false : { opacity: 0, scale: 0.94, y: 38 }}
-                      whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.3 }}
-                      transition={{ duration: 0.68, type: "spring", bounce: 0.1 }}
-                    >
-                      <img
-                        src={certificate.image}
-                        alt={certificate.title}
-                        className="h-auto w-full rounded-[20px] bg-white object-contain object-center"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </motion.article>
+                      certificate={certificate}
+                      index={index}
+                    />
                   ))}
                 </motion.div>
               )}
@@ -196,7 +195,7 @@ function IdentityPanel() {
 
   return (
     <motion.aside
-      className="sam-identity-panel flex min-h-0 flex-col gap-12 px-8 py-8 sm:px-10 sm:py-10 lg:h-screen lg:min-h-0 lg:justify-between lg:gap-0 lg:overflow-hidden lg:px-8 lg:py-2 xl:px-8 xl:py-5"
+      className="sam-identity-panel flex min-h-0 flex-col gap-12 px-8 py-8 sm:px-10 sm:py-10 lg:h-screen lg:min-h-0 lg:justify-between lg:gap-0 lg:overflow-y-auto lg:[scrollbar-width:thin] lg:px-8 lg:py-2 xl:px-8 xl:py-5"
       initial={reduce ? false : { opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.75, type: "spring", bounce: 0, stiffness: 90 }}
@@ -269,10 +268,13 @@ function IdentityPanel() {
             href={resumePdf}
             target="_blank"
             rel="noreferrer"
-            className="mt-2 inline-flex items-center gap-2 py-2.5 text-[0.95rem] font-semibold tracking-[-0.035em] text-[#111111]/54 transition-colors hover:text-[#111111] lg:mt-2 lg:py-0 lg:text-[0.82rem] xl:mt-3 xl:text-[0.9rem]"
+            className="sam-resume group mt-3 inline-flex items-center gap-2 rounded-full border border-[#111111]/25 bg-white px-4 py-2 text-[0.92rem] font-semibold tracking-[-0.035em] text-[#111111] transition-colors hover:bg-[#1a1a1a] hover:text-white lg:mt-1.5 lg:px-3 lg:py-1 lg:text-[0.8rem] xl:mt-2 xl:px-3.5 xl:py-1 xl:text-[0.88rem]"
           >
-            <ArrowDownToLine className="h-4 w-4" aria-hidden />
+            <ArrowDownToLine className="sam-resume-icon h-4 w-4" aria-hidden />
             View resume
+            <span className="rounded-full bg-[#00d45a]/18 px-1.5 py-0.5 font-mono text-[0.6rem] font-bold uppercase tracking-[0.08em] text-[#0a6b34] transition-colors group-hover:bg-white/15 group-hover:text-[#7dffb0]">
+              PDF
+            </span>
           </a>
 
           <DevJokeTicker />
@@ -443,32 +445,118 @@ function ViewSwitcher({
   );
 }
 
+function CertificateCard({
+  certificate,
+  index,
+}: {
+  certificate: (typeof certifications)[number];
+  index: number;
+}) {
+  const reduce = useReducedMotion();
+  const fromLeft = index % 2 === 0;
+
+  return (
+    <motion.article
+      className="group rounded-[26px] bg-[#ededed] p-2 sm:p-3"
+      initial={
+        reduce
+          ? false
+          : { opacity: 0, x: fromLeft ? -44 : 44, y: 34, rotate: fromLeft ? -3.5 : 3.5 }
+      }
+      whileInView={{ opacity: 1, x: 0, y: 0, rotate: 0 }}
+      whileHover={reduce ? {} : { y: -6, scale: 1.012 }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={{ type: "spring", stiffness: 90, damping: 14 }}
+    >
+      <SkeletonImage
+        src={certificate.image}
+        alt={certificate.title}
+        className="rounded-[20px] bg-white"
+      />
+      <motion.div
+        className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-2 pb-1 pt-3 sm:px-1"
+        initial={reduce ? false : { opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.25 }}
+        transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
+      >
+        <p className="min-w-0 text-[0.92rem] font-semibold tracking-[-0.035em]">
+          {certificate.issuer}
+          <span className="font-medium text-[#111111]/50"> · {certificate.signal}</span>
+        </p>
+        <span className="rounded-full bg-white px-3 py-1 text-[0.74rem] font-semibold tracking-[-0.02em] text-[#111111]/55">
+          {certificate.theme}
+        </span>
+      </motion.div>
+    </motion.article>
+  );
+}
+
 function WorkSampleCard({
   sample,
 }: {
   sample: {
     image: string;
     title: string;
+    project: string;
+    slug: string;
+    position: number;
+    total: number;
   };
 }) {
   const reduce = useReducedMotion();
+  const ease = [0.22, 1, 0.36, 1] as const;
+
+  // Visibility is tracked on an unclipped wrapper. Observing an element that is itself clipped
+  // away (clip-path) never reports it as visible, so the reveal would never start.
+  const ref = useRef<HTMLDivElement>(null);
+  const seen = useInView(ref, { once: true, amount: 0.12 });
+  const show = reduce || seen;
 
   return (
-    <motion.article
-      className="overflow-hidden rounded-[24px] bg-[#ededed] p-1 sm:p-2"
-      initial={reduce ? false : { opacity: 0, scale: 0.92, y: 46 }}
-      whileInView={{ opacity: 1, scale: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.34 }}
-      transition={{ duration: 0.72, type: "spring", bounce: 0.12 }}
-    >
-      <img
-        src={sample.image}
-        alt={sample.title}
-        className="h-auto w-full rounded-[20px] bg-white object-contain object-center"
-        loading="lazy"
-        decoding="async"
-      />
-    </motion.article>
+    <div ref={ref}>
+      <motion.article
+        className="relative rounded-[24px] bg-[#ededed] p-1 sm:p-2"
+        initial={false}
+        animate={
+          show
+            ? { clipPath: "inset(0 0 0% 0 round 24px)", y: 0 }
+            : { clipPath: "inset(0 0 100% 0 round 24px)", y: 36 }
+        }
+        transition={{ duration: reduce ? 0 : 0.95, ease }}
+      >
+        <div className="relative overflow-hidden rounded-[20px] bg-white">
+          <motion.div
+            initial={false}
+            animate={
+              show ? { scale: 1, filter: "grayscale(0)" } : { scale: 1.14, filter: "grayscale(1)" }
+            }
+            transition={{ duration: reduce ? 0 : 1.2, ease }}
+          >
+            <SkeletonImage src={sample.image} alt={sample.title} />
+          </motion.div>
+          <motion.div
+            className="absolute left-3 top-3"
+            initial={false}
+            animate={show ? { x: 0, opacity: 1 } : { x: -24, opacity: 0 }}
+            transition={{ duration: reduce ? 0 : 0.6, ease, delay: reduce ? 0 : 0.55 }}
+          >
+            <Link
+              to="/projects/$slug"
+              params={{ slug: sample.slug }}
+              onClick={rememberCaseStudyReturn}
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#1a1a1a]/88 px-3 py-1.5 text-[0.74rem] font-semibold tracking-[-0.02em] text-white backdrop-blur-sm transition-colors hover:bg-black"
+              aria-label={`${sample.project}, screenshot ${sample.position} of ${sample.total}. Open case study`}
+            >
+              {sample.project}
+              <span className="font-mono text-[0.66rem] text-white/55">
+                {sample.position}/{sample.total}
+              </span>
+            </Link>
+          </motion.div>
+        </div>
+      </motion.article>
+    </div>
   );
 }
 

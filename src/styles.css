@@ -778,3 +778,47 @@ button:focus-visible,
     opacity: 0.4;
   }
 }
+
+/* Resume button: a soft ring pulse and a nudging download arrow to draw the eye. */
+@keyframes sam-resume-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgb(17 17 17 / 0.3);
+  }
+
+  70%,
+  100% {
+    box-shadow: 0 0 0 11px rgb(17 17 17 / 0);
+  }
+}
+
+@keyframes sam-resume-nudge {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+
+  30% {
+    transform: translateY(3px);
+  }
+}
+
+.sam-resume {
+  animation: sam-resume-ring 2.6s ease-out infinite;
+}
+
+.sam-resume-icon {
+  animation: sam-resume-nudge 2.6s ease-in-out infinite;
+}
+
+.sam-resume:hover,
+.sam-resume:focus-visible {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sam-resume,
+  .sam-resume-icon {
+    animation: none;
+  }
+}

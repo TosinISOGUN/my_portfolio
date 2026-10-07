@@ -3,15 +3,32 @@ import infinitativeLogo from "@/assets/portfolio/infinitative.svg";
 import learncityLogo from "@/assets/portfolio/LC_logo.png";
 import nachieLogo from "@/assets/portfolio/nachie_maridadi_favicon.png";
 import oyoLogo from "@/assets/portfolio/oyo-state-logo-card.png";
+import { imageSizes } from "./image-sizes.generated";
 
 type ScreenshotModule = Record<string, string>;
+export type ImageSize = { width: number; height: number };
 
-const getScreens = (modules: ScreenshotModule) =>
-  Object.entries(modules)
+// Maps a built image URL to its pixel size, so components can reserve space before it loads.
+const sizeByUrl = new Map<string, ImageSize>();
+
+const registerSizes = (modules: ScreenshotModule) => {
+  for (const [path, url] of Object.entries(modules)) {
+    const size = imageSizes[path.replace("../assets/", "")];
+    if (size) sizeByUrl.set(url, size);
+  }
+};
+
+export const getImageSize = (src: string) => sizeByUrl.get(src);
+
+const getScreens = (modules: ScreenshotModule) => {
+  registerSizes(modules);
+
+  return Object.entries(modules)
     .sort(([first], [second]) =>
       first.localeCompare(second, undefined, { numeric: true, sensitivity: "base" }),
     )
     .map(([, image]) => image);
+};
 
 const openSchoolFieldModules = import.meta.glob(
   "../assets/product_showcase/open school field/*.webp",
@@ -93,13 +110,14 @@ const thomasonScreens = getScreens(
   }) as ScreenshotModule,
 );
 
-const certificationModules = Object.entries(
-  import.meta.glob("../assets/certifications/*.{png,jpeg,jpg}", {
-    eager: true,
-    import: "default",
-    query: "?url",
-  }) as ScreenshotModule,
-).sort(([first], [second]) =>
+const certificationFiles = import.meta.glob("../assets/certifications/*.{png,jpeg,jpg}", {
+  eager: true,
+  import: "default",
+  query: "?url",
+}) as ScreenshotModule;
+registerSizes(certificationFiles);
+
+const certificationModules = Object.entries(certificationFiles).sort(([first], [second]) =>
   first.localeCompare(second, undefined, { numeric: true, sensitivity: "base" }),
 );
 
@@ -816,3 +834,54 @@ export const projectCaseStudies = [
     gallery: nachieScreens,
   },
 ];
+
+// Hero sections: the first full-width landing screen of each project. The Work samples tab shows
+// one hero per project first (in Case Studies order), then the extra hero variants, then the rest.
+const showcaseFiles = import.meta.glob("../assets/product_showcase/*/*.webp", {
+  eager: true,
+  import: "default",
+  query: "?url",
+}) as ScreenshotModule;
+
+const heroSources: Record<string, { folder: string; primary: string; extra?: string[] }> = {
+  "nachie-maridadi": { folder: "nachie maridadi", primary: "Screenshot (271).webp" },
+  "open-school-field": {
+    folder: "open school field",
+    primary: "Screenshot (261).webp",
+    extra: ["Screenshot (270).webp"],
+  },
+  infinitative: { folder: "infinitative", primary: "Screenshot 2026-09-11 121132.webp" },
+  oyobooking: { folder: "oyobooking", primary: "Screenshot (258).webp" },
+  payflow: { folder: "payflow", primary: "Screenshot (297).webp" },
+  samsoni: {
+    folder: "samsoni",
+    primary: "Screenshot 2026-09-20 121521.webp",
+    extra: ["Screenshot 2026-09-20 121514.webp", "Screenshot 2026-09-20 121550.webp"],
+  },
+  thomason: {
+    folder: "thomason",
+    primary: "Screenshot (306).webp",
+    extra: ["Screenshot (307).webp", "Screenshot (308).webp"],
+  },
+  "c-homes": { folder: "c-homes", primary: "Screenshot (274).webp" },
+  learncity: { folder: "learncity", primary: "Screenshot (278).webp" },
+};
+
+const heroRankByUrl = new Map<string, number>();
+featuredProjects.forEach((project, order) => {
+  const source = heroSources[project.slug];
+  if (!source) return;
+
+  const urlFor = (file: string) =>
+    showcaseFiles[`../assets/product_showcase/${source.folder}/${file}`];
+
+  const primary = urlFor(source.primary);
+  if (primary) heroRankByUrl.set(primary, order);
+  (source.extra ?? []).forEach((file, index) => {
+    const url = urlFor(file);
+    if (url) heroRankByUrl.set(url, 1000 + order * 10 + index);
+  });
+});
+
+/** Lower rank = shown earlier. Undefined means the screenshot is not a hero section. */
+export const getHeroRank = (src: string) => heroRankByUrl.get(src);

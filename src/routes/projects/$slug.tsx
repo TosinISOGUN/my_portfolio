@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect } from "react";
 import { Link, createFileRoute, notFound, useRouter } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Github } from "lucide-react";
+import { SkeletonImage } from "@/components/SkeletonImage";
 import { featuredProjects, projectCaseStudies } from "@/data/portfolio";
 import { absoluteUrl } from "@/lib/seo";
 import { prepareCaseStudyReturnRestore } from "@/lib/navigation-memory";
@@ -227,13 +228,11 @@ function ProjectCaseStudyPage() {
 
           <div className="grid gap-4">
             {project.gallery.map((image, index) => (
-              <img
+              <SkeletonImage
                 key={`${project.slug}-${index}`}
                 src={image}
                 alt={`${project.title} screenshot ${index + 1} of ${project.gallery.length}`}
-                className="h-auto w-full rounded-[31px] bg-[#ededed] object-contain"
-                loading="lazy"
-                decoding="async"
+                className="rounded-[31px] bg-[#ededed]"
               />
             ))}
           </div>

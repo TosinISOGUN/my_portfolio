@@ -50,8 +50,11 @@ Almost everything you would edit is in `src/data/portfolio.ts`:
 ## Adding or updating screenshots
 
 1. Drop the PNG screenshots into `src/assets/product_showcase/<project>/`.
-2. Run `npm run optimize:images`. It writes web-sized WebP files next to them and moves the
-   originals to `assets-originals/` (git-ignored, kept locally).
+2. Run `npm run optimize:images`. It writes web-sized WebP files next to them, moves the
+   originals to `assets-originals/` (git-ignored, kept locally), and records every image's pixel
+   size in `src/data/image-sizes.generated.ts`. The site uses those sizes to reserve space and show
+   a skeleton while an image loads (`src/components/SkeletonImage.tsx`). Run it after adding a
+   certificate too.
 3. Galleries pick up every `.webp` in the folder automatically. Covers are chosen by file name in
    `src/data/portfolio.ts` so adding files never shuffles them.
 

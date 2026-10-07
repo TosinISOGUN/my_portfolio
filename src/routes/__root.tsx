@@ -188,13 +188,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "canonical", href: siteUrl },
     ],
-
   }),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
+
+// Cloudflare Web Analytics: free, cookie-less. The site token is public (it is visible in the
+// page source), so it ships as the default. Override with VITE_CF_ANALYTICS_TOKEN at build time,
+// or set it to an empty string to turn analytics off. Production builds only.
+const analyticsToken = import.meta.env.PROD
+  ? ((import.meta.env["VITE_CF_ANALYTICS_TOKEN"] as string | undefined) ??
+    "7c976b29e437431eb264f9bd4046f32c")
+  : "";
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
@@ -211,6 +218,13 @@ function RootShell({ children }: { children: ReactNode }) {
         {children}
         <Scripts />
         <script src="/register-sw.js" defer />
+        {analyticsToken ? (
+          <script
+            type="module"
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: analyticsToken })}
+          />
+        ) : null}
       </body>
     </html>
   );

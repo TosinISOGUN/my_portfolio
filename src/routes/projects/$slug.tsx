@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect } from "react";
-import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
-import { ArrowLeft, ArrowUpRight, Github, Store } from "lucide-react";
-import { projectCaseStudies } from "@/data/portfolio";
+import { Link, createFileRoute, notFound, useRouter } from "@tanstack/react-router";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Github } from "lucide-react";
+import { featuredProjects, projectCaseStudies } from "@/data/portfolio";
 import { absoluteUrl } from "@/lib/seo";
 import { prepareCaseStudyReturnRestore } from "@/lib/navigation-memory";
 
@@ -14,6 +14,8 @@ export const Route = createFileRoute("/projects/$slug")({
     return project;
   },
   head: ({ loaderData }) => {
+    if (!loaderData) return {};
+
     const projectUrl = absoluteUrl(`/projects/${loaderData.slug}`);
     const projectImageUrl = absoluteUrl(loaderData.cover);
     const title = `${loaderData.title} - Case Study - Oluwatomisin Isogun`;
@@ -48,6 +50,15 @@ function ProjectCaseStudyPage() {
   const project = Route.useLoaderData();
   const router = useRouter();
 
+  // Neighbours follow the order of the Case Studies tab on the home page.
+  const order = featuredProjects.map((item) => item.slug);
+  const position = order.indexOf(project.slug);
+  const previousSlug = position > 0 ? order[position - 1] : undefined;
+  const nextSlug = position >= 0 && position < order.length - 1 ? order[position + 1] : undefined;
+  const previousProject = featuredProjects.find((item) => item.slug === previousSlug);
+  const nextProject = featuredProjects.find((item) => item.slug === nextSlug);
+  const details = featuredProjects.find((item) => item.slug === project.slug);
+
   useIsomorphicLayoutEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [project.slug]);
@@ -66,11 +77,7 @@ function ProjectCaseStudyPage() {
     <main className="sam-page min-h-dvh bg-[#f7f7f5] px-5 py-6 text-[#111111] sm:px-8 sm:py-8">
       <div className="mx-auto max-w-[1180px]">
         <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <button
-            type="button"
-            onClick={handleBack}
-            className="sam-social-pill w-fit gap-2"
-          >
+          <button type="button" onClick={handleBack} className="sam-social-pill w-fit gap-2">
             <ArrowLeft className="h-4 w-4" aria-hidden />
             Back
           </button>
@@ -95,17 +102,6 @@ function ProjectCaseStudyPage() {
                 <Github className="h-4 w-4" aria-hidden />
               </a>
             ) : null}
-            {project.marketplaceUrl ? (
-              <a
-                href={project.marketplaceUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="sam-social-pill"
-                aria-label="Open marketplace listing"
-              >
-                <Store className="h-4 w-4" aria-hidden />
-              </a>
-            ) : null}
           </div>
         </header>
 
@@ -122,20 +118,47 @@ function ProjectCaseStudyPage() {
                 {project.summary}
               </p>
             </div>
-            <aside className="rounded-[31px] bg-[#ededed] p-5">
-              <p className="text-[0.92rem] font-semibold tracking-[-0.03em] text-[#111111]/42">
-                Role
-              </p>
-              <p className="mt-2 text-[1.2rem] font-semibold tracking-[-0.045em]">
-                {project.role}
-              </p>
+            <aside className="grid gap-5 rounded-[31px] bg-[#ededed] p-5">
+              <div>
+                <p className="text-[0.92rem] font-semibold tracking-[-0.03em] text-[#111111]/42">
+                  Role
+                </p>
+                <p className="mt-2 text-[1.2rem] font-semibold tracking-[-0.045em]">
+                  {project.role}
+                </p>
+              </div>
+              <div>
+                <p className="text-[0.92rem] font-semibold tracking-[-0.03em] text-[#111111]/42">
+                  Year
+                </p>
+                <p className="mt-2 text-[1.2rem] font-semibold tracking-[-0.045em]">
+                  {project.year}
+                </p>
+              </div>
+              {details ? (
+                <div>
+                  <p className="text-[0.92rem] font-semibold tracking-[-0.03em] text-[#111111]/42">
+                    Stack
+                  </p>
+                  <ul className="mt-2 flex flex-wrap gap-2">
+                    {details.tags.map((tag) => (
+                      <li
+                        key={tag}
+                        className="rounded-full bg-white px-3 py-1.5 text-[0.82rem] font-semibold tracking-[-0.02em] text-[#111111]/60"
+                      >
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
             </aside>
           </div>
         </section>
 
         <img
           src={project.cover}
-          alt=""
+          alt={`${project.title} cover screenshot`}
           className="aspect-[2.28/1] w-full rounded-[31px] object-cover object-top"
           decoding="async"
         />
@@ -207,14 +230,52 @@ function ProjectCaseStudyPage() {
               <img
                 key={`${project.slug}-${index}`}
                 src={image}
-                alt=""
-                className="aspect-[16/10] w-full rounded-[31px] bg-[#ededed] object-cover object-top"
+                alt={`${project.title} screenshot ${index + 1} of ${project.gallery.length}`}
+                className="h-auto w-full rounded-[31px] bg-[#ededed] object-contain"
                 loading="lazy"
                 decoding="async"
               />
             ))}
           </div>
         </section>
+
+        <nav
+          aria-label="More case studies"
+          className="grid gap-4 border-t border-[#111111]/10 py-8 sm:grid-cols-2 sm:py-10"
+        >
+          {previousProject ? (
+            <Link
+              to="/projects/$slug"
+              params={{ slug: previousProject.slug }}
+              className="group grid gap-2 rounded-[31px] bg-[#ededed] p-5 transition-colors hover:bg-white"
+            >
+              <span className="flex items-center gap-2 text-[0.92rem] font-semibold tracking-[-0.03em] text-[#111111]/42">
+                <ArrowLeft className="h-4 w-4" aria-hidden />
+                Previous case study
+              </span>
+              <span className="text-[clamp(1.6rem,4vw,2.6rem)] font-semibold leading-none tracking-[-0.07em]">
+                {previousProject.title}
+              </span>
+            </Link>
+          ) : (
+            <span className="hidden sm:block" aria-hidden />
+          )}
+          {nextProject ? (
+            <Link
+              to="/projects/$slug"
+              params={{ slug: nextProject.slug }}
+              className="group grid gap-2 rounded-[31px] bg-[#ededed] p-5 transition-colors hover:bg-white sm:text-right"
+            >
+              <span className="flex items-center gap-2 text-[0.92rem] font-semibold tracking-[-0.03em] text-[#111111]/42 sm:justify-end">
+                Next case study
+                <ArrowRight className="h-4 w-4" aria-hidden />
+              </span>
+              <span className="text-[clamp(1.6rem,4vw,2.6rem)] font-semibold leading-none tracking-[-0.07em]">
+                {nextProject.title}
+              </span>
+            </Link>
+          ) : null}
+        </nav>
       </div>
     </main>
   );

@@ -16,14 +16,6 @@ export function ProjectsSection() {
             copy="Selected work from shipped products and client projects, with the studio work serving as proof of ownership."
           />
           <div className="flex flex-wrap gap-3">
-            <Link
-              to="/projects"
-              onClick={rememberCaseStudyReturn}
-              className="inline-flex w-fit items-center gap-2 rounded-full bg-tangerine px-5 py-3 font-sans text-sm font-black uppercase tracking-[0.1em] text-cream transition-transform hover:-translate-y-1"
-            >
-              View Archive
-              <ArrowUpRight className="h-4 w-4" aria-hidden />
-            </Link>
             <a
               href="https://github.com/TosinISOGUN"
               target="_blank"

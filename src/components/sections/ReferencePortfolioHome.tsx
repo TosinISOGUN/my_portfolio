@@ -9,7 +9,7 @@ import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowDownToLine, ArrowUpRight, Calendar, Github, Send } from "lucide-react";
 import resumePdf from "@/assets/OLUWATOMISIN_ISOGUN_RESUME.pdf";
-import profilePhoto from "@/assets/profile-photo.png";
+import profilePhoto from "@/assets/Photograph - Oluwatomisin Isogun.jpg";
 import {
   certifications,
   featuredProjects,
@@ -47,15 +47,13 @@ export function ReferencePortfolioHome() {
   );
 
   const sampleScreens = useMemo(() => {
-    const screens = projectCaseStudies
-      .filter((project) => project.slug !== "recap")
-      .flatMap((project) =>
-        project.gallery.map((image, index) => ({
-          image,
-          title: `${project.title} interface ${index + 1}`,
-          sortKey: `${project.slug}-${index}`,
-        })),
-      );
+    const screens = projectCaseStudies.flatMap((project) =>
+      project.gallery.map((image, index) => ({
+        image,
+        title: `${project.title} interface ${index + 1}`,
+        sortKey: `${project.slug}-${index}`,
+      })),
+    );
 
     return screens.sort((first, second) => getShuffleRank(first.sortKey) - getShuffleRank(second.sortKey));
   }, []);
@@ -124,26 +122,6 @@ export function ReferencePortfolioHome() {
                   {workSamples.map((project, index) => (
                     <CaseStudyCard key={project.title} project={project} index={index} />
                   ))}
-                  <Link
-                    to="/projects"
-                    onClick={rememberCaseStudyReturn}
-                    className="group grid min-h-[220px] overflow-hidden rounded-[26px] bg-[#1a1a1a] p-5 text-white sm:p-6"
-                  >
-                    <div className="flex items-start justify-between gap-6">
-                      <span className="rounded-full bg-white/10 px-3 py-1 text-[0.8rem] font-semibold tracking-[-0.02em] text-white/55">
-                        Archive
-                      </span>
-                      <ArrowUpRight className="h-5 w-5 text-white/55 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
-                    </div>
-                    <div className="mt-auto max-w-3xl pt-16">
-                      <p className="text-[clamp(2rem,5vw,4.8rem)] font-semibold leading-[0.92] tracking-[-0.085em]">
-                        View the full project archive.
-                      </p>
-                      <p className="mt-4 max-w-xl text-[1rem] font-medium leading-7 tracking-[-0.035em] text-white/48">
-                        A broader library of product builds, landing pages, dashboards, and case study notes.
-                      </p>
-                    </div>
-                  </Link>
                 </motion.div>
               ) : (
                 <motion.div
@@ -202,7 +180,7 @@ function IdentityPanel() {
             <img
               src={profilePhoto}
               alt="Oluwatomisin Isogun"
-              className="h-full w-full translate-x-[3%] scale-[1.18] object-contain object-bottom"
+              className="h-full w-full object-cover object-top"
             />
           </figure>
 

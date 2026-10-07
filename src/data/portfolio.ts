@@ -279,7 +279,7 @@ export const experience = [
     period: "2026 - Present",
     points: [
       "Founded an independent software studio building focused apps for Atlassian and Jira.",
-      "Designed, built, and shipped Recap, Field Hygiene, and Passdown to the Atlassian Marketplace.",
+      "Designed, built, and shipped Field Hygiene and Passdown to the Atlassian Marketplace.",
       "Owned SEO, technical marketing, and go-to-market execution across product websites and Marketplace listings.",
     ],
   },
@@ -365,6 +365,19 @@ export const featuredProjects = [
       "A frontend-only marketplace with renter, school, agent, and admin portals, mock/live API switching, offline support, realtime hooks, and English to Yoruba language switching.",
   },
   {
+    title: "Infinitative",
+    slug: "infinitative",
+    studio: "Multi-vendor commerce marketplace",
+    logo: infinitativeLogo,
+    tags: ["React", "Marketplace UX", "Cart Flow"],
+    signals: ["Premium commerce landing", "Vendor discovery", "Checkout-ready cart"],
+    link: "https://infinitative-aft.vercel.app/",
+    problem:
+      "Multi-vendor commerce experiences need to present premium products, vendor trust, and shopping actions without making the storefront feel crowded.",
+    result:
+      "A polished marketplace interface with product discovery, vendor surfaces, cart management, checkout summary, and responsive commerce flows.",
+  },
+  {
     title: "OYOBOOKING",
     slug: "oyobooking",
     studio: "Oyo State booking platform",
@@ -377,19 +390,6 @@ export const featuredProjects = [
       "Public-facing booking flows need to handle real users, changing data, and high clarity without collapsing into form clutter.",
     result:
       "A fast, responsive booking experience with API-backed flows, accessible interface patterns, and production-oriented UX.",
-  },
-  {
-    title: "Infinitative",
-    slug: "infinitative",
-    studio: "Multi-vendor commerce marketplace",
-    logo: infinitativeLogo,
-    tags: ["React", "Marketplace UX", "Cart Flow"],
-    signals: ["Premium commerce landing", "Vendor discovery", "Checkout-ready cart"],
-    link: "https://infinitative-aft.vercel.app/",
-    problem:
-      "Multi-vendor commerce experiences need to present premium products, vendor trust, and shopping actions without making the storefront feel crowded.",
-    result:
-      "A polished marketplace interface with product discovery, vendor surfaces, cart management, checkout summary, and responsive commerce flows.",
   },
   {
     title: "Payflow",

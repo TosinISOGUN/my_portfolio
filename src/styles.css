@@ -324,6 +324,24 @@
   }
 }
 
+.sam-status-badge span:first-child {
+  width: 0.52rem;
+  height: 0.52rem;
+}
+
+.sam-status-badge span:first-child span:first-child {
+  animation: sam-status-breathe 1.35s ease-in-out infinite;
+  background: #00f06a !important;
+  opacity: 0.55;
+}
+
+.sam-status-badge span:first-child span:last-child {
+  width: 0.52rem;
+  height: 0.52rem;
+  background: #00d45a !important;
+  box-shadow: 0 0 16px rgb(0 240 106 / 0.78);
+}
+
 @media (max-width: 767px) {
   .sam-identity-panel {
     gap: 1.05rem;
@@ -339,24 +357,6 @@
     gap: 0.32rem;
     font-size: 0.78rem !important;
     color: rgb(17 17 17 / 0.6) !important;
-  }
-
-  .sam-status-badge span:first-child {
-    width: 0.52rem;
-    height: 0.52rem;
-  }
-
-  .sam-status-badge span:first-child span:first-child {
-    animation: sam-status-breathe 1.35s ease-in-out infinite;
-    background: #00f06a !important;
-    opacity: 0.55;
-  }
-
-  .sam-status-badge span:first-child span:last-child {
-    width: 0.52rem;
-    height: 0.52rem;
-    background: #00d45a !important;
-    box-shadow: 0 0 16px rgb(0 240 106 / 0.78);
   }
 
   .sam-profile-block {

@@ -31,3 +31,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Raw screenshots kept locally; run npm run optimize:images to regenerate web copies
+assets-originals/

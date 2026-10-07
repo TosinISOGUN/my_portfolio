@@ -180,7 +180,7 @@ function IdentityPanel() {
             <img
               src={profilePhoto}
               alt="Oluwatomisin Isogun"
-              className="h-full w-full object-cover object-top"
+              className="h-full w-full origin-top translate-x-[4%] scale-[1.12] object-cover object-top"
             />
           </figure>
 

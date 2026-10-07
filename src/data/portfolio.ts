@@ -4,7 +4,6 @@ import infinitativeLogo from "@/assets/portfolio/infinitative.svg";
 import learncityLogo from "@/assets/portfolio/LC_logo.png";
 import nachieLogo from "@/assets/portfolio/nachie_maridadi_favicon.png";
 import oyoLogo from "@/assets/portfolio/oyo-state-logo-card.png";
-import recapLogo from "@/assets/portfolio/recap-logo.svg";
 import shemtLogo from "@/assets/portfolio/shemt-logo.png";
 
 type ScreenshotModule = Record<string, string>;
@@ -16,13 +15,17 @@ const getScreens = (modules: ScreenshotModule) =>
     )
     .map(([, image]) => image);
 
-const openSchoolFieldScreens = getScreens(
-  import.meta.glob("../assets/product_showcase/open school field/*.png", {
-    eager: true,
-    import: "default",
-    query: "?url",
-  }) as ScreenshotModule,
-);
+const openSchoolFieldModules = import.meta.glob("../assets/product_showcase/open school field/*.png", {
+  eager: true,
+  import: "default",
+  query: "?url",
+}) as ScreenshotModule;
+const openSchoolFieldScreens = getScreens(openSchoolFieldModules);
+
+// Pick a specific screenshot by file name so hand-picked covers don't shift when new files are added.
+const pickScreen = (modules: ScreenshotModule, fileName: string) =>
+  Object.entries(modules).find(([path]) => path.endsWith(`/${fileName}`))?.[1] ??
+  Object.values(modules)[0];
 
 const oyoBookingScreens = getScreens(
   import.meta.glob("../assets/product_showcase/oyobooking/*.png", {
@@ -58,14 +61,6 @@ const learncityScreens = getScreens(
 
 const nachieScreens = getScreens(
   import.meta.glob("../assets/product_showcase/nachie maridadi/*.png", {
-    eager: true,
-    import: "default",
-    query: "?url",
-  }) as ScreenshotModule,
-);
-
-const recapScreens = getScreens(
-  import.meta.glob("../assets/product_showcase/recap/*.png", {
     eager: true,
     import: "default",
     query: "?url",
@@ -217,13 +212,9 @@ const getCertificationMeta = (title: string) => {
   };
 };
 
-const [osf261, osf263, osf266, osf268, osf270] = [
-  openSchoolFieldScreens[0],
-  openSchoolFieldScreens[2],
-  openSchoolFieldScreens[5],
-  openSchoolFieldScreens[7],
-  openSchoolFieldScreens[9],
-];
+const [osf261, osf263, osf266, osf268, osf270] = [261, 263, 266, 268, 270].map((number) =>
+  pickScreen(openSchoolFieldModules, `Screenshot (${number}).png`),
+);
 const [oyo258, oyo260] = [oyoBookingScreens[0], oyoBookingScreens[2]];
 const [cHomes274, cHomes276] = [cHomesScreens[0], cHomesScreens[2]];
 const [infinitativeLanding, infinitativeProducts, , , infinitativeCart] = [
@@ -347,6 +338,20 @@ export const certifications = certificationModules.map(([path, image], index) =>
 
 export const featuredProjects = [
   {
+    title: "Nachie Maridadi",
+    slug: "nachie-maridadi",
+    studio: "Commerce landing",
+    logo: nachieLogo,
+    tags: ["React", "Brand UI", "Commerce UX"],
+    signals: ["Product storytelling", "Responsive storefront", "Purchase confidence"],
+    link: "https://nachiemaridadi.vercel.app/",
+    github: "https://github.com/TosinISOGUN/nachie_maridadi",
+    problem:
+      "The brand needed a polished commerce surface that presents products clearly and builds enough confidence to buy.",
+    result:
+      "A lightweight, brand-forward storefront experience with strong product presentation and a direct path toward purchase.",
+  },
+  {
     title: "Open School Field",
     slug: "open-school-field",
     studio: "Oyo State school facility marketplace",
@@ -387,6 +392,42 @@ export const featuredProjects = [
       "A polished marketplace interface with product discovery, vendor surfaces, cart management, checkout summary, and responsive commerce flows.",
   },
   {
+    title: "Payflow",
+    slug: "payflow",
+    studio: "Payroll and compliance platform",
+    tags: ["React", "Product Marketing UI", "Pricing Flow"],
+    signals: ["Compliance messaging", "Platform storytelling", "Pricing clarity"],
+    link: "https://payflow-rose-ten.vercel.app/",
+    problem:
+      "Payroll and compliance products can feel dense quickly, so the interface needed to communicate operational depth without overwhelming buyers.",
+    result:
+      "A polished HR/payroll product site with a premium landing page, platform storytelling, pricing surfaces, and responsive product presentation.",
+  },
+  {
+    title: "Samsoni",
+    slug: "samsoni",
+    studio: "Water delivery storefront",
+    tags: ["React", "Local Commerce", "WhatsApp Ordering"],
+    signals: ["Product browsing", "Recurring delivery plans", "WhatsApp conversion"],
+    link: "https://samsoni.vercel.app/",
+    problem:
+      "The brand needed a direct commerce surface that could communicate quality, delivery coverage, and product options quickly.",
+    result:
+      "A fast local-business storefront that turns bottled and sachet water supply into a simple, conversion-oriented flow.",
+  },
+  {
+    title: "Thomason",
+    slug: "thomason",
+    studio: "Coffee and hospitality website",
+    tags: ["React", "Editorial Layout", "Hospitality UX"],
+    signals: ["Full-bleed imagery", "Menu discovery", "Premium first impression"],
+    link: "https://thomason.vercel.app/",
+    problem:
+      "Hospitality pages need to sell a feeling quickly while still making practical content like the menu easy to reach.",
+    result:
+      "An editorial-feeling restaurant interface with strong ambience, responsive composition, and direct menu exploration.",
+  },
+  {
     title: "C-HOMES",
     slug: "c-homes",
     studio: "CMS-driven property marketplace",
@@ -414,20 +455,6 @@ export const featuredProjects = [
     result:
       "A polished education experience with clear hierarchy, responsive sections, and practical navigation across learning pages.",
   },
-  {
-    title: "Nachie Maridadi",
-    slug: "nachie-maridadi",
-    studio: "Commerce landing",
-    logo: nachieLogo,
-    tags: ["React", "Brand UI", "Commerce UX"],
-    signals: ["Product storytelling", "Responsive storefront", "Purchase confidence"],
-    link: "https://nachiemaridadi.vercel.app/",
-    github: "https://github.com/TosinISOGUN/nachie_maridadi",
-    problem:
-      "The brand needed a polished commerce surface that presents products clearly and builds enough confidence to buy.",
-    result:
-      "A lightweight, brand-forward storefront experience with strong product presentation and a direct path toward purchase.",
-  },
 ];
 
 export const moreProjects = [
@@ -442,12 +469,6 @@ export const moreProjects = [
     logo: aftLogo,
     link: "https://www.adaptive-future.com/",
     type: "Company website",
-  },
-  {
-    title: "Recap",
-    logo: recapLogo,
-    link: "https://recap.isogunlabs.com/",
-    type: "Atlassian Marketplace app",
   },
 ];
 
@@ -689,43 +710,6 @@ export const projectCaseStudies = [
       },
     ],
     gallery: openSchoolFieldScreens,
-  },
-  {
-    slug: "recap",
-    title: "Recap",
-    eyebrow: "Atlassian Marketplace",
-    year: "2026",
-    role: "Founder and Frontend/Product Engineer",
-    liveUrl: "https://recap.isogunlabs.com/",
-    marketplaceUrl: "https://marketplace.atlassian.com/2146687861",
-    cover: recapScreens[0] ?? recapLogo,
-    summary:
-      "A Jira app that turns completed work into reporting output, reducing the manual status-update loop for teams.",
-    challenge:
-      "Teams lose time every reporting cycle collecting finished Jira work and turning it into readable updates.",
-    approach:
-      "I owned the Forge app experience, resolver architecture, marketing site, structured content, Marketplace listing, and review process.",
-    outcome:
-      "Recap shipped as a live commercial Atlassian Marketplace app and became part of a three-product Isogun Labs suite.",
-    metrics: ["Live Marketplace app", "Forge architecture", "SEO site", "Security review"],
-    decisions: [
-      {
-        label: "Forge Surface",
-        value:
-          "The app experience is shaped around Jira context, so users can create reporting output without leaving their workflow.",
-      },
-      {
-        label: "Product Packaging",
-        value:
-          "The marketing site, Marketplace listing, and security review were treated as part of the product, not separate chores.",
-      },
-      {
-        label: "Narrow Scope",
-        value:
-          "The core action stays focused on replacing a repeated reporting task instead of becoming a broad project management suite.",
-      },
-    ],
-    gallery: recapScreens.length ? recapScreens : [recapLogo],
   },
   {
     slug: "oyobooking",

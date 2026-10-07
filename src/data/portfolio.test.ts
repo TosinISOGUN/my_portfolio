@@ -57,7 +57,9 @@ describe("portfolio data", () => {
     expect(workHistory.length).toBeGreaterThan(0);
     for (const entry of workHistory) {
       expect(entry.company).toBeTruthy();
-      expect(entry.points.length).toBeGreaterThan(0);
+      expect(entry.role).toBeTruthy();
+      expect(entry.period).toBeTruthy();
+      expect(entry.summary).toBeTruthy();
     }
   });
 

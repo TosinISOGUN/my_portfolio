@@ -323,15 +323,6 @@ export const workHistory: WorkHistoryEntry[] = [
     ],
   },
   {
-    role: "Data Entry Specialist",
-    company: "AFT Solutions Limited",
-    period: "Jun 2025 - Jan 2026",
-    location: "Hybrid",
-    summary: "Data entry and analysis role at AFT Solutions Limited.",
-    stack: ["Data Analysis", "Web Development"],
-    points: [],
-  },
-  {
     role: "Research Assistant",
     company: "Ondo State University of Science and Technology",
     period: "Jan 2025 - Mar 2025",

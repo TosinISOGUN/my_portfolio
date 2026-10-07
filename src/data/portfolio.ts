@@ -240,6 +240,7 @@ export type WorkHistoryEntry = {
   role: string;
   company: string;
   period: string;
+  location: string;
   summary: string;
   stack: string[];
   points: string[];
@@ -250,7 +251,10 @@ export const workHistory: WorkHistoryEntry[] = [
   {
     role: "Founder & Product Engineer",
     company: "Isogun Labs",
-    period: "2026 - Present",
+    period: "Jul 2026 - Present",
+    location: "Nigeria · Hybrid",
+    summary:
+      "An independent software studio focused on practical, privacy-conscious tools for the Atlassian ecosystem.",
     stack: [
       "Atlassian Forge",
       "Node.js",
@@ -260,10 +264,11 @@ export const workHistory: WorkHistoryEntry[] = [
       "Forge Storage",
       "Forge LLM",
     ],
-    summary:
-      "An independent software studio building focused apps for Atlassian and Jira, owned end to end.",
     points: [
-      "Designed, built, and shipped Field Hygiene and Passdown to the Atlassian Marketplace.",
+      "Built and launched three production apps on the Atlassian Marketplace: Recap, Field Hygiene, and Passdown.",
+      "Led the full product lifecycle from problem discovery and architecture to development, testing, Marketplace review, and release.",
+      "Developed Forge apps that integrate directly with Jira and Jira Service Management.",
+      "Designed products around focused use cases, minimal permissions, and platform-native data handling to reduce unnecessary external data exposure.",
       "Owned SEO, technical marketing, and go-to-market execution across product websites and Marketplace listings.",
     ],
     products: [
@@ -280,14 +285,63 @@ export const workHistory: WorkHistoryEntry[] = [
     ],
   },
   {
+    role: "Frontend Web Development Instructor",
+    company: "Learncity",
+    period: "Mar 2026 - Present",
+    location: "Ibadan, Oyo State · Hybrid",
+    summary:
+      "Teaching frontend web development through a structured 24-week program covering the fundamentals of modern, responsive websites and web applications.",
+    stack: ["HTML", "CSS", "JavaScript", "Responsive design", "Accessibility"],
+    points: [
+      "Deliver practical lessons on HTML, CSS, JavaScript, responsive design, and frontend development principles.",
+      "Prepare lesson materials, exercises, projects, and hands-on coding activities.",
+      "Guide students through building real-world interfaces and debugging frontend issues.",
+      "Teach accessibility, clean code practices, and modern development workflows.",
+      "Give technical feedback and mentorship to help students improve their problem-solving and development skills.",
+    ],
+  },
+  {
     role: "Frontend Web Developer",
     company: "AFT Solutions Limited",
-    period: "July 2025 - Present",
-    stack: ["React", "TypeScript"],
+    period: "Oct 2025 - Present",
+    location: "Ibadan, Oyo State · On-site",
     summary: "Enterprise and government web applications in React and TypeScript.",
+    stack: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "JavaScript",
+      "Tailwind CSS",
+      "REST APIs",
+      "PWAs",
+      "Responsive design",
+    ],
     points: [
-      "Led frontend optimization that cut critical path load time by 30% on data-heavy dashboards.",
-      "Built reusable component systems across internal projects and strengthened CI practices.",
+      "Engineered and deployed production frontend features using React, TypeScript, and Tailwind CSS within an Agile/Scrum delivery model.",
+      "Reduced web application load times by 40% through strategic bundle splitting, lazy loading, and core component refactoring.",
+      "Implemented reusable UI component libraries and enforced accessibility standards to keep client-facing interfaces consistent.",
+    ],
+  },
+  {
+    role: "Data Entry Specialist",
+    company: "AFT Solutions Limited",
+    period: "Jun 2025 - Jan 2026",
+    location: "Hybrid",
+    summary: "Data entry and analysis role at AFT Solutions Limited.",
+    stack: ["Data Analysis", "Web Development"],
+    points: [],
+  },
+  {
+    role: "Research Assistant",
+    company: "Ondo State University of Science and Technology",
+    period: "Jan 2025 - Mar 2025",
+    location: "Okitipupa, Ondo State · Hybrid",
+    summary: "Part-time research on AI-driven weather prediction.",
+    stack: ["LSTM networks", "Time-series modeling", "Model validation"],
+    points: [
+      "Conducted time-series modeling using LSTM networks to improve accuracy in AI-driven weather prediction.",
+      "Preprocessed and engineered features from incomplete meteorological datasets, and validated models using cross-validation and error analysis.",
+      "Compared traditional regression methods with deep learning approaches and documented experimental results for internal research reports.",
     ],
   },
 ];

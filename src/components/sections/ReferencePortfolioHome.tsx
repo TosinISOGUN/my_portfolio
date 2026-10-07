@@ -488,9 +488,12 @@ function WorkHistoryCard({ entry, index }: { entry: WorkHistoryEntry; index: num
         <span className="rounded-full bg-white px-3 py-1 text-[0.78rem] font-semibold tracking-[-0.02em] text-[#111111]/55">
           {entry.role}
         </span>
+        <span className="rounded-full bg-white px-3 py-1 text-[0.78rem] font-semibold tracking-[-0.02em] text-[#111111]/55">
+          {entry.location}
+        </span>
       </div>
 
-      <h3 className="mt-5 text-[clamp(2.15rem,8vw,4.8rem)] font-semibold leading-[0.9] tracking-[-0.085em]">
+      <h3 className="mt-5 max-w-4xl text-[clamp(1.9rem,6vw,3.6rem)] font-semibold leading-[0.95] tracking-[-0.08em]">
         {entry.company}
       </h3>
       <p className="mt-5 max-w-3xl text-[1rem] font-medium leading-7 tracking-[-0.035em] text-[#111111]/60 sm:text-[1.08rem]">
@@ -508,16 +511,18 @@ function WorkHistoryCard({ entry, index }: { entry: WorkHistoryEntry; index: num
         ))}
       </ul>
 
-      <ul className="mt-6 grid max-w-3xl gap-3">
-        {entry.points.map((point) => (
-          <li
-            key={point}
-            className="rounded-[18px] bg-white px-4 py-3 text-[0.95rem] font-medium leading-6 tracking-[-0.03em] text-[#111111]/70"
-          >
-            {point}
-          </li>
-        ))}
-      </ul>
+      {entry.points.length ? (
+        <ul className="mt-6 grid max-w-3xl gap-3">
+          {entry.points.map((point) => (
+            <li
+              key={point}
+              className="rounded-[18px] bg-white px-4 py-3 text-[0.95rem] font-medium leading-6 tracking-[-0.03em] text-[#111111]/70"
+            >
+              {point}
+            </li>
+          ))}
+        </ul>
+      ) : null}
 
       {entry.products?.length ? (
         <div className="mt-6">

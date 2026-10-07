@@ -18,7 +18,6 @@ export default defineConfig({
     },
     pages: [
       { path: "/" },
-      { path: "/projects" },
       { path: "/projects/open-school-field" },
       { path: "/projects/oyobooking" },
       { path: "/projects/infinitative" },
@@ -28,7 +27,6 @@ export default defineConfig({
       { path: "/projects/c-homes" },
       { path: "/projects/learncity" },
       { path: "/projects/nachie-maridadi" },
-      { path: "/projects/recap" },
     ],
   },
 });

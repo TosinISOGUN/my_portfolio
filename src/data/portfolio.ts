@@ -262,29 +262,6 @@ export const aboutParagraphs = [
   "In my current frontend role, I build enterprise and government software that has to stay reliable under real organizational weight. I am also open to frontend roles, contract builds, and product teams that need polished React and TypeScript execution.",
 ];
 
-export const experience = [
-  {
-    role: "Frontend Web Developer",
-    company: "AFT Solutions Limited",
-    period: "July 2025 - Present",
-    points: [
-      "Building enterprise and government web applications in React and TypeScript.",
-      "Led frontend optimization that cut critical path load time by 30% on data-heavy dashboards.",
-      "Built reusable component systems across internal projects and strengthened CI practices.",
-    ],
-  },
-  {
-    role: "Founder & Product Engineer",
-    company: "Isogun Labs",
-    period: "2026 - Present",
-    points: [
-      "Founded an independent software studio building focused apps for Atlassian and Jira.",
-      "Designed, built, and shipped Field Hygiene and Passdown to the Atlassian Marketplace.",
-      "Owned SEO, technical marketing, and go-to-market execution across product websites and Marketplace listings.",
-    ],
-  },
-];
-
 export const skills = [
   "React 18+",
   "Next.js",

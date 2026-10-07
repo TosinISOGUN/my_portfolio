@@ -1,4 +1,4 @@
-import { aboutParagraphs, experience, focusAreas } from "@/data/portfolio";
+import { aboutParagraphs, focusAreas } from "@/data/portfolio";
 import profilePhoto from "@/assets/profile-photo.png";
 import { RevealSection } from "./RevealSection";
 import { SectionLabel } from "./SectionLabel";
@@ -59,36 +59,6 @@ export function AboutSection() {
               <p className="mt-5 max-w-sm font-sans text-base leading-7 opacity-75">{area.copy}</p>
             </article>
           ))}
-        </div>
-
-        <div className="mt-12 sm:mt-16">
-          <div className="max-w-5xl">
-            <h3 className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-navy">
-              Current Work
-            </h3>
-            <div className="mt-5 divide-y divide-charcoal/10 border-y border-charcoal/10">
-              {experience.map((item) => (
-                <article key={`${item.company}-${item.role}`} className="grid gap-5 py-7 md:grid-cols-[0.8fr_1.2fr]">
-                  <div>
-                    <p className="font-sans text-xl font-black text-charcoal">{item.role}</p>
-                    <p className="mt-1 font-sans text-sm font-bold uppercase tracking-[0.12em] text-tangerine">
-                      {item.company}
-                    </p>
-                    <p className="mt-3 font-mono text-xs font-bold uppercase tracking-[0.16em] text-charcoal/55">
-                      {item.period}
-                    </p>
-                  </div>
-                  <ul className="space-y-3">
-                    {item.points.map((point) => (
-                      <li key={point} className="font-sans text-base leading-7 text-charcoal/72">
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                </article>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </RevealSection>

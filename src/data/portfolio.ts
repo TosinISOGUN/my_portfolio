@@ -1,10 +1,8 @@
-import aftLogo from "@/assets/portfolio/aft-website-logo.png";
 import cHomesLogo from "@/assets/portfolio/c-homes.svg";
 import infinitativeLogo from "@/assets/portfolio/infinitative.svg";
 import learncityLogo from "@/assets/portfolio/LC_logo.png";
 import nachieLogo from "@/assets/portfolio/nachie_maridadi_favicon.png";
 import oyoLogo from "@/assets/portfolio/oyo-state-logo-card.png";
-import shemtLogo from "@/assets/portfolio/shemt-logo.png";
 
 type ScreenshotModule = Record<string, string>;
 
@@ -15,20 +13,24 @@ const getScreens = (modules: ScreenshotModule) =>
     )
     .map(([, image]) => image);
 
-const openSchoolFieldModules = import.meta.glob("../assets/product_showcase/open school field/*.png", {
-  eager: true,
-  import: "default",
-  query: "?url",
-}) as ScreenshotModule;
+const openSchoolFieldModules = import.meta.glob(
+  "../assets/product_showcase/open school field/*.webp",
+  {
+    eager: true,
+    import: "default",
+    query: "?url",
+  },
+) as ScreenshotModule;
 const openSchoolFieldScreens = getScreens(openSchoolFieldModules);
 
 // Pick a specific screenshot by file name so hand-picked covers don't shift when new files are added.
 const pickScreen = (modules: ScreenshotModule, fileName: string) =>
   Object.entries(modules).find(([path]) => path.endsWith(`/${fileName}`))?.[1] ??
-  Object.values(modules)[0];
+  Object.values(modules)[0] ??
+  "";
 
 const oyoBookingScreens = getScreens(
-  import.meta.glob("../assets/product_showcase/oyobooking/*.png", {
+  import.meta.glob("../assets/product_showcase/oyobooking/*.webp", {
     eager: true,
     import: "default",
     query: "?url",
@@ -36,7 +38,7 @@ const oyoBookingScreens = getScreens(
 );
 
 const cHomesScreens = getScreens(
-  import.meta.glob("../assets/product_showcase/c-homes/*.png", {
+  import.meta.glob("../assets/product_showcase/c-homes/*.webp", {
     eager: true,
     import: "default",
     query: "?url",
@@ -44,7 +46,7 @@ const cHomesScreens = getScreens(
 );
 
 const infinitativeScreens = getScreens(
-  import.meta.glob("../assets/product_showcase/infinitative/*.png", {
+  import.meta.glob("../assets/product_showcase/infinitative/*.webp", {
     eager: true,
     import: "default",
     query: "?url",
@@ -52,7 +54,7 @@ const infinitativeScreens = getScreens(
 );
 
 const learncityScreens = getScreens(
-  import.meta.glob("../assets/product_showcase/learncity/*.png", {
+  import.meta.glob("../assets/product_showcase/learncity/*.webp", {
     eager: true,
     import: "default",
     query: "?url",
@@ -60,7 +62,7 @@ const learncityScreens = getScreens(
 );
 
 const nachieScreens = getScreens(
-  import.meta.glob("../assets/product_showcase/nachie maridadi/*.png", {
+  import.meta.glob("../assets/product_showcase/nachie maridadi/*.webp", {
     eager: true,
     import: "default",
     query: "?url",
@@ -68,7 +70,7 @@ const nachieScreens = getScreens(
 );
 
 const payflowScreens = getScreens(
-  import.meta.glob("../assets/product_showcase/payflow/*.png", {
+  import.meta.glob("../assets/product_showcase/payflow/*.webp", {
     eager: true,
     import: "default",
     query: "?url",
@@ -76,7 +78,7 @@ const payflowScreens = getScreens(
 );
 
 const samsoniScreens = getScreens(
-  import.meta.glob("../assets/product_showcase/samsoni/*.png", {
+  import.meta.glob("../assets/product_showcase/samsoni/*.webp", {
     eager: true,
     import: "default",
     query: "?url",
@@ -84,7 +86,7 @@ const samsoniScreens = getScreens(
 );
 
 const thomasonScreens = getScreens(
-  import.meta.glob("../assets/product_showcase/thomason/*.png", {
+  import.meta.glob("../assets/product_showcase/thomason/*.webp", {
     eager: true,
     import: "default",
     query: "?url",
@@ -212,22 +214,18 @@ const getCertificationMeta = (title: string) => {
   };
 };
 
-const [osf261, osf263, osf266, osf268, osf270] = [261, 263, 266, 268, 270].map((number) =>
-  pickScreen(openSchoolFieldModules, `Screenshot (${number}).png`),
-);
-const [oyo258, oyo260] = [oyoBookingScreens[0], oyoBookingScreens[2]];
-const [cHomes274, cHomes276] = [cHomesScreens[0], cHomesScreens[2]];
-const [infinitativeLanding, infinitativeProducts, , , infinitativeCart] = [
-  infinitativeScreens[0],
-  infinitativeScreens[1],
-  infinitativeScreens[2],
-  infinitativeScreens[4],
-];
-const [learncity278, learncity281] = [learncityScreens[0], learncityScreens[3]];
-const [nachie271] = nachieScreens;
-const [payflowLanding, payflowPlatform] = [payflowScreens[0], payflowScreens[2]];
-const samsoniLanding = samsoniScreens[1] ?? samsoniScreens[0];
-const thomasonLanding = thomasonScreens[0];
+const osf261 = pickScreen(openSchoolFieldModules, "Screenshot (261).webp");
+// Hand-picked screens (cover + highlights). Falls back to the first screen if the folder is short.
+const screenAt = (screens: string[], index: number) => screens[index] ?? screens[0] ?? "";
+
+const oyo258 = screenAt(oyoBookingScreens, 0);
+const cHomes274 = screenAt(cHomesScreens, 0);
+const infinitativeLanding = screenAt(infinitativeScreens, 0);
+const learncity278 = screenAt(learncityScreens, 0);
+const nachie271 = screenAt(nachieScreens, 0);
+const payflowLanding = screenAt(payflowScreens, 0);
+const samsoniLanding = screenAt(samsoniScreens, 1);
+const thomasonLanding = screenAt(thomasonScreens, 0);
 
 export const profile = {
   name: "Oluwatomisin Isogun",
@@ -238,28 +236,60 @@ export const profile = {
   upwork: "https://www.upwork.com/freelancers/~0136c2f689158ada21?mp_source=share",
 };
 
-export const focusAreas = [
-  {
-    title: "Full-Loop Product Ownership",
-    copy: "Code, SEO, security questionnaires, Marketplace listings, and go-to-market. I ship products, not just components.",
-  },
-  {
-    title: "Enterprise-Scale Frontend",
-    copy: "Government and enterprise interfaces at AFT Solutions, built to stay reliable under real organizational load.",
-  },
-  {
-    title: "Data-Dense Interfaces",
-    copy: "Analytics dashboards, booking systems, and CMS-driven marketplaces where the hard part is the data, not the styling.",
-  },
-  {
-    title: "Performance-First Engineering",
-    copy: "Lighthouse 90+ scores, sub-200ms filter queries, and code splitting that keeps large React apps fast.",
-  },
-];
+export type WorkHistoryEntry = {
+  role: string;
+  company: string;
+  period: string;
+  summary: string;
+  stack: string[];
+  points: string[];
+  products?: { name: string; description: string; href: string }[];
+};
 
-export const aboutParagraphs = [
-  "My work spans booking platforms, admin consoles, marketplaces, dashboards, and conversion-focused landing pages, with a focus on interfaces that stay clear when the data gets dense.",
-  "In my current frontend role, I build enterprise and government software that has to stay reliable under real organizational weight. I am also open to frontend roles, contract builds, and product teams that need polished React and TypeScript execution.",
+export const workHistory: WorkHistoryEntry[] = [
+  {
+    role: "Founder & Product Engineer",
+    company: "Isogun Labs",
+    period: "2026 - Present",
+    stack: [
+      "Atlassian Forge",
+      "Node.js",
+      "React",
+      "JavaScript",
+      "Jira REST API",
+      "Forge Storage",
+      "Forge LLM",
+    ],
+    summary:
+      "An independent software studio building focused apps for Atlassian and Jira, owned end to end.",
+    points: [
+      "Designed, built, and shipped Field Hygiene and Passdown to the Atlassian Marketplace.",
+      "Owned SEO, technical marketing, and go-to-market execution across product websites and Marketplace listings.",
+    ],
+    products: [
+      {
+        name: "Field Hygiene for Jira",
+        description: "Finds duplicate, unused, and undocumented custom fields on a Jira site.",
+        href: "https://marketplace.atlassian.com/apps/2905942594",
+      },
+      {
+        name: "Passdown",
+        description: "Writes shift-handoff briefs for Jira Service Management teams.",
+        href: "https://passdown.isogunlabs.com/",
+      },
+    ],
+  },
+  {
+    role: "Frontend Web Developer",
+    company: "AFT Solutions Limited",
+    period: "July 2025 - Present",
+    stack: ["React", "TypeScript"],
+    summary: "Enterprise and government web applications in React and TypeScript.",
+    points: [
+      "Led frontend optimization that cut critical path load time by 30% on data-heavy dashboards.",
+      "Built reusable component systems across internal projects and strengthened CI practices.",
+    ],
+  },
 ];
 
 export const skills = [
@@ -276,29 +306,6 @@ export const skills = [
   "Playwright",
   "REST APIs",
   "CI/CD",
-];
-
-export const techStackGroups = [
-  {
-    title: "Frontend Core",
-    copy: "The layer I reach for when the interface has to stay fast, typed, and maintainable.",
-    items: ["React 19", "TypeScript", "TanStack Router", "TanStack Query", "Vite"],
-  },
-  {
-    title: "Interface Systems",
-    copy: "Design implementation tools for polished components, responsive layouts, and motion.",
-    items: ["Tailwind CSS", "Shadcn UI", "Radix UI", "Framer Motion", "Lucide"],
-  },
-  {
-    title: "Product Data",
-    copy: "Patterns for API-driven products, content-heavy sites, and admin workflows.",
-    items: ["REST APIs", "Sanity CMS", "Mock API layers", "PWA flows", "Localization"],
-  },
-  {
-    title: "Quality Loop",
-    copy: "The checks that keep real product surfaces stable after launch.",
-    items: ["Vitest", "Playwright", "CI/CD", "Lighthouse", "Accessibility"],
-  },
 ];
 
 export const certifications = certificationModules.map(([path, image], index) => {
@@ -433,223 +440,6 @@ export const featuredProjects = [
       "A polished education experience with clear hierarchy, responsive sections, and practical navigation across learning pages.",
   },
 ];
-
-export const moreProjects = [
-  {
-    title: "Shemt",
-    logo: shemtLogo,
-    link: "https://shemt.vercel.app/",
-    type: "AI-assisted data interface",
-  },
-  {
-    title: "Adaptive Future Tech",
-    logo: aftLogo,
-    link: "https://www.adaptive-future.com/",
-    type: "Company website",
-  },
-];
-
-export const showcaseScreens = [
-  {
-    title: "Open School Field landing",
-    project: "Open School Field",
-    image: osf261,
-    kind: "Marketplace landing",
-    category: "Landing",
-    insight: "Positioned idle school fields as bookable public infrastructure with clear search entry points.",
-    link: "https://open-school-field-five.vercel.app",
-  },
-  {
-    title: "Admin operations",
-    project: "Open School Field",
-    image: osf266,
-    kind: "Admin dashboard",
-    category: "Dashboard",
-    insight: "Aggregates school, booking, facility, and dispute health into a single operations console.",
-    link: "https://open-school-field-five.vercel.app",
-  },
-  {
-    title: "Facility discovery",
-    project: "Open School Field",
-    image: osf263,
-    kind: "Search flow",
-    category: "Booking",
-    insight: "Search and facility detail flows balance public simplicity with availability and pricing depth.",
-    link: "https://open-school-field-five.vercel.app",
-  },
-  {
-    title: "School operations",
-    project: "Open School Field",
-    image: osf268,
-    kind: "School portal",
-    category: "Admin",
-    insight: "Gives schools facility, booking, staff, verification, revenue, and check-in workflows.",
-    link: "https://open-school-field-five.vercel.app",
-  },
-  {
-    title: "Localized booking",
-    project: "Open School Field",
-    image: osf270,
-    kind: "Yoruba-ready UI",
-    category: "Booking",
-    insight: "English and Yoruba switching improves access for local users who are more comfortable outside English.",
-    link: "https://open-school-field-five.vercel.app",
-  },
-  {
-    title: "OYOBOOKING search",
-    project: "OYOBOOKING",
-    image: oyo258,
-    kind: "Booking flow",
-    category: "Booking",
-    insight: "A public-sector booking interface tuned for clarity, trust, and fast facility discovery.",
-    link: "https://oyobooking.ng",
-  },
-  {
-    title: "OYOBOOKING detail",
-    project: "OYOBOOKING",
-    image: oyo260,
-    kind: "Facility detail",
-    category: "Booking",
-    insight: "Turns facility data into a decision-ready page with clear actions and responsive presentation.",
-    link: "https://oyobooking.ng",
-  },
-  {
-    title: "Infinitative landing",
-    project: "Infinitative",
-    image: infinitativeLanding,
-    kind: "Commerce landing",
-    category: "Landing",
-    insight: "A premium marketplace home page built around search, product categories, and vendor trust.",
-    link: "https://infinitative-aft.vercel.app/",
-  },
-  {
-    title: "Infinitative products",
-    project: "Infinitative",
-    image: infinitativeProducts,
-    kind: "Product discovery",
-    category: "Landing",
-    insight: "Product cards, filtering, and shopping actions make the catalog easy to scan and buy from.",
-    link: "https://infinitative-aft.vercel.app/",
-  },
-  {
-    title: "Infinitative cart",
-    project: "Infinitative",
-    image: infinitativeCart,
-    kind: "Cart flow",
-    category: "Booking",
-    insight: "Cart quantity controls and order summary patterns support a checkout-ready commerce path.",
-    link: "https://infinitative-aft.vercel.app/",
-  },
-  {
-    title: "Learncity landing",
-    project: "Learncity",
-    image: learncity278,
-    kind: "Education landing",
-    category: "Landing",
-    insight: "A structured education landing page built for scanning, conversion, and program discovery.",
-    link: "https://learncityacademy.com/",
-  },
-  {
-    title: "Learncity interface",
-    project: "Learncity",
-    image: learncity281,
-    kind: "Learning platform",
-    category: "Dashboard",
-    insight: "Learning surfaces organized around practical navigation and repeat user workflows.",
-    link: "https://learncityacademy.com/",
-  },
-  {
-    title: "C-HOMES marketplace",
-    project: "C-HOMES",
-    image: cHomes274,
-    kind: "Property interface",
-    category: "Landing",
-    insight: "A property marketplace surface with CMS-backed content and clear listing hierarchy.",
-    link: "https://c-homes.vercel.app/",
-  },
-  {
-    title: "C-HOMES content",
-    project: "C-HOMES",
-    image: cHomes276,
-    kind: "CMS surface",
-    category: "Admin",
-    insight: "Editable property content keeps the marketplace maintainable beyond the first launch.",
-    link: "https://c-homes.vercel.app/",
-  },
-  {
-    title: "Nachie Maridadi",
-    project: "Nachie Maridadi",
-    image: nachie271,
-    kind: "Commerce landing",
-    category: "Landing",
-    insight: "A brand-forward commerce page using strong product presentation and direct conversion paths.",
-    link: "https://nachiemaridadi.vercel.app/",
-  },
-  {
-    title: "Payflow landing",
-    project: "Payflow",
-    image: payflowLanding,
-    kind: "Payroll platform",
-    category: "Landing",
-    insight: "Positions payroll, compliance, and people operations as one calm system for growing teams.",
-    link: "https://payflow-rose-ten.vercel.app/",
-  },
-  {
-    title: "Payflow platform",
-    project: "Payflow",
-    image: payflowPlatform,
-    kind: "Product workflow",
-    category: "Dashboard",
-    insight: "Turns payroll operations into scannable product surfaces with clear actions and trust cues.",
-    link: "https://payflow-rose-ten.vercel.app/",
-  },
-  {
-    title: "Samsoni landing",
-    project: "Samsoni",
-    image: samsoniLanding,
-    kind: "Delivery landing",
-    category: "Landing",
-    insight: "A local delivery brand page built around product clarity, trust, and WhatsApp conversion.",
-    link: "https://samsoni.vercel.app/",
-  },
-  {
-    title: "Thomason landing",
-    project: "Thomason",
-    image: thomasonLanding,
-    kind: "Hospitality landing",
-    category: "Landing",
-    insight: "An atmospheric restaurant surface using photography, restrained motion, and menu discovery.",
-    link: "https://thomason.vercel.app/",
-  },
-];
-
-export const openSchoolFieldCaseStudy = {
-  title: "Open School Field",
-  subtitle: "A role-based frontend for booking school sports and event facilities across Oyo State.",
-  liveUrl: "https://open-school-field-five.vercel.app",
-  image: osf266,
-  facts: [
-    "Renter, school, agent, super-agent, and admin workflows",
-    "TanStack Router, TanStack Query, React 19, TypeScript, Tailwind v4",
-    "Mock API and live API abstraction for backend handoff",
-    "English and Yoruba localization for local access",
-    "PWA/offline support, monitoring wrapper, and realtime event contract",
-  ],
-  decisions: [
-    {
-      label: "Routing",
-      value: "File-based TanStack Router routes keep renter, school, agent, and admin areas separated without hiding shared patterns.",
-    },
-    {
-      label: "Data Layer",
-      value: "A service contract lets the UI run fully against mock data while remaining ready for an ASP.NET Core backend.",
-    },
-    {
-      label: "Localization",
-      value: "The language switcher changes English to Yoruba in one interaction, widening access for local users.",
-    },
-  ],
-};
 
 export const projectCaseStudies = [
   {

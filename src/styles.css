@@ -756,3 +756,25 @@
 
 
 
+
+/* Keyboard focus: visible ring on everything interactive. */
+a:focus-visible,
+button:focus-visible,
+[role="tab"]:focus-visible,
+[tabindex="0"]:focus-visible {
+  outline: 2px solid #111111;
+  outline-offset: 3px;
+  border-radius: 0.5rem;
+}
+
+[role="tab"]:focus-visible {
+  outline-offset: -3px;
+  outline-color: #00d45a;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sam-status-badge span:first-child span:first-child {
+    animation: none;
+    opacity: 0.4;
+  }
+}

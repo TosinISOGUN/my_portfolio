@@ -139,7 +139,7 @@ export function ReferencePortfolioHome() {
               ) : view === "work-history" ? (
                 <motion.div
                   key="work-history"
-                  className="grid gap-8"
+                  className="grid gap-0"
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -14 }}
@@ -150,6 +150,7 @@ export function ReferencePortfolioHome() {
                       key={`${entry.company}-${entry.role}`}
                       entry={entry}
                       index={index}
+                      total={workHistory.length}
                     />
                   ))}
                 </motion.div>
@@ -268,7 +269,7 @@ function IdentityPanel() {
             href={resumePdf}
             target="_blank"
             rel="noreferrer"
-            className="mt-4 inline-flex items-center gap-2 text-[0.95rem] font-semibold tracking-[-0.035em] text-[#111111]/54 transition-colors hover:text-[#111111] lg:mt-2 lg:text-[0.82rem] xl:mt-3 xl:text-[0.9rem]"
+            className="mt-2 inline-flex items-center gap-2 py-2.5 text-[0.95rem] font-semibold tracking-[-0.035em] text-[#111111]/54 transition-colors hover:text-[#111111] lg:mt-2 lg:py-0 lg:text-[0.82rem] xl:mt-3 xl:text-[0.9rem]"
           >
             <ArrowDownToLine className="h-4 w-4" aria-hidden />
             View resume
@@ -423,7 +424,7 @@ function ViewSwitcher({
             aria-selected={active}
             aria-controls="portfolio-panel"
             onClick={() => onChange(item)}
-            className={`relative z-10 h-full flex-1 whitespace-nowrap rounded-full px-2 text-[0.7rem] font-medium tracking-[-0.035em] transition-colors sm:px-4 sm:text-[0.78rem] ${
+            className={`relative z-10 h-full flex-1 whitespace-nowrap rounded-full px-2 text-[0.7rem] font-medium max-[359px]:px-1 max-[359px]:text-[0.64rem] tracking-[-0.035em] transition-colors sm:px-4 sm:text-[0.78rem] ${
               active ? "text-white" : "text-[#111111]/50 hover:text-[#111111]/80"
             }`}
           >
@@ -471,89 +472,174 @@ function WorkSampleCard({
   );
 }
 
-function WorkHistoryCard({ entry, index }: { entry: WorkHistoryEntry; index: number }) {
+function WorkHistoryCard({
+  entry,
+  index,
+  total,
+}: {
+  entry: WorkHistoryEntry;
+  index: number;
+  total: number;
+}) {
   const reduce = useReducedMotion();
+  const isFirst = index === 0;
+  const isLast = index === total - 1;
+  const isCurrent = /present/i.test(entry.period);
+  const lineSpan = isFirst ? "top-7 bottom-0" : isLast ? "top-0 h-7" : "top-0 bottom-0";
+
+  const chip =
+    "rounded-full bg-white px-3 py-1 text-[0.78rem] font-semibold tracking-[-0.02em] text-[#111111]/55";
 
   return (
-    <motion.article
-      className="overflow-hidden rounded-[26px] bg-[#ededed] p-5 text-[#111111] sm:p-7"
-      initial={reduce ? false : { opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, delay: index * 0.08, ease: "easeOut" }}
-    >
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="rounded-full bg-white px-3 py-1 text-[0.78rem] font-semibold tracking-[-0.02em] text-[#111111]/55">
+    <article className="grid grid-cols-[28px_minmax(0,1fr)] md:grid-cols-[150px_28px_minmax(0,1fr)]">
+      <div className="hidden pr-4 pt-[1.6rem] text-right md:block">
+        <p className="text-[0.95rem] font-semibold leading-tight tracking-[-0.03em] text-[#111111]/65">
           {entry.period}
-        </span>
-        <span className="rounded-full bg-white px-3 py-1 text-[0.78rem] font-semibold tracking-[-0.02em] text-[#111111]/55">
-          {entry.role}
-        </span>
-        <span className="rounded-full bg-white px-3 py-1 text-[0.78rem] font-semibold tracking-[-0.02em] text-[#111111]/55">
-          {entry.location}
-        </span>
+        </p>
+        {isCurrent ? (
+          <span className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-[#1a1a1a] px-2.5 py-1 text-[0.7rem] font-semibold tracking-[-0.01em] text-white">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#00f06a]" aria-hidden />
+            Now
+          </span>
+        ) : null}
       </div>
 
-      <h3 className="mt-5 max-w-4xl text-[clamp(1.9rem,6vw,3.6rem)] font-semibold leading-[0.95] tracking-[-0.08em]">
-        {entry.company}
-      </h3>
-      <p className="mt-5 max-w-3xl text-[1rem] font-medium leading-7 tracking-[-0.035em] text-[#111111]/60 sm:text-[1.08rem]">
-        {entry.summary}
-      </p>
+      <div className="relative" aria-hidden>
+        {!(isFirst && isLast) ? (
+          <span className={`absolute left-1/2 w-px -translate-x-1/2 bg-[#111111]/12 ${lineSpan}`}>
+            <motion.span
+              className="block h-full w-full origin-top bg-[#111111]"
+              initial={reduce ? false : { scaleY: 0 }}
+              whileInView={{ scaleY: 1 }}
+              viewport={{ margin: "0px 0px -35% 0px" }}
+              transition={{ duration: 0.9, ease: "easeOut" }}
+            />
+          </span>
+        ) : null}
+        {isCurrent ? (
+          <>
+            {reduce ? null : (
+              <span
+                className="absolute left-1/2 top-7 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#00f06a]"
+                style={{ animation: "sam-status-breathe 1.6s ease-in-out infinite" }}
+              />
+            )}
+            <motion.span
+              className="absolute left-1/2 top-7 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#00d45a] shadow-[0_0_14px_rgb(0_240_106/0.7)]"
+              initial={reduce ? false : { scale: 0.4 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ margin: "0px 0px -35% 0px" }}
+              transition={{ type: "spring", stiffness: 380, damping: 16 }}
+            />
+          </>
+        ) : (
+          <motion.span
+            className="absolute left-1/2 top-7 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#111111]"
+            initial={reduce ? false : { scale: 0.6, backgroundColor: "#ffffff" }}
+            whileInView={{ scale: 1, backgroundColor: "#111111" }}
+            viewport={{ margin: "0px 0px -35% 0px" }}
+            transition={{ type: "spring", stiffness: 380, damping: 18 }}
+          />
+        )}
+      </div>
 
-      <ul className="mt-5 flex flex-wrap gap-2" aria-label={`${entry.company} stack`}>
-        {entry.stack.map((item) => (
-          <li
-            key={item}
-            className="rounded-full bg-white px-3 py-1.5 text-[0.82rem] font-semibold tracking-[-0.02em] text-[#111111]/58"
-          >
-            {item}
-          </li>
-        ))}
-      </ul>
-
-      {entry.points.length ? (
-        <ul className="mt-6 grid max-w-3xl gap-3">
-          {entry.points.map((point) => (
-            <li
-              key={point}
-              className="rounded-[18px] bg-white px-4 py-3 text-[0.95rem] font-medium leading-6 tracking-[-0.03em] text-[#111111]/70"
-            >
-              {point}
-            </li>
-          ))}
-        </ul>
-      ) : null}
-
-      {entry.products?.length ? (
-        <div className="mt-6">
-          <p className="text-[0.84rem] font-semibold tracking-[-0.03em] text-[#111111]/45">
-            Shipped products
-          </p>
-          <div className="mt-3 flex flex-wrap gap-3">
-            {entry.products.map((product) => (
-              <a
-                key={product.name}
-                href={product.href}
-                target="_blank"
-                rel="noreferrer"
-                className="group grid max-w-sm gap-1 rounded-[18px] bg-white px-4 py-3 transition-transform hover:-translate-y-0.5"
-              >
-                <span className="flex items-center justify-between gap-4 text-[1rem] font-semibold tracking-[-0.04em]">
-                  {product.name}
-                  <ArrowUpRight
-                    className="h-4 w-4 text-[#111111]/50 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    aria-hidden
-                  />
-                </span>
-                <span className="text-[0.88rem] font-medium leading-5 tracking-[-0.03em] text-[#111111]/55">
-                  {product.description}
-                </span>
-              </a>
-            ))}
+      <motion.div
+        className="pb-8 md:pb-10"
+        initial={reduce ? false : { y: 44, scale: 0.97 }}
+        whileInView={{ y: 0, scale: 1 }}
+        viewport={{ once: true, amount: 0.12 }}
+        transition={{ type: "spring", stiffness: 110, damping: 20 }}
+      >
+        <div className="overflow-hidden rounded-[26px] bg-[#ededed] p-5 text-[#111111] sm:p-7">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className={`${chip} md:hidden`}>{entry.period}</span>
+            <span className={chip}>{entry.location}</span>
           </div>
+
+          <h3 className="mt-5 max-w-4xl text-[clamp(1.9rem,5vw,3.4rem)] font-semibold leading-[0.95] tracking-[-0.08em]">
+            {entry.role}
+          </h3>
+          <h4 className="mt-3 text-[clamp(1.05rem,2.2vw,1.35rem)] font-semibold tracking-[-0.045em] text-[#111111]/55">
+            {entry.company}
+          </h4>
+
+          <p className="mt-5 max-w-3xl text-[1rem] font-medium leading-7 tracking-[-0.035em] text-[#111111]/60 sm:text-[1.05rem]">
+            {entry.summary}
+          </p>
+
+          <ul className="mt-5 flex flex-wrap gap-2" aria-label={`${entry.company} stack`}>
+            {entry.stack.map((item) => (
+              <li
+                key={item}
+                className="rounded-full bg-[#1a1a1a] px-3 py-1.5 text-[0.8rem] font-semibold tracking-[-0.02em] text-white"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+
+          {entry.points.length ? (
+            <ol className="mt-6 max-w-3xl divide-y divide-[#111111]/10 overflow-hidden rounded-[20px] bg-white px-4">
+              {entry.points.map((point, pointIndex) => (
+                <motion.li
+                  key={point}
+                  className="flex gap-4 py-3.5"
+                  initial={reduce ? false : { x: -18 }}
+                  whileInView={{ x: 0 }}
+                  viewport={{ once: true, amount: 0.6 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 140,
+                    damping: 20,
+                    delay: pointIndex * 0.07,
+                  }}
+                >
+                  <span
+                    className="pt-0.5 font-mono text-[0.72rem] font-semibold text-[#111111]/35"
+                    aria-hidden
+                  >
+                    {String(pointIndex + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-[0.95rem] font-medium leading-6 tracking-[-0.03em] text-[#111111]/72">
+                    {point}
+                  </span>
+                </motion.li>
+              ))}
+            </ol>
+          ) : null}
+
+          {entry.products?.length ? (
+            <div className="mt-6">
+              <p className="text-[0.84rem] font-semibold tracking-[-0.03em] text-[#111111]/45">
+                Shipped products
+              </p>
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                {entry.products.map((product) => (
+                  <a
+                    key={product.name}
+                    href={product.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group grid gap-1.5 rounded-[20px] bg-[#1a1a1a] p-4 text-white transition-transform hover:-translate-y-0.5"
+                  >
+                    <span className="flex items-center justify-between gap-4 text-[1.02rem] font-semibold tracking-[-0.04em]">
+                      {product.name}
+                      <ArrowUpRight
+                        className="h-4 w-4 text-white/55 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                        aria-hidden
+                      />
+                    </span>
+                    <span className="text-[0.88rem] font-medium leading-5 tracking-[-0.03em] text-white/55">
+                      {product.description}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
-      ) : null}
-    </motion.article>
+      </motion.div>
+    </article>
   );
 }
 

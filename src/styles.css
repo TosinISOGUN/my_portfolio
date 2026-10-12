@@ -405,14 +405,26 @@
     gap: 0.5rem !important;
   }
 
-  /* Keep the two hero buttons side by side on phones. */
-  .sam-action-row .sam-pill {
+  /* Keep the two buttons side by side on phones (hero and the bottom call to action). */
+  .sam-action-row .sam-pill,
+  .sam-cta-row .sam-pill {
     gap: 0.4rem;
     padding: 0.5rem 0.85rem;
     font-size: 0.88rem;
   }
 
-  .sam-action-row .sam-pill svg {
+  .sam-cta-row {
+    gap: 0.4rem !important;
+  }
+
+  .sam-cta-row .sam-pill {
+    gap: 0.35rem;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.84rem;
+  }
+
+  .sam-action-row .sam-pill svg,
+  .sam-cta-row .sam-pill svg {
     width: 16px;
     height: 16px;
   }

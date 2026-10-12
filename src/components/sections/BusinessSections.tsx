@@ -26,7 +26,7 @@ export function CtaBlock() {
       <p className="mt-4 max-w-xl text-[1rem] font-medium leading-7 tracking-[-0.035em] text-white/60">
         Book a free call, or message me on WhatsApp.
       </p>
-      <div className="mt-6 flex flex-wrap gap-3">
+      <div className="sam-cta-row mt-6 flex flex-wrap gap-3">
         <a
           href={bookingUrl}
           target="_blank"
@@ -35,7 +35,7 @@ export function CtaBlock() {
         >
           <Calendar className="h-[18px] w-[18px]" aria-hidden />
           Book a free call
-          <ArrowUpRight className="h-4 w-4" aria-hidden />
+          <ArrowUpRight className="h-4 w-4 max-[480px]:hidden" aria-hidden />
         </a>
         <a
           href={whatsappUrl}

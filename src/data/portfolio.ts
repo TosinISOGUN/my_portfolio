@@ -255,7 +255,7 @@ export const profile = {
 };
 
 /** Opens WhatsApp with a short starter message. Number is in international format, no plus or zeros. */
-export const whatsappUrl = `https://wa.me/2348164376172?text=${encodeURIComponent("Hi Tosin, I'd like a website for my business.")}`;
+export const whatsappUrl = `https://wa.me/2348164376172?text=${encodeURIComponent("Hi Oluwatomisin, I'd like a website for my ")}`;
 
 export const bookingUrl = "https://cal.com/oluwatomisin-isogun-disku5/30min?overlayCalendar=true";
 

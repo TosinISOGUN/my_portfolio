@@ -1,5 +1,18 @@
+import type { ReactNode } from "react";
 import { ArrowUpRight, Calendar, ChevronDown, MessageCircle } from "lucide-react";
 import { bookingUrl, whatsappUrl } from "@/data/portfolio";
+
+/**
+ * A visible reminder that a fact still needs the owner's decision.
+ * Run "npm run check:todos" to list every one before publishing.
+ */
+function Todo({ children }: { children: ReactNode }) {
+  return (
+    <mark className="rounded bg-[#fff1b8] px-1.5 py-0.5 font-mono text-[0.78em] font-semibold text-[#6b4f00]">
+      TODO(owner): {children}
+    </mark>
+  );
+}
 
 const cardClass = "overflow-hidden rounded-[26px] bg-[#ededed] p-5 text-[#111111] sm:p-7";
 
@@ -51,15 +64,46 @@ export function CtaBlock() {
   );
 }
 
-const faqs: { question: string; answer: string }[] = [
+const faqs: { question: string; answer: string; todo?: string }[] = [
+  {
+    question: "How much does a website cost?",
+    answer:
+      "Websites start from $799 (USD). That includes your domain and hosting. The price is fixed and agreed with you on the free call.",
+  },
+  {
+    question: "What is included?",
+    answer:
+      "Up to 5 pages, a contact or booking form, mobile-friendly design, basic SEO setup, your domain and hosting costs, and handover of the finished site. Not included: writing, photography, and extra pages.",
+  },
+  {
+    question: "How long does it take?",
+    answer: "5 working days. The clock starts when your deposit is paid and I have your content.",
+  },
+  {
+    question: "What do I need to provide?",
+    answer:
+      "Your text and photos, and a list of the pages you want. Writing and photography are not included.",
+  },
+  {
+    question: "How many changes are included?",
+    answer: "Two rounds of changes are included. More can be quoted.",
+  },
+  {
+    question: "What if I want more than 5 pages?",
+    answer: "Extra pages are quoted before any work starts.",
+  },
   {
     question: "Do I own the website?",
-    answer: "Yes. Once the final payment is made, the website and everything on it belong to you.",
+    answer: "Yes. Ownership transfers to you on final payment.",
   },
   {
     question: "What about hosting and domain?",
+    answer: "Your domain purchase and hosting costs are already part of the website price.",
+  },
+  {
+    question: "How do payments work?",
     answer:
-      "Your domain is registered in your name and you pay the provider directly, so you are never locked in. I set up the hosting and the domain for you. I take no ongoing fee unless you ask me to look after the site.",
+      "A 50% deposit starts the project. The other 50% is due on delivery, before I hand over the final files and logins. I accept bank transfer in USD.",
   },
   {
     question: "What if I need changes after launch?",
@@ -67,9 +111,8 @@ const faqs: { question: string; answer: string }[] = [
       "Small changes and fixes are free for a month after launch. After that, I send you a quote before doing any work.",
   },
   {
-    question: "How do payments work?",
-    answer:
-      "You pay 50% upfront to start the build and the other 50% when your website is delivered.",
+    question: "Will it work on phones?",
+    answer: "Yes. Every site is built mobile-first.",
   },
 ];
 
@@ -92,6 +135,12 @@ export function Faq() {
             </summary>
             <p className="px-4 pb-4 text-[0.95rem] font-medium leading-6 tracking-[-0.03em] text-[#111111]/65">
               {item.answer}
+              {item.todo ? (
+                <>
+                  {" "}
+                  <Todo>{item.todo}</Todo>
+                </>
+              ) : null}
             </p>
           </details>
         ))}

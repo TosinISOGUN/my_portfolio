@@ -1,4 +1,4 @@
-const CACHE_NAME = "oluwatomisin-portfolio-v3";
+const CACHE_NAME = "oluwatomisin-portfolio-v4";
 const APP_SHELL = [
   "/",
   "/favicon.svg",

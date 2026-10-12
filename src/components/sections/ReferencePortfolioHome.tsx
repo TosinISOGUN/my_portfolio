@@ -267,7 +267,7 @@ function IdentityPanel() {
             href={resumePdf}
             target="_blank"
             rel="noreferrer"
-            className="mt-1 inline-flex items-center gap-1.5 py-2 text-[0.9rem] font-medium tracking-[-0.03em] text-[#111111]/50 underline-offset-4 transition-colors hover:text-[#111111] hover:underline lg:mt-0 lg:py-0.5 lg:text-[0.8rem]"
+            className="mt-1 inline-flex items-center gap-1.5 py-2 text-[0.9rem] font-medium tracking-[-0.03em] text-[#111111]/50 underline-offset-4 transition-colors hover:text-[#111111] hover:underline lg:-mt-0.5 lg:py-1.5 lg:text-[0.8rem]"
           >
             <ArrowDownToLine className="h-3.5 w-3.5" aria-hidden />
             Resume
@@ -771,7 +771,7 @@ function CaseStudyCard({ project, index }: { project: CaseStudyCardProject; inde
                 <img
                   key={`${image}-${previewIndex}`}
                   src={image}
-                  alt=""
+                  alt={`${project.title} screenshot ${previewIndex + 1}`}
                   className="aspect-[4/3] rounded-[14px] bg-white object-cover object-top"
                   loading="lazy"
                   decoding="async"

@@ -129,14 +129,6 @@ function ProjectCaseStudyPage() {
                   {project.role}
                 </p>
               </div>
-              <div>
-                <p className="text-[0.92rem] font-semibold tracking-[-0.03em] text-[#111111]/42">
-                  Year
-                </p>
-                <p className="mt-2 text-[1.2rem] font-semibold tracking-[-0.045em]">
-                  {project.year}
-                </p>
-              </div>
               {details ? (
                 <div>
                   <p className="text-[0.92rem] font-semibold tracking-[-0.03em] text-[#111111]/42">

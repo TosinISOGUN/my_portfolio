@@ -68,12 +68,12 @@ const faqs: { question: string; answer: string; todo?: string }[] = [
   {
     question: "How much does a website cost?",
     answer:
-      "Websites start from $1,200 (USD). The price is fixed and agreed with you on the free call.",
+      "Websites start from $799 (USD). That includes your domain and hosting. The price is fixed and agreed with you on the free call.",
   },
   {
     question: "What is included?",
     answer:
-      "Up to 5 pages, a contact or booking form, mobile-friendly design, basic SEO setup, and handover of the finished site. Not included: writing, photography, domain and hosting costs, and extra pages.",
+      "Up to 5 pages, a contact or booking form, mobile-friendly design, basic SEO setup, your domain and hosting costs, and handover of the finished site. Not included: writing, photography, and extra pages.",
   },
   {
     question: "How long does it take?",
@@ -95,13 +95,10 @@ const faqs: { question: string; answer: string; todo?: string }[] = [
   {
     question: "Do I own the website?",
     answer: "Yes. Ownership transfers to you on final payment.",
-    todo: "confirm",
   },
   {
     question: "What about hosting and domain?",
-    answer:
-      "Domain and hosting are your own costs, listed separately. I can set them up with you or hand over to your existing ones.",
-    todo: "confirm hosting setup",
+    answer: "Your domain purchase and hosting costs are already part of the website price.",
   },
   {
     question: "How do payments work?",

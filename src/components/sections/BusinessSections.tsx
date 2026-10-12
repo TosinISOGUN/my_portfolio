@@ -1,18 +1,5 @@
-import type { ReactNode } from "react";
 import { ArrowUpRight, Calendar, ChevronDown, Send } from "lucide-react";
 import { bookingUrl, mockupUrl } from "@/data/portfolio";
-
-/**
- * A visible reminder that a fact still needs the owner's decision.
- * Search the codebase for "TODO(owner)" to find every one before publishing.
- */
-function Todo({ children }: { children: ReactNode }) {
-  return (
-    <mark className="rounded bg-[#fff1b8] px-1.5 py-0.5 font-mono text-[0.78em] font-semibold text-[#6b4f00]">
-      TODO(owner): {children}
-    </mark>
-  );
-}
 
 const cardClass = "overflow-hidden rounded-[26px] bg-[#ededed] p-5 text-[#111111] sm:p-7";
 
@@ -32,7 +19,7 @@ export function ServicesBlock() {
             Price
           </dt>
           <dd className="mt-2 text-[0.98rem] font-medium leading-6 tracking-[-0.03em] text-[#111111]/75">
-            Fixed price, from <Todo>price</Todo>
+            Fixed price, agreed with you on the free call.
           </dd>
         </div>
         <div className="rounded-[20px] bg-white p-4">
@@ -40,10 +27,8 @@ export function ServicesBlock() {
             What is included
           </dt>
           <dd className="mt-2 text-[0.98rem] font-medium leading-6 tracking-[-0.03em] text-[#111111]/75">
-            <Todo>
-              confirm scope, for example number of pages, booking or contact form, mobile-friendly,
-              basic SEO, hosting handoff
-            </Todo>
+            Up to 5 pages, mobile-friendly, a contact form or booking link, basic search engine
+            setup, and your site launched live.
           </dd>
         </div>
         <div className="rounded-[20px] bg-white p-4">
@@ -51,7 +36,7 @@ export function ServicesBlock() {
             Delivery time
           </dt>
           <dd className="mt-2 text-[0.98rem] font-medium leading-6 tracking-[-0.03em] text-[#111111]/75">
-            <Todo>confirm, currently planned at 5 days</Todo>
+            About 7 days after I have your text, photos, and logo.
           </dd>
         </div>
       </dl>
@@ -142,24 +127,25 @@ export function CtaBlock() {
   );
 }
 
-const faqs: { question: string; answer?: string; todo: string }[] = [
+const faqs: { question: string; answer: string }[] = [
   {
     question: "Do I own the website?",
-    answer: "Yes, you own your site.",
-    todo: "confirm ownership terms",
+    answer: "Yes. Once the final payment is made, the website and everything on it belong to you.",
   },
   {
     question: "What about hosting and domain?",
-    todo: "confirm: who sets up and pays for hosting and the domain",
+    answer:
+      "Your domain is registered in your name and you pay the provider directly, so you are never locked in. I set up the hosting and the domain for you. I take no ongoing fee unless you ask me to look after the site.",
   },
   {
     question: "What if I need changes after launch?",
-    todo: "confirm: what is included after launch and how later changes are priced",
+    answer:
+      "Small changes and fixes are free for a month after launch. After that, I send you a quote before doing any work.",
   },
   {
     question: "How do payments work?",
-    answer: "A deposit first, then the balance when your website is delivered.",
-    todo: "confirm deposit amount and terms",
+    answer:
+      "You pay 50% upfront to start the build and the other 50% when your website is delivered.",
   },
 ];
 
@@ -181,8 +167,7 @@ export function Faq() {
               />
             </summary>
             <p className="px-4 pb-4 text-[0.95rem] font-medium leading-6 tracking-[-0.03em] text-[#111111]/65">
-              {item.answer ? `${item.answer} ` : null}
-              <Todo>{item.todo}</Todo>
+              {item.answer}
             </p>
           </details>
         ))}

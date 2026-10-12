@@ -322,8 +322,6 @@ function IdentityPanel() {
   );
 }
 
-// TODO(owner): confirm that "Fixed price", "Fast delivery", and "You own your site" are promises
-// you want to make before publishing this line.
 function TrustLine() {
   return (
     <div className="sam-dev-note mt-5 max-w-[420px] border-l border-[#111111]/15 pl-4 sm:max-w-[460px] lg:mt-3 lg:max-w-[335px] xl:mt-6 xl:max-w-[355px]">

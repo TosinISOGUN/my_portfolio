@@ -4,11 +4,20 @@ import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-mot
 import { ArrowDownToLine, ArrowUpRight, Calendar, Github, Send } from "lucide-react";
 import resumePdf from "@/assets/OLUWATOMISIN_ISOGUN_RESUME.pdf";
 import { SkeletonImage } from "@/components/SkeletonImage";
+import {
+  CtaBlock,
+  Faq,
+  HowItWorks,
+  ServicesBlock,
+  WebsitesHeading,
+} from "@/components/sections/BusinessSections";
 import profilePhoto from "@/assets/Photograph - Oluwatomisin Isogun.jpg";
 import {
+  bookingUrl,
   certifications,
   featuredProjects,
   getHeroRank,
+  mockupUrl,
   profile,
   projectCaseStudies,
   skills,
@@ -31,8 +40,6 @@ const viewLabels: Record<ViewMode, string> = {
   certifications: "Certifications",
 };
 
-const bookingUrl = "https://cal.com/oluwatomisin-isogun-disku5/30min?overlayCalendar=true";
-const mockupUrl = `mailto:${profile.email}?subject=${encodeURIComponent("Free homepage mockup request")}`;
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 export function ReferencePortfolioHome() {
@@ -143,9 +150,14 @@ export function ReferencePortfolioHome() {
                   exit={{ opacity: 0, y: -14 }}
                   transition={{ duration: 0.25 }}
                 >
+                  <ServicesBlock />
+                  <HowItWorks />
+                  <WebsitesHeading />
                   {workSamples.map((project, index) => (
                     <CaseStudyCard key={project.title} project={project} index={index} />
                   ))}
+                  <CtaBlock />
+                  <Faq />
                 </motion.div>
               ) : view === "work-history" ? (
                 <motion.div

@@ -254,6 +254,11 @@ export const profile = {
   upwork: "https://www.upwork.com/freelancers/~0136c2f689158ada21?mp_source=share",
 };
 
+export const bookingUrl = "https://cal.com/oluwatomisin-isogun-disku5/30min?overlayCalendar=true";
+
+/** Opens an email with a ready-made subject so requests are easy to spot. */
+export const mockupUrl = `mailto:${profile.email}?subject=${encodeURIComponent("Free homepage mockup request")}`;
+
 export type WorkHistoryEntry = {
   role: string;
   company: string;

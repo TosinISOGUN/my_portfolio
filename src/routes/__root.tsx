@@ -34,7 +34,7 @@ const structuredData = [
     "@type": "Person",
     name: "Oluwatomisin Isogun",
     jobTitle: "Freelance web designer and developer",
-    email: "mailto:oluwatomisinisogun@gmail.com",
+    email: "mailto:tomisin@isogunlabs.com",
     url: siteUrl,
     sameAs: [
       "https://github.com/TosinISOGUN",
@@ -67,7 +67,7 @@ const structuredData = [
     description: seoDescription,
     url: siteUrl,
     image: ogImageUrl,
-    email: "mailto:oluwatomisinisogun@gmail.com",
+    email: "mailto:tomisin@isogunlabs.com",
     serviceType: ["Web design", "Web development"],
     founder: { "@type": "Person", name: "Oluwatomisin Isogun" },
   },

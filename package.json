@@ -11,6 +11,7 @@
     "optimize:images": "node scripts/optimize-images.mjs",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
+    "check:todos": "node scripts/list-todos.mjs",
     "lint": "eslint .",
     "format": "prettier --write ."
   },

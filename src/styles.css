@@ -222,8 +222,8 @@
   gap: 0.5rem;
   border-radius: 31px;
   padding: 0.55rem 1rem;
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-size: 0.92rem;
+  font-weight: 500;
   letter-spacing: -0.02em;
   text-decoration: none;
   transition:
@@ -297,9 +297,9 @@
   background: #ededed;
   padding: 0.45rem 0.9rem;
   color: #1a1a1a;
-  font-size: 0.96rem;
-  font-weight: 700;
-  letter-spacing: -0.035em;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
   text-decoration: none;
   transition:
     transform 180ms ease,
@@ -355,7 +355,7 @@
 
   .sam-status-badge {
     gap: 0.32rem;
-    font-size: 0.78rem !important;
+    font-size: 0.7rem !important;
     color: rgb(17 17 17 / 0.6) !important;
   }
 
@@ -370,20 +370,20 @@
 
   .sam-profile-block h1 {
     margin-top: 0.72rem !important;
-    font-size: 1.16rem !important;
+    font-size: 1.05rem !important;
   }
 
   .sam-profile-block h2 {
     margin-top: 1rem !important;
     max-width: 20.5rem;
-    font-size: clamp(1.48rem, 6.8vw, 1.95rem) !important;
-    line-height: 1.06 !important;
+    font-size: clamp(1.4rem, 6.2vw, 1.7rem) !important;
+    line-height: 1.14 !important;
   }
 
   .sam-profile-block > p {
-    margin-top: 0.95rem !important;
-    font-size: 0.94rem !important;
-    line-height: 1.32 !important;
+    margin-top: 0.8rem !important;
+    font-size: 0.9rem !important;
+    line-height: 1.38 !important;
   }
 
   .sam-stack-block {
@@ -402,7 +402,19 @@
 
   .sam-action-row {
     margin-top: 1.15rem !important;
-    gap: 0.55rem !important;
+    gap: 0.5rem !important;
+  }
+
+  /* Keep the two hero buttons side by side on phones. */
+  .sam-action-row .sam-pill {
+    gap: 0.4rem;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.88rem;
+  }
+
+  .sam-action-row .sam-pill svg {
+    width: 16px;
+    height: 16px;
   }
 
   .sam-action-row + a {
@@ -411,9 +423,8 @@
   }
 
   .sam-dev-note {
-    margin-top: 1.15rem !important;
+    margin-top: 0.9rem !important;
     max-width: 100% !important;
-    padding-left: 0.75rem !important;
   }
 
   .sam-dev-note > div {
@@ -421,7 +432,7 @@
   }
 
   .sam-dev-note > div > p {
-    font-size: 0.84rem !important;
+    font-size: 0.8rem !important;
     line-height: 1.26 !important;
   }
 
@@ -432,7 +443,7 @@
   }
 
   .sam-contact-footer p {
-    font-size: 1.05rem !important;
+    font-size: 0.98rem !important;
   }
 
   .sam-contact-footer > div {
@@ -444,13 +455,73 @@
   .sam-page .sam-pill {
     min-height: 38px;
     padding: 0.48rem 0.82rem;
-    font-size: 0.88rem;
+    font-size: 0.84rem;
   }
 
   .sam-page .sam-social-pill {
     min-height: 34px;
     padding: 0.38rem 0.76rem;
-    font-size: 0.88rem;
+    font-size: 0.84rem;
+  }
+
+  .sam-page .sam-action-row .sam-pill {
+    gap: 0.4rem;
+    padding: 0.45rem 0.7rem;
+  }
+
+  .sam-page .sam-action-row .sam-pill svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Short laptop screens: tighten the left column so it fits without scrolling. */
+@media (min-width: 1024px) and (max-height: 800px) {
+  .sam-profile-block figure {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .sam-profile-block h1 {
+    margin-top: 0.5rem !important;
+  }
+
+  .sam-profile-block h2 {
+    margin-top: 0.6rem !important;
+  }
+
+  .sam-profile-block > p {
+    margin-top: 0.45rem !important;
+  }
+
+  .sam-action-row {
+    margin-top: 0.7rem !important;
+  }
+
+  .sam-dev-note,
+  .sam-stack-block {
+    margin-top: 0.5rem !important;
+  }
+
+  .sam-contact-footer {
+    margin-top: 0.5rem !important;
+  }
+
+  .sam-contact-footer > div {
+    margin-top: 0.4rem !important;
+    gap: 0.4rem !important;
+  }
+
+  .sam-action-row {
+    gap: 0.4rem !important;
+  }
+
+  .sam-page .sam-pill {
+    min-height: 34px;
+  }
+
+  .sam-page .sam-social-pill {
+    min-height: 30px;
   }
 }
 
@@ -776,49 +847,5 @@ button:focus-visible,
   .sam-status-badge span:first-child span:first-child {
     animation: none;
     opacity: 0.4;
-  }
-}
-
-/* Resume button: a soft ring pulse and a nudging download arrow to draw the eye. */
-@keyframes sam-resume-ring {
-  0% {
-    box-shadow: 0 0 0 0 rgb(17 17 17 / 0.3);
-  }
-
-  70%,
-  100% {
-    box-shadow: 0 0 0 11px rgb(17 17 17 / 0);
-  }
-}
-
-@keyframes sam-resume-nudge {
-  0%,
-  60%,
-  100% {
-    transform: translateY(0);
-  }
-
-  30% {
-    transform: translateY(3px);
-  }
-}
-
-.sam-resume {
-  animation: sam-resume-ring 2.6s ease-out infinite;
-}
-
-.sam-resume-icon {
-  animation: sam-resume-nudge 2.6s ease-in-out infinite;
-}
-
-.sam-resume:hover,
-.sam-resume:focus-visible {
-  animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sam-resume,
-  .sam-resume-icon {
-    animation: none;
   }
 }

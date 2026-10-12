@@ -1,11 +1,14 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
-import { ArrowDownToLine, ArrowUpRight, Calendar, Github, Send } from "lucide-react";
+import { ArrowDownToLine, ArrowUpRight, Calendar, Github, MessageCircle, Send } from "lucide-react";
 import resumePdf from "@/assets/OLUWATOMISIN_ISOGUN_RESUME.pdf";
 import { SkeletonImage } from "@/components/SkeletonImage";
+import { CtaBlock, Faq, WebsitesHeading } from "@/components/sections/BusinessSections";
 import profilePhoto from "@/assets/Photograph - Oluwatomisin Isogun.jpg";
 import {
+  bookingUrl,
+  whatsappUrl,
   certifications,
   featuredProjects,
   getHeroRank,
@@ -25,13 +28,12 @@ type CaseStudyCardProject = (typeof featuredProjects)[number] & {
 
 const viewOrder: ViewMode[] = ["case-studies", "work-history", "samples", "certifications"];
 const viewLabels: Record<ViewMode, string> = {
-  "case-studies": "Case studies",
+  "case-studies": "Websites I've built",
   "work-history": "Work history",
   samples: "Work samples",
   certifications: "Certifications",
 };
 
-const bookingUrl = "https://cal.com/oluwatomisin-isogun-disku5/30min?overlayCalendar=true";
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 export function ReferencePortfolioHome() {
@@ -100,7 +102,7 @@ export function ReferencePortfolioHome() {
 
   return (
     <main className="sam-page min-h-screen bg-white text-[#111111] lg:h-screen lg:overflow-hidden">
-      <div className="grid min-h-screen lg:grid-cols-[clamp(300px,26vw,380px)_minmax(0,1fr)] xl:grid-cols-[460px_minmax(0,1fr)]">
+      <div className="grid min-h-screen lg:grid-cols-[clamp(280px,24vw,330px)_minmax(0,1fr)] xl:grid-cols-[380px_minmax(0,1fr)]">
         <IdentityPanel />
 
         <section
@@ -113,7 +115,7 @@ export function ReferencePortfolioHome() {
           data-case-study-return-view={view}
           className="min-w-0 border-[#111111]/10 lg:h-screen lg:overflow-y-auto lg:border-l"
         >
-          <div className="sticky top-0 z-20 border-b border-[#111111]/10 bg-white/92 px-3 py-4 backdrop-blur-md sm:px-8 sm:py-5 lg:px-8">
+          <div className="sticky top-0 z-20 border-b border-[#111111]/10 bg-white/92 px-3 py-2.5 backdrop-blur-md sm:px-8 sm:py-3 lg:px-8">
             <ViewSwitcher value={view} onChange={handleViewChange} />
           </div>
 
@@ -123,7 +125,7 @@ export function ReferencePortfolioHome() {
               {view === "samples" ? (
                 <motion.div
                   key="samples"
-                  className="-mx-1 grid gap-7 sm:-mx-4 lg:-mx-5 xl:-mx-6"
+                  className="grid gap-7"
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -14 }}
@@ -142,9 +144,12 @@ export function ReferencePortfolioHome() {
                   exit={{ opacity: 0, y: -14 }}
                   transition={{ duration: 0.25 }}
                 >
+                  <WebsitesHeading />
                   {workSamples.map((project, index) => (
                     <CaseStudyCard key={project.title} project={project} index={index} />
                   ))}
+                  <CtaBlock />
+                  <Faq />
                 </motion.div>
               ) : view === "work-history" ? (
                 <motion.div
@@ -173,6 +178,9 @@ export function ReferencePortfolioHome() {
                   exit={{ opacity: 0, y: -14 }}
                   transition={{ duration: 0.25 }}
                 >
+                  <p className="max-w-2xl text-[1.05rem] font-medium leading-7 tracking-[-0.035em] text-[#111111]/58">
+                    I run projects on a clear process.
+                  </p>
                   {orderedCertifications.map((certificate, index) => (
                     <CertificateCard
                       key={certificate.image}
@@ -214,36 +222,19 @@ function IdentityPanel() {
             />
           </figure>
 
-          <h1 className="mt-5 text-[1.45rem] font-semibold leading-none tracking-[-0.06em] text-[#050505] lg:mt-2 lg:text-[1.12rem] xl:mt-3 xl:text-[1.28rem]">
+          <h1 className="mt-5 text-[1.25rem] font-medium leading-none tracking-[-0.045em] text-[#050505] lg:mt-2 lg:text-[1.05rem] xl:mt-3 xl:text-[1.125rem]">
             {profile.name}
           </h1>
 
-          <h2 className="mt-8 max-w-[455px] text-[clamp(1.75rem,8vw,2.35rem)] font-semibold leading-[1.16] tracking-[-0.075em] text-[#050505] lg:mt-4 lg:max-w-[360px] lg:text-[1.58rem] xl:mt-5 xl:max-w-[390px] xl:text-[1.95rem]">
-            <span className="text-[#111111]/48">Hey, I'm Oluwatomisin, a </span>
-            frontend developer for product teams.
+          <h2 className="mt-7 max-w-[455px] text-[clamp(1.5rem,7vw,1.9rem)] font-medium leading-[1.2] tracking-[-0.05em] text-[#050505] lg:mt-4 lg:max-w-[360px] lg:text-[1.3rem] xl:mt-5 xl:max-w-[390px] xl:text-[1.625rem]">
+            <span className="text-[#111111]/48">I build fast, good-looking websites </span>
+            that turn visitors into customers.
           </h2>
 
-          <p className="mt-7 max-w-[445px] text-[1.06rem] font-medium leading-[1.42] tracking-[-0.045em] text-[#111111]/58 lg:mt-4 lg:max-w-[350px] lg:text-[0.84rem] lg:leading-[1.3] xl:mt-5 xl:max-w-[390px] xl:text-[0.95rem]">
-            I build React and TypeScript interfaces that feel premium and turn complex workflows
-            into actual product momentum. I care about the small stuff, spacing, states,
-            performance, and the one extra click that should not be there.
+          <p className="mt-5 max-w-[445px] text-[0.98rem] font-normal leading-[1.4] tracking-[-0.03em] text-[#111111]/62 lg:mt-3 lg:max-w-[350px] lg:text-[0.8rem] lg:leading-[1.35] xl:mt-4 xl:max-w-[390px] xl:text-[0.88rem]">
+            Mobile-friendly websites with online booking, ordering, and contact forms, built to help
+            your business get found and get contacted. Fixed price, no surprises.
           </p>
-
-          <div className="sam-stack-block mt-6 max-w-[390px] lg:mt-3 xl:mt-4">
-            <p className="text-[0.84rem] font-semibold tracking-[-0.03em] text-[#111111]/38">
-              Core stack
-            </p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {skills.slice(0, 8).map((skill) => (
-                <span
-                  key={skill}
-                  className="rounded-full bg-[#ededed] px-3 py-1.5 text-[0.78rem] font-semibold tracking-[-0.025em] text-[#111111]/56 lg:px-2.5 lg:py-1 lg:text-[0.72rem] xl:text-[0.76rem]"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
 
           <div className="sam-action-row mt-9 flex flex-wrap gap-3 lg:mt-4 lg:gap-2 xl:mt-5">
             <a
@@ -253,14 +244,16 @@ function IdentityPanel() {
               className="sam-pill sam-tilt-button bg-[#1a1a1a] text-white hover:bg-black"
             >
               <Calendar className="h-[18px] w-[18px]" aria-hidden />
-              Book a call
+              Book a free call
             </a>
             <a
-              href={`mailto:${profile.email}`}
+              href={whatsappUrl}
+              target="_blank"
+              rel="noreferrer"
               className="sam-pill sam-tilt-button bg-[#ededed] text-[#1a1a1a] hover:bg-white"
             >
-              <Send className="h-[18px] w-[18px]" aria-hidden />
-              Message me
+              <MessageCircle className="h-[18px] w-[18px]" aria-hidden />
+              Chat on WhatsApp
             </a>
           </div>
 
@@ -268,22 +261,35 @@ function IdentityPanel() {
             href={resumePdf}
             target="_blank"
             rel="noreferrer"
-            className="sam-resume group mt-3 inline-flex items-center gap-2 rounded-full border border-[#111111]/25 bg-white px-4 py-2 text-[0.92rem] font-semibold tracking-[-0.035em] text-[#111111] transition-colors hover:bg-[#1a1a1a] hover:text-white lg:mt-1.5 lg:px-3 lg:py-1 lg:text-[0.8rem] xl:mt-2 xl:px-3.5 xl:py-1 xl:text-[0.88rem]"
+            className="mt-1 inline-flex items-center gap-1.5 py-2 text-[0.84rem] font-normal tracking-[-0.02em] text-[#111111]/50 underline-offset-4 transition-colors hover:text-[#111111] hover:underline lg:-mt-0.5 lg:py-1.5 lg:text-[0.76rem]"
           >
-            <ArrowDownToLine className="sam-resume-icon h-4 w-4" aria-hidden />
-            View resume
-            <span className="rounded-full bg-[#00d45a]/18 px-1.5 py-0.5 font-mono text-[0.6rem] font-bold uppercase tracking-[0.08em] text-[#0a6b34] transition-colors group-hover:bg-white/15 group-hover:text-[#7dffb0]">
-              PDF
-            </span>
+            <ArrowDownToLine className="h-3.5 w-3.5" aria-hidden />
+            Resume
           </a>
 
-          <DevJokeTicker />
+          <TrustLine />
+
+          <div className="sam-stack-block mt-5 max-w-[390px] lg:mt-3 xl:mt-4">
+            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[#111111]/32">
+              Built with
+            </p>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {skills.slice(0, 8).map((skill) => (
+                <span
+                  key={skill}
+                  className="rounded-full bg-[#f3f3f3] px-2.5 py-1 text-[0.7rem] font-medium tracking-[-0.02em] text-[#111111]/45 lg:px-2 lg:py-0.5 lg:text-[0.66rem] xl:text-[0.7rem]"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
       <div className="sam-contact-footer mt-10 pb-1 lg:mt-3 xl:mt-5">
-        <p className="text-[1.35rem] font-semibold leading-tight tracking-[-0.065em] lg:text-[1rem] xl:text-[1.12rem]">
-          got a project in mind? let's chat :)
+        <p className="text-[1.15rem] font-medium leading-tight tracking-[-0.045em] lg:text-[0.92rem] xl:text-[1rem]">
+          Need a website that brings in more customers? Let's talk.
         </p>
         <div className="mt-5 flex flex-wrap gap-3 lg:mt-2 lg:gap-2 xl:mt-3">
           <a
@@ -310,88 +316,19 @@ function IdentityPanel() {
   );
 }
 
-const devJokes = [
-  "Frontend is just convincing rectangles to behave.",
-  "I write bugs professionally, then fix them as a service.",
-  "CSS is easy until the div develops ambition.",
-  "Git happens. Ship anyway.",
-  "I center divs and occasionally question reality.",
-  "My code works. I just want to know why.",
-  "React state: because feelings need management too.",
-  "I asked JavaScript for truth. It said maybe.",
-  "Naming things is half the job. The other half is renaming them.",
-  "I do not fear bugs. I have console.log.",
-  "A clean UI is a love letter to future users.",
-  "Cache cleared. Confidence restored.",
-  "This layout was aligned through patience and snacks.",
-  "Production is just staging with witnesses.",
-  "Pixels behave better after coffee.",
-  "If it looks simple, the CSS probably negotiated hard.",
-  "I make buttons feel like they know their purpose.",
-  "The best animation is the one nobody has to wait for.",
-  "Ship small. Learn fast. Refactor kindly.",
-  "Code is poetry until the deadline joins the meeting.",
-  "A div without CSS is just a box with dreams.",
-  "I turn product anxiety into loading states.",
-  "The bug was shy until I shared my screen.",
-  "Responsive design is empathy with breakpoints.",
-  "I trust the process. I also trust the preview build.",
-  "JavaScript said undefined. I felt that.",
-  "A good button should look clickable and feel inevitable.",
-  "I debug in dark mode so the errors respect the mood.",
-  "The DOM remembers everything except why I named it that.",
-  "I measure twice and still inspect element.",
-  "Types save lives, mostly mine at 2am.",
-  "Every pixel has a job. Some need supervision.",
-  "404: Motivation not found. Coffee retry pending.",
-  "I like my components reusable and my margins explainable.",
-  "The console knows what I did last deploy.",
-  "A smooth flow is just fewer tiny betrayals.",
-  "I speak fluent product, CSS, and polite urgency.",
-  "Some days you ship. Some days you teach z-index manners.",
-  "The best UX is invisible until it is missing.",
-  "I make edge cases feel included.",
-];
-
-function DevJokeTicker() {
-  const [index, setIndex] = useState(0);
-  const reduce = useReducedMotion();
-
-  useEffect(() => {
-    if (reduce) return;
-
-    const interval = window.setInterval(() => {
-      setIndex((current) => (current + 1) % devJokes.length);
-    }, 4200);
-
-    return () => window.clearInterval(interval);
-  }, [reduce]);
-
+function TrustLine() {
   return (
-    <div className="sam-dev-note mt-8 max-w-[420px] border-l border-[#111111]/10 pl-4 sm:max-w-[460px] lg:mt-3 lg:max-w-[335px] xl:mt-10 xl:max-w-[355px]">
-      <p className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-[#111111]/28">
-        dev notes, lol
+    <div className="sam-dev-note mt-4 max-w-[420px] sm:max-w-[460px] lg:mt-3 lg:max-w-[335px] xl:mt-4 xl:max-w-[355px]">
+      <p className="text-[0.86rem] font-medium leading-[1.35] tracking-[-0.02em] text-[#111111]/55 lg:text-[0.76rem] xl:text-[0.82rem]">
+        Fixed price. Fast delivery. You own your site.
       </p>
-      <div className="relative mt-2 min-h-[44px] overflow-hidden lg:min-h-[34px] xl:min-h-[52px]">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.p
-            key={devJokes[index] ?? index}
-            className="text-[0.88rem] font-medium leading-[1.35] tracking-[-0.035em] text-[#111111]/45 lg:text-[0.78rem] lg:leading-[1.25] xl:text-[0.95rem] xl:leading-[1.35]"
-            initial={reduce ? false : { opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
-            transition={{ duration: 0.18, ease: "easeOut" }}
-          >
-            {devJokes[index]}
-          </motion.p>
-        </AnimatePresence>
-      </div>
     </div>
   );
 }
+
 function StatusBadge() {
   return (
-    <div className="sam-status-badge sam-handwritten inline-flex w-fit items-center gap-2 text-[1.12rem] text-[#111111]/68 lg:text-[1rem]">
+    <div className="sam-status-badge sam-handwritten inline-flex w-fit items-center gap-2 text-[0.95rem] text-[#111111]/68 lg:text-[0.85rem]">
       <span className="relative flex h-2.5 w-2.5">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-35" />
         <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-600" />
@@ -412,7 +349,7 @@ function ViewSwitcher({
     <div
       role="tablist"
       aria-label="Portfolio sections"
-      className="relative flex h-[32px] w-fit min-w-[470px] max-w-full items-center overflow-x-auto rounded-full bg-[#ededed] p-0 sm:h-[34px] max-[520px]:min-w-0 max-[520px]:w-full"
+      className="relative flex h-[28px] w-fit min-w-[440px] max-w-full items-center overflow-x-auto rounded-full bg-[#ededed] p-0 sm:h-[30px] max-[520px]:min-w-0 max-[520px]:w-full"
     >
       {viewOrder.map((item) => {
         const active = value === item;
@@ -426,7 +363,7 @@ function ViewSwitcher({
             aria-selected={active}
             aria-controls="portfolio-panel"
             onClick={() => onChange(item)}
-            className={`relative z-10 h-full flex-1 whitespace-nowrap rounded-full px-2 text-[0.7rem] font-medium max-[359px]:px-1 max-[359px]:text-[0.64rem] tracking-[-0.035em] transition-colors sm:px-4 sm:text-[0.78rem] ${
+            className={`relative z-10 h-full flex-1 whitespace-nowrap rounded-full px-2 text-[0.68rem] font-medium max-[359px]:px-1 max-[359px]:text-[0.62rem] tracking-[-0.035em] transition-colors sm:px-4 sm:text-[0.74rem] ${
               active ? "text-white" : "text-[#111111]/50 hover:text-[#111111]/80"
             }`}
           >
@@ -437,7 +374,14 @@ function ViewSwitcher({
                 transition={{ type: "spring", stiffness: 420, damping: 35 }}
               />
             ) : null}
-            {viewLabels[item]}
+            {item === "case-studies" ? (
+              <>
+                <span className="min-[521px]:hidden">Websites</span>
+                <span className="max-[520px]:hidden">{viewLabels[item]}</span>
+              </>
+            ) : (
+              viewLabels[item]
+            )}
           </button>
         );
       })}
@@ -457,7 +401,7 @@ function CertificateCard({
 
   return (
     <motion.article
-      className="group rounded-[26px] bg-[#ededed] p-2 sm:p-3"
+      className="group overflow-hidden rounded-[26px] bg-[#ededed]"
       initial={
         reduce
           ? false
@@ -468,13 +412,9 @@ function CertificateCard({
       viewport={{ once: true, amount: 0.25 }}
       transition={{ type: "spring", stiffness: 90, damping: 14 }}
     >
-      <SkeletonImage
-        src={certificate.image}
-        alt={certificate.title}
-        className="rounded-[20px] bg-white"
-      />
+      <SkeletonImage src={certificate.image} alt={certificate.title} className="bg-white" />
       <motion.div
-        className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-2 pb-1 pt-3 sm:px-1"
+        className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 pb-4 pt-4 sm:px-5"
         initial={reduce ? false : { opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.25 }}
@@ -516,7 +456,7 @@ function WorkSampleCard({
   return (
     <div ref={ref}>
       <motion.article
-        className="relative rounded-[24px] bg-[#ededed] p-1 sm:p-2"
+        className="relative rounded-[24px] bg-[#ededed]"
         initial={false}
         animate={
           show
@@ -525,7 +465,7 @@ function WorkSampleCard({
         }
         transition={{ duration: reduce ? 0 : 0.95, ease }}
       >
-        <div className="relative overflow-hidden rounded-[20px] bg-white">
+        <div className="relative overflow-hidden rounded-[24px] bg-white">
           <motion.div
             initial={false}
             animate={
@@ -655,17 +595,6 @@ function WorkHistoryCard({
             {entry.summary}
           </p>
 
-          <ul className="mt-5 flex flex-wrap gap-2" aria-label={`${entry.company} stack`}>
-            {entry.stack.map((item) => (
-              <li
-                key={item}
-                className="rounded-full bg-[#1a1a1a] px-3 py-1.5 text-[0.8rem] font-semibold tracking-[-0.02em] text-white"
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
-
           {entry.points.length ? (
             <ol className="mt-6 max-w-3xl divide-y divide-[#111111]/10 overflow-hidden rounded-[20px] bg-white px-4">
               {entry.points.map((point, pointIndex) => (
@@ -725,6 +654,22 @@ function WorkHistoryCard({
               </div>
             </div>
           ) : null}
+
+          <div className="mt-6 border-t border-[#111111]/10 pt-4">
+            <p className="text-[0.74rem] font-semibold uppercase tracking-[0.12em] text-[#111111]/38">
+              Tools used
+            </p>
+            <ul className="mt-2 flex flex-wrap gap-1.5" aria-label={`${entry.company} tools`}>
+              {entry.stack.map((item) => (
+                <li
+                  key={item}
+                  className="rounded-full bg-white px-2.5 py-1 text-[0.74rem] font-medium tracking-[-0.01em] text-[#111111]/55"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </motion.div>
     </article>
@@ -740,7 +685,7 @@ function CaseStudyCard({ project, index }: { project: CaseStudyCardProject; inde
 
   return (
     <motion.article
-      className="group overflow-hidden rounded-[26px] bg-[#ededed] p-3 text-[#111111]"
+      className="group overflow-hidden rounded-[26px] bg-[#ededed] text-[#111111]"
       initial={reduce ? false : { opacity: 0, y: 42, scale: 0.96 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.28 }}
@@ -750,7 +695,7 @@ function CaseStudyCard({ project, index }: { project: CaseStudyCardProject; inde
         to="/projects/$slug"
         params={{ slug: project.slug }}
         onClick={rememberCaseStudyReturn}
-        className="block overflow-hidden rounded-[20px] bg-white"
+        className="block overflow-hidden bg-white"
       >
         {cover ? (
           <img
@@ -763,7 +708,7 @@ function CaseStudyCard({ project, index }: { project: CaseStudyCardProject; inde
         ) : null}
       </Link>
 
-      <div className="grid gap-7 px-2 py-5 sm:px-3 sm:py-6 xl:grid-cols-[minmax(0,1fr)_300px] xl:items-end">
+      <div className="grid gap-7 px-5 py-5 sm:px-7 sm:py-7 xl:grid-cols-[minmax(0,1fr)_300px] xl:items-end">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             <span className="rounded-full bg-white px-3 py-1 text-[0.78rem] font-semibold tracking-[-0.02em] text-[#111111]/44">
@@ -773,7 +718,7 @@ function CaseStudyCard({ project, index }: { project: CaseStudyCardProject; inde
               {caseStudy?.eyebrow ?? project.studio}
             </span>
             <span className="rounded-full bg-white px-3 py-1 text-[0.78rem] font-semibold tracking-[-0.02em] text-[#111111]/44">
-              {caseStudy?.role ?? profile.role}
+              Design and development
             </span>
           </div>
 
@@ -793,15 +738,18 @@ function CaseStudyCard({ project, index }: { project: CaseStudyCardProject; inde
           </p>
 
           <div className="mt-6 flex flex-wrap gap-2">
-            {(caseStudy?.metrics ?? project.signals).slice(0, 4).map((metric) => (
+            {project.labels.map((label) => (
               <span
-                key={metric}
-                className="rounded-full bg-white px-3 py-1.5 text-[0.82rem] font-semibold tracking-[-0.02em] text-[#111111]/52"
+                key={label}
+                className="rounded-full bg-white px-3 py-1.5 text-[0.82rem] font-semibold tracking-[-0.02em] text-[#111111]/58"
               >
-                {metric}
+                {label}
               </span>
             ))}
           </div>
+          <p className="mt-3 text-[0.74rem] font-medium tracking-[-0.01em] text-[#111111]/38">
+            {project.tags.join(" · ")}
+          </p>
         </div>
 
         <div className="grid gap-4">
@@ -811,7 +759,7 @@ function CaseStudyCard({ project, index }: { project: CaseStudyCardProject; inde
                 <img
                   key={`${image}-${previewIndex}`}
                   src={image}
-                  alt=""
+                  alt={`${project.title} screenshot ${previewIndex + 1}`}
                   className="aspect-[4/3] rounded-[14px] bg-white object-cover object-top"
                   loading="lazy"
                   decoding="async"

@@ -20,12 +20,26 @@ describe("portfolio data", () => {
     expect(caseStudies).toEqual(featured);
   });
 
-  it("puts Nachie Maridadi first, then Open School Field, then Infinitative", () => {
-    expect(featuredProjects.slice(0, 3).map((project) => project.slug)).toEqual([
+  it("orders projects from closest-to-a-local-business to most technical", () => {
+    expect(featuredProjects.map((project) => project.slug)).toEqual([
+      "samsoni",
+      "oyobooking",
+      "thomason",
       "nachie-maridadi",
-      "open-school-field",
+      "c-homes",
       "infinitative",
+      "open-school-field",
+      "learncity",
+      "payflow",
     ]);
+  });
+
+  it("gives every project plain-language labels and a one-line summary", () => {
+    for (const project of featuredProjects) {
+      expect(project.labels.length, `${project.slug} labels`).toBeGreaterThan(0);
+      const study = projectCaseStudies.find((item) => item.slug === project.slug);
+      expect(study?.summary.length ?? 0, `${project.slug} summary`).toBeLessThan(110);
+    }
   });
 
   it("does not showcase Recap", () => {

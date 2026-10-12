@@ -53,7 +53,7 @@ const structuredData = [
       "@type": "Offer",
       itemOffered: {
         "@type": "Service",
-        name: "Frontend development for product teams",
+        name: "Website design and development for businesses",
       },
     },
   },
@@ -70,7 +70,7 @@ const structuredData = [
   {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
-    name: "Oluwatomisin Isogun - Frontend Developer",
+    name: "Oluwatomisin Isogun | Websites That Turn Visitors Into Customers",
     url: siteUrl,
     mainEntity: {
       "@type": "Person",
@@ -144,20 +144,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Oluwatomisin Isogun Portfolio" },
+      { title: "Oluwatomisin Isogun | Websites That Turn Visitors Into Customers" },
       {
         name: "description",
-        content: "Portfolio of Oluwatomisin Isogun, frontend developer.",
+        content:
+          "I build fast, good-looking websites that turn visitors into customers. Fixed price, quick delivery.",
       },
       { name: "author", content: "Oluwatomisin Isogun" },
       { name: "theme-color", content: "#f7f7f5" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-title", content: "Oluwatomisin" },
-      { property: "og:title", content: "Oluwatomisin Isogun Portfolio" },
+      {
+        property: "og:title",
+        content: "Oluwatomisin Isogun | Websites That Turn Visitors Into Customers",
+      },
       {
         property: "og:description",
-        content: "Frontend work across booking platforms, dashboards, and marketplace products.",
+        content:
+          "I build fast, good-looking websites that turn visitors into customers. Fixed price, quick delivery.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: siteUrl },
@@ -168,10 +173,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image:height", content: "630" },
       { property: "og:image:alt", content: "Oluwatomisin Isogun" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Oluwatomisin Isogun Portfolio" },
+      {
+        name: "twitter:title",
+        content: "Oluwatomisin Isogun | Websites That Turn Visitors Into Customers",
+      },
       {
         name: "twitter:description",
-        content: "Frontend work across booking platforms, dashboards, and marketplace products.",
+        content:
+          "I build fast, good-looking websites that turn visitors into customers. Fixed price, quick delivery.",
       },
       { name: "twitter:image", content: ogImageUrl },
       { name: "twitter:image:alt", content: "Oluwatomisin Isogun" },

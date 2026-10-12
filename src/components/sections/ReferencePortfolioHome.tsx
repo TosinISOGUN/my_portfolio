@@ -222,14 +222,14 @@ function IdentityPanel() {
             />
           </figure>
 
-          <h1 className="mt-5 text-[1.25rem] font-medium leading-none tracking-[-0.045em] text-[#050505] lg:mt-2 lg:text-[1.05rem] xl:mt-3 xl:text-[1.125rem]">
+          <div className="sam-name mt-5 text-[1.25rem] font-medium leading-none tracking-[-0.045em] text-[#050505] lg:mt-2 lg:text-[1.05rem] xl:mt-3 xl:text-[1.125rem]">
             {profile.name}
-          </h1>
+          </div>
 
-          <h2 className="mt-7 max-w-[455px] text-[clamp(1.5rem,7vw,1.9rem)] font-medium leading-[1.2] tracking-[-0.05em] text-[#050505] lg:mt-4 lg:max-w-[360px] lg:text-[1.3rem] xl:mt-5 xl:max-w-[390px] xl:text-[1.625rem]">
+          <h1 className="sam-headline mt-7 max-w-[455px] text-[clamp(1.5rem,7vw,1.9rem)] font-medium leading-[1.2] tracking-[-0.05em] text-[#050505] lg:mt-4 lg:max-w-[360px] lg:text-[1.3rem] xl:mt-5 xl:max-w-[390px] xl:text-[1.625rem]">
             <span className="text-[#111111]/48">I build fast, good-looking websites </span>
             that turn visitors into customers.
-          </h2>
+          </h1>
 
           <p className="mt-5 max-w-[445px] text-[0.98rem] font-normal leading-[1.4] tracking-[-0.03em] text-[#111111]/62 lg:mt-3 lg:max-w-[350px] lg:text-[0.8rem] lg:leading-[1.35] xl:mt-4 xl:max-w-[390px] xl:text-[0.88rem]">
             Mobile-friendly websites with online booking, ordering, and contact forms, built to help

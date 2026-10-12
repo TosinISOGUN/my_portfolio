@@ -19,17 +19,18 @@ export const Route = createFileRoute("/projects/$slug")({
 
     const projectUrl = absoluteUrl(`/projects/${loaderData.slug}`);
     const projectImageUrl = absoluteUrl(loaderData.cover);
-    const title = `${loaderData.title} - Case Study - Oluwatomisin Isogun`;
+    const title = `${loaderData.title}: website design and development | Oluwatomisin Isogun`;
+    const description = `${loaderData.summary} Designed and built by Oluwatomisin Isogun.`;
 
     return {
       meta: [
         { title },
         {
           name: "description",
-          content: loaderData.summary,
+          content: description,
         },
         { property: "og:title", content: title },
-        { property: "og:description", content: loaderData.summary },
+        { property: "og:description", content: description },
         { property: "og:type", content: "article" },
         { property: "og:url", content: projectUrl },
         { property: "og:image", content: projectImageUrl },
@@ -37,7 +38,7 @@ export const Route = createFileRoute("/projects/$slug")({
         { property: "og:image:alt", content: `${loaderData.title} interface preview` },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: title },
-        { name: "twitter:description", content: loaderData.summary },
+        { name: "twitter:description", content: description },
         { name: "twitter:image", content: projectImageUrl },
         { name: "twitter:image:alt", content: `${loaderData.title} interface preview` },
       ],

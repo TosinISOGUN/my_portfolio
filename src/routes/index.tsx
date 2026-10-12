@@ -1,26 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ReferencePortfolioHome } from "@/components/sections/ReferencePortfolioHome";
-import { ogImageUrl, siteUrl } from "@/lib/seo";
-
-const homeTitle = "Oluwatomisin Isogun | Websites That Turn Visitors Into Customers";
-const homeDescription =
-  "I build fast, good-looking websites that turn visitors into customers. Fixed price, quick delivery.";
+import { ogImageUrl, seoDescription, seoTitle, shareTitle, siteUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: homeTitle },
+      { title: seoTitle },
       {
         name: "description",
-        content: homeDescription,
+        content: seoDescription,
       },
       {
         property: "og:title",
-        content: homeTitle,
+        content: shareTitle,
       },
       {
         property: "og:description",
-        content: homeDescription,
+        content: seoDescription,
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: siteUrl },
@@ -35,8 +31,8 @@ export const Route = createFileRoute("/")({
           "Oluwatomisin Isogun, web design and development. Websites that turn visitors into customers.",
       },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: homeTitle },
-      { name: "twitter:description", content: homeDescription },
+      { name: "twitter:title", content: shareTitle },
+      { name: "twitter:description", content: seoDescription },
       { name: "twitter:image", content: ogImageUrl },
       {
         name: "twitter:image:alt",

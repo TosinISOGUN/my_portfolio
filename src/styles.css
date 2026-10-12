@@ -453,6 +453,56 @@
   }
 }
 
+/* Short laptop screens: tighten the left column so it fits without scrolling. */
+@media (min-width: 1024px) and (max-height: 800px) {
+  .sam-profile-block figure {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .sam-profile-block h1 {
+    margin-top: 0.5rem !important;
+  }
+
+  .sam-profile-block h2 {
+    margin-top: 0.6rem !important;
+  }
+
+  .sam-profile-block > p {
+    margin-top: 0.45rem !important;
+  }
+
+  .sam-action-row {
+    margin-top: 0.7rem !important;
+  }
+
+  .sam-dev-note,
+  .sam-stack-block {
+    margin-top: 0.5rem !important;
+  }
+
+  .sam-contact-footer {
+    margin-top: 0.5rem !important;
+  }
+
+  .sam-contact-footer > div {
+    margin-top: 0.4rem !important;
+    gap: 0.4rem !important;
+  }
+
+  .sam-action-row {
+    gap: 0.4rem !important;
+  }
+
+  .sam-page .sam-pill {
+    min-height: 34px;
+  }
+
+  .sam-page .sam-social-pill {
+    min-height: 30px;
+  }
+}
+
 .portfolio-horizontal,
 .portfolio-screen-marquee {
   overflow: hidden;

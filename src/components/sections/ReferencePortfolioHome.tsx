@@ -1,13 +1,14 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
-import { ArrowDownToLine, ArrowUpRight, Calendar, Github, Send } from "lucide-react";
+import { ArrowDownToLine, ArrowUpRight, Calendar, Github, MessageCircle, Send } from "lucide-react";
 import resumePdf from "@/assets/OLUWATOMISIN_ISOGUN_RESUME.pdf";
 import { SkeletonImage } from "@/components/SkeletonImage";
 import { CtaBlock, Faq, WebsitesHeading } from "@/components/sections/BusinessSections";
 import profilePhoto from "@/assets/Photograph - Oluwatomisin Isogun.jpg";
 import {
   bookingUrl,
+  whatsappUrl,
   certifications,
   featuredProjects,
   getHeroRank,
@@ -102,7 +103,7 @@ export function ReferencePortfolioHome() {
 
   return (
     <main className="sam-page min-h-screen bg-white text-[#111111] lg:h-screen lg:overflow-hidden">
-      <div className="grid min-h-screen lg:grid-cols-[clamp(300px,26vw,380px)_minmax(0,1fr)] xl:grid-cols-[460px_minmax(0,1fr)]">
+      <div className="grid min-h-screen lg:grid-cols-[clamp(280px,24vw,330px)_minmax(0,1fr)] xl:grid-cols-[380px_minmax(0,1fr)]">
         <IdentityPanel />
 
         <section
@@ -307,6 +308,15 @@ function IdentityPanel() {
           </a>
           <a href={`mailto:${profile.email}`} className="sam-social-pill">
             Email
+          </a>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="sam-social-pill gap-1.5"
+          >
+            <MessageCircle className="h-3.5 w-3.5" aria-hidden />
+            WhatsApp
           </a>
         </div>
       </div>

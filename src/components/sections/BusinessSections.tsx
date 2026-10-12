@@ -1,5 +1,5 @@
-import { ArrowUpRight, Calendar, ChevronDown, Send } from "lucide-react";
-import { bookingUrl, mockupUrl } from "@/data/portfolio";
+import { ArrowUpRight, Calendar, ChevronDown, MessageCircle, Send } from "lucide-react";
+import { bookingUrl, mockupUrl, whatsappUrl } from "@/data/portfolio";
 
 const cardClass = "overflow-hidden rounded-[26px] bg-[#ededed] p-5 text-[#111111] sm:p-7";
 
@@ -40,6 +40,15 @@ export function CtaBlock() {
         <a href={mockupUrl} className="sam-pill bg-white/12 text-white hover:bg-white/20">
           <Send className="h-[18px] w-[18px]" aria-hidden />
           Get a free homepage mockup
+        </a>
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="sam-pill bg-white/12 text-white hover:bg-white/20"
+        >
+          <MessageCircle className="h-[18px] w-[18px]" aria-hidden />
+          WhatsApp me
         </a>
       </div>
     </section>

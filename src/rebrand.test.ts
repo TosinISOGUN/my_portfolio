@@ -41,6 +41,7 @@ describe("client-facing copy rules", () => {
     expect(allText).toContain("linkedin.com/in/oluwatomisin-isogun");
     expect(allText).toContain("upwork.com/freelancers");
     expect(allText).toContain("OLUWATOMISIN_ISOGUN_RESUME.pdf");
+    expect(allText).toContain("wa.me/2348164376172");
   });
 
   it("uses the rebrand headline, buttons and footer line", () => {

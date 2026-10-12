@@ -254,6 +254,9 @@ export const profile = {
   upwork: "https://www.upwork.com/freelancers/~0136c2f689158ada21?mp_source=share",
 };
 
+/** Opens WhatsApp with a short starter message. Number is in international format, no plus or zeros. */
+export const whatsappUrl = `https://wa.me/2348164376172?text=${encodeURIComponent("Hi Tosin, I'd like a website for my business.")}`;
+
 export const bookingUrl = "https://cal.com/oluwatomisin-isogun-disku5/30min?overlayCalendar=true";
 
 /** Opens an email with a ready-made subject so requests are easy to spot. */

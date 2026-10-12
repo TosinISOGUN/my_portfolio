@@ -402,7 +402,19 @@
 
   .sam-action-row {
     margin-top: 1.15rem !important;
-    gap: 0.55rem !important;
+    gap: 0.5rem !important;
+  }
+
+  /* Keep the two hero buttons side by side on phones. */
+  .sam-action-row .sam-pill {
+    gap: 0.4rem;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.88rem;
+  }
+
+  .sam-action-row .sam-pill svg {
+    width: 16px;
+    height: 16px;
   }
 
   .sam-action-row + a {
@@ -450,6 +462,16 @@
     min-height: 34px;
     padding: 0.38rem 0.76rem;
     font-size: 0.84rem;
+  }
+
+  .sam-page .sam-action-row .sam-pill {
+    gap: 0.4rem;
+    padding: 0.45rem 0.7rem;
+  }
+
+  .sam-page .sam-action-row .sam-pill svg {
+    width: 16px;
+    height: 16px;
   }
 }
 

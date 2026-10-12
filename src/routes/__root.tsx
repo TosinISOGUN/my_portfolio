@@ -171,7 +171,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image:type", content: "image/jpeg" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "Oluwatomisin Isogun" },
+      {
+        property: "og:image:alt",
+        content:
+          "Oluwatomisin Isogun, web design and development. Websites that turn visitors into customers.",
+      },
       { name: "twitter:card", content: "summary_large_image" },
       {
         name: "twitter:title",
@@ -183,7 +187,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "I build fast, good-looking websites that turn visitors into customers. Fixed price, quick delivery.",
       },
       { name: "twitter:image", content: ogImageUrl },
-      { name: "twitter:image:alt", content: "Oluwatomisin Isogun" },
+      {
+        name: "twitter:image:alt",
+        content:
+          "Oluwatomisin Isogun, web design and development. Websites that turn visitors into customers.",
+      },
     ],
     links: [
       {

@@ -259,9 +259,6 @@ export const whatsappUrl = `https://wa.me/2348164376172?text=${encodeURIComponen
 
 export const bookingUrl = "https://cal.com/oluwatomisin-isogun-disku5/30min?overlayCalendar=true";
 
-/** Opens an email with a ready-made subject so requests are easy to spot. */
-export const mockupUrl = `mailto:${profile.email}?subject=${encodeURIComponent("Free homepage mockup request")}`;
-
 export type WorkHistoryEntry = {
   role: string;
   company: string;

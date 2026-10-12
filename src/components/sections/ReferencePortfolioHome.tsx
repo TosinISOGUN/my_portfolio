@@ -12,7 +12,6 @@ import {
   certifications,
   featuredProjects,
   getHeroRank,
-  mockupUrl,
   profile,
   projectCaseStudies,
   skills,
@@ -116,7 +115,7 @@ export function ReferencePortfolioHome() {
           data-case-study-return-view={view}
           className="min-w-0 border-[#111111]/10 lg:h-screen lg:overflow-y-auto lg:border-l"
         >
-          <div className="sticky top-0 z-20 border-b border-[#111111]/10 bg-white/92 px-3 py-4 backdrop-blur-md sm:px-8 sm:py-5 lg:px-8">
+          <div className="sticky top-0 z-20 border-b border-[#111111]/10 bg-white/92 px-3 py-2.5 backdrop-blur-md sm:px-8 sm:py-3 lg:px-8">
             <ViewSwitcher value={view} onChange={handleViewChange} />
           </div>
 
@@ -126,7 +125,7 @@ export function ReferencePortfolioHome() {
               {view === "samples" ? (
                 <motion.div
                   key="samples"
-                  className="-mx-1 grid gap-7 sm:-mx-4 lg:-mx-5 xl:-mx-6"
+                  className="grid gap-7"
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -14 }}
@@ -248,11 +247,13 @@ function IdentityPanel() {
               Book a free call
             </a>
             <a
-              href={mockupUrl}
+              href={whatsappUrl}
+              target="_blank"
+              rel="noreferrer"
               className="sam-pill sam-tilt-button bg-[#ededed] text-[#1a1a1a] hover:bg-white"
             >
-              <Send className="h-[18px] w-[18px]" aria-hidden />
-              Get a free homepage mockup
+              <MessageCircle className="h-[18px] w-[18px]" aria-hidden />
+              Chat on WhatsApp
             </a>
           </div>
 
@@ -309,15 +310,6 @@ function IdentityPanel() {
           <a href={`mailto:${profile.email}`} className="sam-social-pill">
             Email
           </a>
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="sam-social-pill gap-1.5"
-          >
-            <MessageCircle className="h-3.5 w-3.5" aria-hidden />
-            WhatsApp
-          </a>
         </div>
       </div>
     </motion.aside>
@@ -336,7 +328,7 @@ function TrustLine() {
 
 function StatusBadge() {
   return (
-    <div className="sam-status-badge sam-handwritten inline-flex w-fit items-center gap-2 text-[1.12rem] text-[#111111]/68 lg:text-[1rem]">
+    <div className="sam-status-badge sam-handwritten inline-flex w-fit items-center gap-2 text-[0.95rem] text-[#111111]/68 lg:text-[0.85rem]">
       <span className="relative flex h-2.5 w-2.5">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-35" />
         <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-600" />
@@ -357,7 +349,7 @@ function ViewSwitcher({
     <div
       role="tablist"
       aria-label="Portfolio sections"
-      className="relative flex h-[32px] w-fit min-w-[470px] max-w-full items-center overflow-x-auto rounded-full bg-[#ededed] p-0 sm:h-[34px] max-[520px]:min-w-0 max-[520px]:w-full"
+      className="relative flex h-[28px] w-fit min-w-[440px] max-w-full items-center overflow-x-auto rounded-full bg-[#ededed] p-0 sm:h-[30px] max-[520px]:min-w-0 max-[520px]:w-full"
     >
       {viewOrder.map((item) => {
         const active = value === item;
@@ -371,7 +363,7 @@ function ViewSwitcher({
             aria-selected={active}
             aria-controls="portfolio-panel"
             onClick={() => onChange(item)}
-            className={`relative z-10 h-full flex-1 whitespace-nowrap rounded-full px-2 text-[0.7rem] font-medium max-[359px]:px-1 max-[359px]:text-[0.64rem] tracking-[-0.035em] transition-colors sm:px-4 sm:text-[0.78rem] ${
+            className={`relative z-10 h-full flex-1 whitespace-nowrap rounded-full px-2 text-[0.68rem] font-medium max-[359px]:px-1 max-[359px]:text-[0.62rem] tracking-[-0.035em] transition-colors sm:px-4 sm:text-[0.74rem] ${
               active ? "text-white" : "text-[#111111]/50 hover:text-[#111111]/80"
             }`}
           >
@@ -409,7 +401,7 @@ function CertificateCard({
 
   return (
     <motion.article
-      className="group rounded-[26px] bg-[#ededed] p-2 sm:p-3"
+      className="group overflow-hidden rounded-[26px] bg-[#ededed]"
       initial={
         reduce
           ? false
@@ -420,13 +412,9 @@ function CertificateCard({
       viewport={{ once: true, amount: 0.25 }}
       transition={{ type: "spring", stiffness: 90, damping: 14 }}
     >
-      <SkeletonImage
-        src={certificate.image}
-        alt={certificate.title}
-        className="rounded-[20px] bg-white"
-      />
+      <SkeletonImage src={certificate.image} alt={certificate.title} className="bg-white" />
       <motion.div
-        className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-2 pb-1 pt-3 sm:px-1"
+        className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 pb-4 pt-4 sm:px-5"
         initial={reduce ? false : { opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.25 }}
@@ -468,7 +456,7 @@ function WorkSampleCard({
   return (
     <div ref={ref}>
       <motion.article
-        className="relative rounded-[24px] bg-[#ededed] p-1 sm:p-2"
+        className="relative rounded-[24px] bg-[#ededed]"
         initial={false}
         animate={
           show
@@ -477,7 +465,7 @@ function WorkSampleCard({
         }
         transition={{ duration: reduce ? 0 : 0.95, ease }}
       >
-        <div className="relative overflow-hidden rounded-[20px] bg-white">
+        <div className="relative overflow-hidden rounded-[24px] bg-white">
           <motion.div
             initial={false}
             animate={
@@ -697,7 +685,7 @@ function CaseStudyCard({ project, index }: { project: CaseStudyCardProject; inde
 
   return (
     <motion.article
-      className="group overflow-hidden rounded-[26px] bg-[#ededed] p-3 text-[#111111]"
+      className="group overflow-hidden rounded-[26px] bg-[#ededed] text-[#111111]"
       initial={reduce ? false : { opacity: 0, y: 42, scale: 0.96 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.28 }}
@@ -707,7 +695,7 @@ function CaseStudyCard({ project, index }: { project: CaseStudyCardProject; inde
         to="/projects/$slug"
         params={{ slug: project.slug }}
         onClick={rememberCaseStudyReturn}
-        className="block overflow-hidden rounded-[20px] bg-white"
+        className="block overflow-hidden bg-white"
       >
         {cover ? (
           <img
@@ -720,7 +708,7 @@ function CaseStudyCard({ project, index }: { project: CaseStudyCardProject; inde
         ) : null}
       </Link>
 
-      <div className="grid gap-7 px-2 py-5 sm:px-3 sm:py-6 xl:grid-cols-[minmax(0,1fr)_300px] xl:items-end">
+      <div className="grid gap-7 px-5 py-5 sm:px-7 sm:py-7 xl:grid-cols-[minmax(0,1fr)_300px] xl:items-end">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             <span className="rounded-full bg-white px-3 py-1 text-[0.78rem] font-semibold tracking-[-0.02em] text-[#111111]/44">

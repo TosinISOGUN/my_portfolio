@@ -1,5 +1,5 @@
-import { ArrowUpRight, Calendar, ChevronDown, MessageCircle, Send } from "lucide-react";
-import { bookingUrl, mockupUrl, whatsappUrl } from "@/data/portfolio";
+import { ArrowUpRight, Calendar, ChevronDown, MessageCircle } from "lucide-react";
+import { bookingUrl, whatsappUrl } from "@/data/portfolio";
 
 const cardClass = "overflow-hidden rounded-[26px] bg-[#ededed] p-5 text-[#111111] sm:p-7";
 
@@ -24,7 +24,7 @@ export function CtaBlock() {
         Want a website like these?
       </h3>
       <p className="mt-4 max-w-xl text-[1rem] font-medium leading-7 tracking-[-0.035em] text-white/60">
-        Book a free call, or ask for a free homepage mockup.
+        Book a free call, or message me on WhatsApp.
       </p>
       <div className="mt-6 flex flex-wrap gap-3">
         <a
@@ -37,10 +37,6 @@ export function CtaBlock() {
           Book a free call
           <ArrowUpRight className="h-4 w-4" aria-hidden />
         </a>
-        <a href={mockupUrl} className="sam-pill bg-white/12 text-white hover:bg-white/20">
-          <Send className="h-[18px] w-[18px]" aria-hidden />
-          Get a free homepage mockup
-        </a>
         <a
           href={whatsappUrl}
           target="_blank"
@@ -48,7 +44,7 @@ export function CtaBlock() {
           className="sam-pill bg-white/12 text-white hover:bg-white/20"
         >
           <MessageCircle className="h-[18px] w-[18px]" aria-hidden />
-          WhatsApp me
+          Chat on WhatsApp
         </a>
       </div>
     </section>

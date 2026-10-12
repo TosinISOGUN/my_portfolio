@@ -47,8 +47,7 @@ describe("client-facing copy rules", () => {
   it("uses the rebrand headline, buttons and footer line", () => {
     expect(allText).toContain("that turn visitors into customers.");
     expect(allText).toContain("Book a free call");
-    expect(allText).toContain("Get a free homepage mockup");
-    expect(allText).toContain("Free homepage mockup request");
+    expect(allText).toContain("Chat on WhatsApp");
     expect(allText).toContain("Need a website that brings in more customers? Let's talk.");
     expect(allText).toContain("Fixed price. Fast delivery. You own your site.");
   });

@@ -30,7 +30,8 @@ for (const file of await walk(path.join(root, "src"))) {
       trimmed.startsWith("/**") ||
       trimmed.includes("TODO(owner): {children}");
     // Markers show up three ways: a comment, a <Todo> element in the page, or a "todo:" data field.
-    const isMarker = line.includes("TODO(owner)") || /<Todo>/.test(line) || /^s*todo:s/.test(line);
+    const isMarker =
+      line.includes("TODO(owner)") || /<Todo>/.test(line) || /^\s*todo:\s/.test(line);
     if (isMarker && !isDocumentation) {
       found.push(
         `${path.relative(root, file).split(path.sep).join("/")}:${index + 1}  ${line.trim()}`,

@@ -4,13 +4,7 @@ import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-mot
 import { ArrowDownToLine, ArrowUpRight, Calendar, Github, Send } from "lucide-react";
 import resumePdf from "@/assets/OLUWATOMISIN_ISOGUN_RESUME.pdf";
 import { SkeletonImage } from "@/components/SkeletonImage";
-import {
-  CtaBlock,
-  Faq,
-  HowItWorks,
-  ServicesBlock,
-  WebsitesHeading,
-} from "@/components/sections/BusinessSections";
+import { CtaBlock, Faq, WebsitesHeading } from "@/components/sections/BusinessSections";
 import profilePhoto from "@/assets/Photograph - Oluwatomisin Isogun.jpg";
 import {
   bookingUrl,
@@ -150,8 +144,6 @@ export function ReferencePortfolioHome() {
                   exit={{ opacity: 0, y: -14 }}
                   transition={{ duration: 0.25 }}
                 >
-                  <ServicesBlock />
-                  <HowItWorks />
                   <WebsitesHeading />
                   {workSamples.map((project, index) => (
                     <CaseStudyCard key={project.title} project={project} index={index} />

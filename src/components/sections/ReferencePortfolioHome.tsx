@@ -32,6 +32,7 @@ const viewLabels: Record<ViewMode, string> = {
 };
 
 const bookingUrl = "https://cal.com/oluwatomisin-isogun-disku5/30min?overlayCalendar=true";
+const mockupUrl = `mailto:${profile.email}?subject=${encodeURIComponent("Free homepage mockup request")}`;
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 export function ReferencePortfolioHome() {
@@ -219,31 +220,14 @@ function IdentityPanel() {
           </h1>
 
           <h2 className="mt-8 max-w-[455px] text-[clamp(1.75rem,8vw,2.35rem)] font-semibold leading-[1.16] tracking-[-0.075em] text-[#050505] lg:mt-4 lg:max-w-[360px] lg:text-[1.58rem] xl:mt-5 xl:max-w-[390px] xl:text-[1.95rem]">
-            <span className="text-[#111111]/48">Hey, I'm Oluwatomisin, a </span>
-            frontend developer for product teams.
+            <span className="text-[#111111]/48">I build fast, good-looking websites </span>
+            that turn visitors into customers.
           </h2>
 
           <p className="mt-7 max-w-[445px] text-[1.06rem] font-medium leading-[1.42] tracking-[-0.045em] text-[#111111]/58 lg:mt-4 lg:max-w-[350px] lg:text-[0.84rem] lg:leading-[1.3] xl:mt-5 xl:max-w-[390px] xl:text-[0.95rem]">
-            I build React and TypeScript interfaces that feel premium and turn complex workflows
-            into actual product momentum. I care about the small stuff, spacing, states,
-            performance, and the one extra click that should not be there.
+            Mobile-friendly websites with online booking, ordering, and contact forms, built to help
+            your business get found and get contacted. Fixed price, no surprises.
           </p>
-
-          <div className="sam-stack-block mt-6 max-w-[390px] lg:mt-3 xl:mt-4">
-            <p className="text-[0.84rem] font-semibold tracking-[-0.03em] text-[#111111]/38">
-              Core stack
-            </p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {skills.slice(0, 8).map((skill) => (
-                <span
-                  key={skill}
-                  className="rounded-full bg-[#ededed] px-3 py-1.5 text-[0.78rem] font-semibold tracking-[-0.025em] text-[#111111]/56 lg:px-2.5 lg:py-1 lg:text-[0.72rem] xl:text-[0.76rem]"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
 
           <div className="sam-action-row mt-9 flex flex-wrap gap-3 lg:mt-4 lg:gap-2 xl:mt-5">
             <a
@@ -253,14 +237,14 @@ function IdentityPanel() {
               className="sam-pill sam-tilt-button bg-[#1a1a1a] text-white hover:bg-black"
             >
               <Calendar className="h-[18px] w-[18px]" aria-hidden />
-              Book a call
+              Book a free call
             </a>
             <a
-              href={`mailto:${profile.email}`}
+              href={mockupUrl}
               className="sam-pill sam-tilt-button bg-[#ededed] text-[#1a1a1a] hover:bg-white"
             >
               <Send className="h-[18px] w-[18px]" aria-hidden />
-              Message me
+              Get a free homepage mockup
             </a>
           </div>
 
@@ -268,22 +252,35 @@ function IdentityPanel() {
             href={resumePdf}
             target="_blank"
             rel="noreferrer"
-            className="sam-resume group mt-3 inline-flex items-center gap-2 rounded-full border border-[#111111]/25 bg-white px-4 py-2 text-[0.92rem] font-semibold tracking-[-0.035em] text-[#111111] transition-colors hover:bg-[#1a1a1a] hover:text-white lg:mt-1.5 lg:px-3 lg:py-1 lg:text-[0.8rem] xl:mt-2 xl:px-3.5 xl:py-1 xl:text-[0.88rem]"
+            className="mt-1 inline-flex items-center gap-1.5 py-2 text-[0.9rem] font-medium tracking-[-0.03em] text-[#111111]/50 underline-offset-4 transition-colors hover:text-[#111111] hover:underline lg:mt-0 lg:py-0.5 lg:text-[0.8rem]"
           >
-            <ArrowDownToLine className="sam-resume-icon h-4 w-4" aria-hidden />
-            View resume
-            <span className="rounded-full bg-[#00d45a]/18 px-1.5 py-0.5 font-mono text-[0.6rem] font-bold uppercase tracking-[0.08em] text-[#0a6b34] transition-colors group-hover:bg-white/15 group-hover:text-[#7dffb0]">
-              PDF
-            </span>
+            <ArrowDownToLine className="h-3.5 w-3.5" aria-hidden />
+            Resume
           </a>
 
-          <DevJokeTicker />
+          <TrustLine />
+
+          <div className="sam-stack-block mt-5 max-w-[390px] lg:mt-3 xl:mt-4">
+            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[#111111]/32">
+              Built with
+            </p>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {skills.slice(0, 8).map((skill) => (
+                <span
+                  key={skill}
+                  className="rounded-full bg-[#f3f3f3] px-2.5 py-1 text-[0.7rem] font-medium tracking-[-0.02em] text-[#111111]/45 lg:px-2 lg:py-0.5 lg:text-[0.66rem] xl:text-[0.7rem]"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
       <div className="sam-contact-footer mt-10 pb-1 lg:mt-3 xl:mt-5">
         <p className="text-[1.35rem] font-semibold leading-tight tracking-[-0.065em] lg:text-[1rem] xl:text-[1.12rem]">
-          got a project in mind? let's chat :)
+          Need a website that brings in more customers? Let's talk.
         </p>
         <div className="mt-5 flex flex-wrap gap-3 lg:mt-2 lg:gap-2 xl:mt-3">
           <a
@@ -310,85 +307,18 @@ function IdentityPanel() {
   );
 }
 
-const devJokes = [
-  "Frontend is just convincing rectangles to behave.",
-  "I write bugs professionally, then fix them as a service.",
-  "CSS is easy until the div develops ambition.",
-  "Git happens. Ship anyway.",
-  "I center divs and occasionally question reality.",
-  "My code works. I just want to know why.",
-  "React state: because feelings need management too.",
-  "I asked JavaScript for truth. It said maybe.",
-  "Naming things is half the job. The other half is renaming them.",
-  "I do not fear bugs. I have console.log.",
-  "A clean UI is a love letter to future users.",
-  "Cache cleared. Confidence restored.",
-  "This layout was aligned through patience and snacks.",
-  "Production is just staging with witnesses.",
-  "Pixels behave better after coffee.",
-  "If it looks simple, the CSS probably negotiated hard.",
-  "I make buttons feel like they know their purpose.",
-  "The best animation is the one nobody has to wait for.",
-  "Ship small. Learn fast. Refactor kindly.",
-  "Code is poetry until the deadline joins the meeting.",
-  "A div without CSS is just a box with dreams.",
-  "I turn product anxiety into loading states.",
-  "The bug was shy until I shared my screen.",
-  "Responsive design is empathy with breakpoints.",
-  "I trust the process. I also trust the preview build.",
-  "JavaScript said undefined. I felt that.",
-  "A good button should look clickable and feel inevitable.",
-  "I debug in dark mode so the errors respect the mood.",
-  "The DOM remembers everything except why I named it that.",
-  "I measure twice and still inspect element.",
-  "Types save lives, mostly mine at 2am.",
-  "Every pixel has a job. Some need supervision.",
-  "404: Motivation not found. Coffee retry pending.",
-  "I like my components reusable and my margins explainable.",
-  "The console knows what I did last deploy.",
-  "A smooth flow is just fewer tiny betrayals.",
-  "I speak fluent product, CSS, and polite urgency.",
-  "Some days you ship. Some days you teach z-index manners.",
-  "The best UX is invisible until it is missing.",
-  "I make edge cases feel included.",
-];
-
-function DevJokeTicker() {
-  const [index, setIndex] = useState(0);
-  const reduce = useReducedMotion();
-
-  useEffect(() => {
-    if (reduce) return;
-
-    const interval = window.setInterval(() => {
-      setIndex((current) => (current + 1) % devJokes.length);
-    }, 4200);
-
-    return () => window.clearInterval(interval);
-  }, [reduce]);
-
+// TODO(owner): confirm that "Fixed price", "Fast delivery", and "You own your site" are promises
+// you want to make before publishing this line.
+function TrustLine() {
   return (
-    <div className="sam-dev-note mt-8 max-w-[420px] border-l border-[#111111]/10 pl-4 sm:max-w-[460px] lg:mt-3 lg:max-w-[335px] xl:mt-10 xl:max-w-[355px]">
-      <p className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-[#111111]/28">
-        dev notes, lol
+    <div className="sam-dev-note mt-5 max-w-[420px] border-l border-[#111111]/15 pl-4 sm:max-w-[460px] lg:mt-3 lg:max-w-[335px] xl:mt-6 xl:max-w-[355px]">
+      <p className="text-[0.95rem] font-semibold leading-[1.35] tracking-[-0.035em] text-[#111111]/70 lg:text-[0.82rem] xl:text-[0.95rem]">
+        Fixed price. Fast delivery. You own your site.
       </p>
-      <div className="relative mt-2 min-h-[44px] overflow-hidden lg:min-h-[34px] xl:min-h-[52px]">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.p
-            key={devJokes[index] ?? index}
-            className="text-[0.88rem] font-medium leading-[1.35] tracking-[-0.035em] text-[#111111]/45 lg:text-[0.78rem] lg:leading-[1.25] xl:text-[0.95rem] xl:leading-[1.35]"
-            initial={reduce ? false : { opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
-            transition={{ duration: 0.18, ease: "easeOut" }}
-          >
-            {devJokes[index]}
-          </motion.p>
-        </AnimatePresence>
-      </div>
     </div>
   );
 }
+
 function StatusBadge() {
   return (
     <div className="sam-status-badge sam-handwritten inline-flex w-fit items-center gap-2 text-[1.12rem] text-[#111111]/68 lg:text-[1rem]">

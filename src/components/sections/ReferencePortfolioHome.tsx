@@ -174,6 +174,9 @@ export function ReferencePortfolioHome() {
                   exit={{ opacity: 0, y: -14 }}
                   transition={{ duration: 0.25 }}
                 >
+                  <p className="max-w-2xl text-[1.05rem] font-medium leading-7 tracking-[-0.035em] text-[#111111]/58">
+                    I run projects on a clear process.
+                  </p>
                   {orderedCertifications.map((certificate, index) => (
                     <CertificateCard
                       key={certificate.image}
@@ -592,17 +595,6 @@ function WorkHistoryCard({
             {entry.summary}
           </p>
 
-          <ul className="mt-5 flex flex-wrap gap-2" aria-label={`${entry.company} stack`}>
-            {entry.stack.map((item) => (
-              <li
-                key={item}
-                className="rounded-full bg-[#1a1a1a] px-3 py-1.5 text-[0.8rem] font-semibold tracking-[-0.02em] text-white"
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
-
           {entry.points.length ? (
             <ol className="mt-6 max-w-3xl divide-y divide-[#111111]/10 overflow-hidden rounded-[20px] bg-white px-4">
               {entry.points.map((point, pointIndex) => (
@@ -662,6 +654,22 @@ function WorkHistoryCard({
               </div>
             </div>
           ) : null}
+
+          <div className="mt-6 border-t border-[#111111]/10 pt-4">
+            <p className="text-[0.74rem] font-semibold uppercase tracking-[0.12em] text-[#111111]/38">
+              Tools used
+            </p>
+            <ul className="mt-2 flex flex-wrap gap-1.5" aria-label={`${entry.company} tools`}>
+              {entry.stack.map((item) => (
+                <li
+                  key={item}
+                  className="rounded-full bg-white px-2.5 py-1 text-[0.74rem] font-medium tracking-[-0.01em] text-[#111111]/55"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </motion.div>
     </article>

@@ -272,7 +272,7 @@ export const workHistory: WorkHistoryEntry[] = [
     period: "Jul 2026 - Present",
     location: "Nigeria · Hybrid",
     summary:
-      "An independent software studio focused on practical, privacy-conscious tools for the Atlassian ecosystem.",
+      "My own software studio. I design, build, and launch focused, privacy-conscious tools for teams that use Jira.",
     stack: [
       "Atlassian Forge",
       "Node.js",
@@ -283,11 +283,11 @@ export const workHistory: WorkHistoryEntry[] = [
       "Forge LLM",
     ],
     points: [
-      "Built and launched three production apps on the Atlassian Marketplace: Recap, Field Hygiene, and Passdown.",
-      "Led the full product lifecycle from problem discovery and architecture to development, testing, Marketplace review, and release.",
-      "Developed Forge apps that integrate directly with Jira and Jira Service Management.",
-      "Designed products around focused use cases, minimal permissions, and platform-native data handling to reduce unnecessary external data exposure.",
-      "Owned SEO, technical marketing, and go-to-market execution across product websites and Marketplace listings.",
+      "Built and launched three apps on the Atlassian Marketplace: Recap, Field Hygiene, and Passdown.",
+      "Handled everything from finding the problem to design, building, testing, Marketplace review, and launch.",
+      "Built the apps to work inside Jira and Jira Service Management.",
+      "Kept each app focused on one job and limited to the access it needs, to avoid unnecessary external data sharing.",
+      "Ran the SEO, marketing, and launch for each product website and Marketplace listing.",
     ],
     products: [
       {

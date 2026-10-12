@@ -409,7 +409,7 @@ function CertificateCard({
       }
       whileInView={{ opacity: 1, x: 0, y: 0, rotate: 0 }}
       whileHover={reduce ? {} : { y: -6, scale: 1.012 }}
-      viewport={{ once: true, amount: 0.25 }}
+      viewport={{ once: true, amount: 0.05 }}
       transition={{ type: "spring", stiffness: 90, damping: 14 }}
     >
       <SkeletonImage src={certificate.image} alt={certificate.title} className="bg-white" />
@@ -417,7 +417,7 @@ function CertificateCard({
         className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 pb-4 pt-4 sm:px-5"
         initial={reduce ? false : { opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.25 }}
+        viewport={{ once: true, amount: 0.05 }}
         transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
       >
         <p className="min-w-0 text-[0.92rem] font-semibold tracking-[-0.035em]">
@@ -450,7 +450,7 @@ function WorkSampleCard({
   // Visibility is tracked on an unclipped wrapper. Observing an element that is itself clipped
   // away (clip-path) never reports it as visible, so the reveal would never start.
   const ref = useRef<HTMLDivElement>(null);
-  const seen = useInView(ref, { once: true, amount: 0.12 });
+  const seen = useInView(ref, { once: true, amount: "some" });
   const show = reduce || seen;
 
   return (
@@ -575,7 +575,7 @@ function WorkHistoryCard({
         className="pb-8 md:pb-10"
         initial={reduce ? false : { y: 44, scale: 0.97 }}
         whileInView={{ y: 0, scale: 1 }}
-        viewport={{ once: true, amount: 0.12 }}
+        viewport={{ once: true, amount: "some" }}
         transition={{ type: "spring", stiffness: 110, damping: 20 }}
       >
         <div className="overflow-hidden rounded-[26px] bg-[#ededed] p-5 text-[#111111] sm:p-7">
@@ -603,7 +603,7 @@ function WorkHistoryCard({
                   className="flex gap-4 py-3.5"
                   initial={reduce ? false : { x: -18 }}
                   whileInView={{ x: 0 }}
-                  viewport={{ once: true, amount: 0.6 }}
+                  viewport={{ once: true, amount: 0.15 }}
                   transition={{
                     type: "spring",
                     stiffness: 140,
@@ -688,7 +688,7 @@ function CaseStudyCard({ project, index }: { project: CaseStudyCardProject; inde
       className="group overflow-hidden rounded-[26px] bg-[#ededed] text-[#111111]"
       initial={reduce ? false : { opacity: 0, y: 42, scale: 0.96 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.28 }}
+      viewport={{ once: true, amount: 0.05 }}
       transition={{ duration: 0.68, type: "spring", bounce: 0.1 }}
     >
       <Link
@@ -754,7 +754,7 @@ function CaseStudyCard({ project, index }: { project: CaseStudyCardProject; inde
 
         <div className="grid gap-4">
           {previewImages.length ? (
-            <div className="grid grid-cols-3 gap-2">
+            <div className="hidden grid-cols-3 gap-2 md:grid">
               {previewImages.map((image, previewIndex) => (
                 <img
                   key={`${image}-${previewIndex}`}

@@ -28,7 +28,10 @@ for (const file of await walk(path.join(root, "src"))) {
     const isDocumentation =
       trimmed.startsWith("*") ||
       trimmed.startsWith("/**") ||
-      trimmed.includes("TODO(owner): {children}");
+      trimmed.includes("TODO(owner): {children}") ||
+      // The FAQ renders its optional "todo:" field through this line. It is a marker only when
+      // an item sets that field, and the field itself is counted on its own line.
+      trimmed.includes("<Todo>{item.todo}</Todo>");
     // Markers show up three ways: a comment, a <Todo> element in the page, or a "todo:" data field.
     const isMarker =
       line.includes("TODO(owner)") || /<Todo>/.test(line) || /^\s*todo:\s/.test(line);

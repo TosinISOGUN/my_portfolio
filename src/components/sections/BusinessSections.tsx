@@ -109,7 +109,6 @@ const faqs: { question: string; answer: string; todo?: string }[] = [
     question: "What if I need changes after launch?",
     answer:
       "Small changes and fixes are free for a month after launch. After that, I send you a quote before doing any work.",
-    todo: "confirm: free for a month after launch, or quoted separately from day one",
   },
   {
     question: "Will it work on phones?",

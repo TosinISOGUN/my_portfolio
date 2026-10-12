@@ -385,44 +385,17 @@ export const certifications = certificationModules.map(([path, image], index) =>
 
 export const featuredProjects = [
   {
-    title: "Nachie Maridadi",
-    slug: "nachie-maridadi",
-    studio: "Commerce landing",
-    logo: nachieLogo,
-    tags: ["React", "Brand UI", "Commerce UX"],
-    signals: ["Product storytelling", "Responsive storefront", "Purchase confidence"],
-    link: "https://nachiemaridadi.vercel.app/",
-    github: "https://github.com/TosinISOGUN/nachie_maridadi",
+    title: "Samsoni",
+    slug: "samsoni",
+    studio: "Water delivery storefront",
+    tags: ["React", "Local Commerce", "WhatsApp Ordering"],
+    labels: ["WhatsApp ordering", "Delivery plans", "Mobile-friendly"],
+    signals: ["Product browsing", "Recurring delivery plans", "WhatsApp conversion"],
+    link: "https://samsoni.vercel.app/",
     problem:
-      "The brand needed a polished commerce surface that presents products clearly and builds enough confidence to buy.",
+      "The brand needed a direct commerce surface that could communicate quality, delivery coverage, and product options quickly.",
     result:
-      "A lightweight, brand-forward storefront experience with strong product presentation and a direct path toward purchase.",
-  },
-  {
-    title: "Open School Field",
-    slug: "open-school-field",
-    studio: "Oyo State school facility marketplace",
-    logo: oyoLogo,
-    tags: ["React 19", "TanStack Router", "TanStack Query", "PWA", "Yoruba i18n"],
-    signals: ["Multi-role portals", "English/Yoruba switching", "Mock/live API layer"],
-    link: "https://open-school-field-five.vercel.app",
-    problem:
-      "Schools, renters, agents, and admins need one clear interface for discovering, booking, managing, and reporting on school sports facilities.",
-    result:
-      "A frontend-only marketplace with renter, school, agent, and admin portals, mock/live API switching, offline support, realtime hooks, and English to Yoruba language switching.",
-  },
-  {
-    title: "Infinitative",
-    slug: "infinitative",
-    studio: "Multi-vendor commerce marketplace",
-    logo: infinitativeLogo,
-    tags: ["React", "Marketplace UX", "Cart Flow"],
-    signals: ["Premium commerce landing", "Vendor discovery", "Checkout-ready cart"],
-    link: "https://infinitative-aft.vercel.app/",
-    problem:
-      "Multi-vendor commerce experiences need to present premium products, vendor trust, and shopping actions without making the storefront feel crowded.",
-    result:
-      "A polished marketplace interface with product discovery, vendor surfaces, cart management, checkout summary, and responsive commerce flows.",
+      "A fast local-business storefront that turns bottled and sachet water supply into a simple, conversion-oriented flow.",
   },
   {
     title: "OYOBOOKING",
@@ -430,6 +403,7 @@ export const featuredProjects = [
     studio: "Oyo State booking platform",
     logo: oyoLogo,
     tags: ["React", "API Integration", "Accessibility"],
+    labels: ["Online booking", "Easy to use", "Mobile-friendly"],
     signals: ["Public booking UX", "API-backed flows", "Responsive facility pages"],
     link: "https://oyobooking.ng",
     github: "https://github.com/TosinISOGUN/oyo_booking.com",
@@ -439,34 +413,11 @@ export const featuredProjects = [
       "A fast, responsive booking experience with API-backed flows, accessible interface patterns, and production-oriented UX.",
   },
   {
-    title: "Payflow",
-    slug: "payflow",
-    studio: "Payroll and compliance platform",
-    tags: ["React", "Product Marketing UI", "Pricing Flow"],
-    signals: ["Compliance messaging", "Platform storytelling", "Pricing clarity"],
-    link: "https://payflow-rose-ten.vercel.app/",
-    problem:
-      "Payroll and compliance products can feel dense quickly, so the interface needed to communicate operational depth without overwhelming buyers.",
-    result:
-      "A polished HR/payroll product site with a premium landing page, platform storytelling, pricing surfaces, and responsive product presentation.",
-  },
-  {
-    title: "Samsoni",
-    slug: "samsoni",
-    studio: "Water delivery storefront",
-    tags: ["React", "Local Commerce", "WhatsApp Ordering"],
-    signals: ["Product browsing", "Recurring delivery plans", "WhatsApp conversion"],
-    link: "https://samsoni.vercel.app/",
-    problem:
-      "The brand needed a direct commerce surface that could communicate quality, delivery coverage, and product options quickly.",
-    result:
-      "A fast local-business storefront that turns bottled and sachet water supply into a simple, conversion-oriented flow.",
-  },
-  {
     title: "Thomason",
     slug: "thomason",
     studio: "Coffee and hospitality website",
     tags: ["React", "Editorial Layout", "Hospitality UX"],
+    labels: ["Menu discovery", "Full-screen photography", "Mobile-friendly"],
     signals: ["Full-bleed imagery", "Menu discovery", "Premium first impression"],
     link: "https://thomason.vercel.app/",
     problem:
@@ -475,11 +426,27 @@ export const featuredProjects = [
       "An editorial-feeling restaurant interface with strong ambience, responsive composition, and direct menu exploration.",
   },
   {
+    title: "Nachie Maridadi",
+    slug: "nachie-maridadi",
+    studio: "Commerce landing",
+    logo: nachieLogo,
+    tags: ["React", "Brand UI", "Commerce UX"],
+    labels: ["Online storefront", "Product showcase", "Mobile-friendly"],
+    signals: ["Product storytelling", "Responsive storefront", "Purchase confidence"],
+    link: "https://nachiemaridadi.vercel.app/",
+    github: "https://github.com/TosinISOGUN/nachie_maridadi",
+    problem:
+      "The brand needed a polished commerce surface that presents products clearly and builds enough confidence to buy.",
+    result:
+      "A lightweight, brand-forward storefront experience with strong product presentation and a direct path toward purchase.",
+  },
+  {
     title: "C-HOMES",
     slug: "c-homes",
     studio: "CMS-driven property marketplace",
     logo: cHomesLogo,
     tags: ["React", "Sanity CMS", "Content Management"],
+    labels: ["Editable listings", "Search-friendly pages", "Mobile-friendly"],
     signals: ["CMS content model", "Property listing UX", "Search-friendly frontend"],
     link: "https://c-homes.vercel.app/",
     github: "https://github.com/TosinISOGUN/c-homes",
@@ -489,11 +456,40 @@ export const featuredProjects = [
       "A CMS-powered marketplace experience with editable property content, responsive presentation, and a maintainable frontend.",
   },
   {
+    title: "Infinitative",
+    slug: "infinitative",
+    studio: "Multi-vendor commerce marketplace",
+    logo: infinitativeLogo,
+    tags: ["React", "Marketplace UX", "Cart Flow"],
+    labels: ["Vendor pages", "Shopping cart", "Mobile-friendly"],
+    signals: ["Premium commerce landing", "Vendor discovery", "Checkout-ready cart"],
+    link: "https://infinitative-aft.vercel.app/",
+    problem:
+      "Multi-vendor commerce experiences need to present premium products, vendor trust, and shopping actions without making the storefront feel crowded.",
+    result:
+      "A polished marketplace interface with product discovery, vendor surfaces, cart management, checkout summary, and responsive commerce flows.",
+  },
+  {
+    title: "Open School Field",
+    slug: "open-school-field",
+    studio: "Oyo State school facility marketplace",
+    logo: oyoLogo,
+    tags: ["React 19", "TanStack Router", "TanStack Query", "PWA", "Yoruba i18n"],
+    labels: ["Online booking", "English and Yoruba", "Works offline"],
+    signals: ["Multi-role portals", "English/Yoruba switching", "Mock/live API layer"],
+    link: "https://open-school-field-five.vercel.app",
+    problem:
+      "Schools, renters, agents, and admins need one clear interface for discovering, booking, managing, and reporting on school sports facilities.",
+    result:
+      "A frontend-only marketplace with renter, school, agent, and admin portals, mock/live API switching, offline support, realtime hooks, and English to Yoruba language switching.",
+  },
+  {
     title: "Learncity",
     slug: "learncity",
     studio: "Academy platform",
     logo: learncityLogo,
     tags: ["React", "Responsive UI", "Landing Systems"],
+    labels: ["Program pages", "Easy navigation", "Mobile-friendly"],
     signals: ["Education UX", "Program discovery", "Conversion-focused layout"],
     link: "https://learncityacademy.com/",
     github: "https://github.com/TosinISOGUN/learncity",
@@ -501,6 +497,19 @@ export const featuredProjects = [
       "Prospective learners need to understand program value quickly without getting lost in dense academy content.",
     result:
       "A polished education experience with clear hierarchy, responsive sections, and practical navigation across learning pages.",
+  },
+  {
+    title: "Payflow",
+    slug: "payflow",
+    studio: "Payroll and compliance platform",
+    tags: ["React", "Product Marketing UI", "Pricing Flow"],
+    labels: ["Concept project", "Pricing page", "Mobile-friendly"],
+    signals: ["Compliance messaging", "Platform storytelling", "Pricing clarity"],
+    link: "https://payflow-rose-ten.vercel.app/",
+    problem:
+      "Payroll and compliance products can feel dense quickly, so the interface needed to communicate operational depth without overwhelming buyers.",
+    result:
+      "A polished HR/payroll product site with a premium landing page, platform storytelling, pricing surfaces, and responsive product presentation.",
   },
 ];
 
@@ -513,8 +522,7 @@ export const projectCaseStudies = [
     role: "Frontend Developer",
     liveUrl: "https://open-school-field-five.vercel.app",
     cover: osf261,
-    summary:
-      "A role-based frontend for booking school sports and event facilities across Oyo State, built for renters, schools, agents, super-agents, and admins.",
+    summary: "Facility booking platform for schools across Oyo State, in English and Yoruba.",
     challenge:
       "The product needed to feel simple for public renters while supporting deep operational workflows for schools, agents, finance, disputes, reports, and platform admins.",
     approach:
@@ -550,8 +558,7 @@ export const projectCaseStudies = [
     liveUrl: "https://oyobooking.ng",
     githubUrl: "https://github.com/TosinISOGUN/oyo_booking.com",
     cover: oyo258,
-    summary:
-      "A booking interface for public facility discovery, comparison, and reservation flows.",
+    summary: "Public booking site where people find and reserve facilities online.",
     challenge:
       "The experience had to keep public-sector booking flows clear while handling changing facility data and user actions.",
     approach:
@@ -586,8 +593,7 @@ export const projectCaseStudies = [
     role: "Frontend Developer",
     liveUrl: "https://infinitative-aft.vercel.app/",
     cover: infinitativeLanding,
-    summary:
-      "A premium multi-vendor marketplace interface for product discovery, vendor browsing, cart management, and checkout-oriented shopping flows.",
+    summary: "Multi-vendor marketplace with vendor pages and a cart.",
     challenge:
       "The marketplace needed to feel premium and trustworthy while keeping products, vendors, search, cart actions, and checkout information easy to understand.",
     approach:
@@ -622,8 +628,7 @@ export const projectCaseStudies = [
     role: "Frontend Developer",
     liveUrl: "https://payflow-rose-ten.vercel.app/",
     cover: payflowLanding,
-    summary:
-      "A people, payroll, and compliance platform concept designed to make HR operations feel calm, trustworthy, and easy to scan.",
+    summary: "Concept: payroll platform website with a pricing flow.",
     challenge:
       "Payroll and compliance products can feel dense quickly, so the interface needed to communicate operational depth without overwhelming buyers.",
     approach:
@@ -658,8 +663,7 @@ export const projectCaseStudies = [
     role: "Frontend Developer",
     liveUrl: "https://samsoni.vercel.app/",
     cover: samsoniLanding,
-    summary:
-      "A water delivery website for product browsing, trust-building, recurring delivery, and WhatsApp-led ordering across Lagos.",
+    summary: "Water delivery website for Lagos where customers order on WhatsApp.",
     challenge:
       "The brand needed a direct commerce surface that could communicate quality, delivery coverage, and product options quickly.",
     approach:
@@ -694,8 +698,7 @@ export const projectCaseStudies = [
     role: "Frontend Developer",
     liveUrl: "https://thomason.vercel.app/",
     cover: thomasonLanding,
-    summary:
-      "An atmospheric coffee and hospitality website focused on mood, menu discovery, and a premium first impression.",
+    summary: "Hospitality website with full-bleed imagery and easy menu discovery.",
     challenge:
       "Hospitality pages need to sell a feeling quickly while still making practical content like the menu easy to reach.",
     approach:
@@ -731,8 +734,7 @@ export const projectCaseStudies = [
     liveUrl: "https://c-homes.vercel.app/",
     githubUrl: "https://github.com/TosinISOGUN/c-homes",
     cover: cHomes274,
-    summary:
-      "A CMS-driven property marketplace designed for editable listings, search-friendly content, and clean property presentation.",
+    summary: "Property listings site the owner can update without a developer.",
     challenge:
       "Property content changes constantly, so the frontend needed to support structured content without becoming brittle.",
     approach:
@@ -768,8 +770,7 @@ export const projectCaseStudies = [
     liveUrl: "https://learncityacademy.com/",
     githubUrl: "https://github.com/TosinISOGUN/learncity",
     cover: learncity278,
-    summary:
-      "An education platform surface built to help learners discover programs, understand offers, and move through the academy experience clearly.",
+    summary: "Landing site for an education platform.",
     challenge:
       "The interface needed to communicate learning value quickly while keeping navigation and program discovery simple for prospective students.",
     approach:
@@ -806,7 +807,7 @@ export const projectCaseStudies = [
     githubUrl: "https://github.com/TosinISOGUN/nachie_maridadi",
     cover: nachie271,
     summary:
-      "A brand-forward commerce interface designed to present products clearly and move visitors toward confident purchase decisions.",
+      "Online storefront for bespoke African fashion, with a clear book-a-consultation button.",
     challenge:
       "The page needed enough visual polish to support the brand while staying lightweight, direct, and easy to browse.",
     approach:

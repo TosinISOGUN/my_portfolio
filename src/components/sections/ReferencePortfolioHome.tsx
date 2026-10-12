@@ -25,7 +25,7 @@ type CaseStudyCardProject = (typeof featuredProjects)[number] & {
 
 const viewOrder: ViewMode[] = ["case-studies", "work-history", "samples", "certifications"];
 const viewLabels: Record<ViewMode, string> = {
-  "case-studies": "Case studies",
+  "case-studies": "Websites I've built",
   "work-history": "Work history",
   samples: "Work samples",
   certifications: "Certifications",
@@ -367,7 +367,14 @@ function ViewSwitcher({
                 transition={{ type: "spring", stiffness: 420, damping: 35 }}
               />
             ) : null}
-            {viewLabels[item]}
+            {item === "case-studies" ? (
+              <>
+                <span className="min-[521px]:hidden">Websites</span>
+                <span className="max-[520px]:hidden">{viewLabels[item]}</span>
+              </>
+            ) : (
+              viewLabels[item]
+            )}
           </button>
         );
       })}
@@ -703,7 +710,7 @@ function CaseStudyCard({ project, index }: { project: CaseStudyCardProject; inde
               {caseStudy?.eyebrow ?? project.studio}
             </span>
             <span className="rounded-full bg-white px-3 py-1 text-[0.78rem] font-semibold tracking-[-0.02em] text-[#111111]/44">
-              {caseStudy?.role ?? profile.role}
+              Design and development
             </span>
           </div>
 
@@ -723,15 +730,18 @@ function CaseStudyCard({ project, index }: { project: CaseStudyCardProject; inde
           </p>
 
           <div className="mt-6 flex flex-wrap gap-2">
-            {(caseStudy?.metrics ?? project.signals).slice(0, 4).map((metric) => (
+            {project.labels.map((label) => (
               <span
-                key={metric}
-                className="rounded-full bg-white px-3 py-1.5 text-[0.82rem] font-semibold tracking-[-0.02em] text-[#111111]/52"
+                key={label}
+                className="rounded-full bg-white px-3 py-1.5 text-[0.82rem] font-semibold tracking-[-0.02em] text-[#111111]/58"
               >
-                {metric}
+                {label}
               </span>
             ))}
           </div>
+          <p className="mt-3 text-[0.74rem] font-medium tracking-[-0.01em] text-[#111111]/38">
+            {project.tags.join(" · ")}
+          </p>
         </div>
 
         <div className="grid gap-4">

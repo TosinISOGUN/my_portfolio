@@ -12,7 +12,7 @@ import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { ogImageUrl, siteUrl } from "../lib/seo";
+import { ogImageUrl, seoDescription, seoTitle, shareTitle, siteUrl } from "../lib/seo";
 import { restorePendingCaseStudyReturn } from "../lib/navigation-memory";
 
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
@@ -33,20 +33,23 @@ const structuredData = [
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Oluwatomisin Isogun",
-    jobTitle: "Frontend Developer",
+    jobTitle: "Freelance web designer and developer",
     email: "mailto:oluwatomisinisogun@gmail.com",
     url: siteUrl,
     sameAs: [
       "https://github.com/TosinISOGUN",
       "https://www.linkedin.com/in/oluwatomisin-isogun-a38740356/",
+      "https://www.upwork.com/freelancers/~0136c2f689158ada21",
     ],
     knowsAbout: [
+      "Web design",
+      "Web development",
+      "Mobile-friendly websites",
+      "Online booking",
+      "Online ordering",
+      "Website performance",
       "React",
       "TypeScript",
-      "Frontend Engineering",
-      "Product Engineering",
-      "Dashboard Interfaces",
-      "Booking Platforms",
       "Atlassian Forge",
     ],
     makesOffer: {
@@ -56,6 +59,17 @@ const structuredData = [
         name: "Website design and development for businesses",
       },
     },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: "Oluwatomisin Isogun, web design and development",
+    description: seoDescription,
+    url: siteUrl,
+    image: ogImageUrl,
+    email: "mailto:oluwatomisinisogun@gmail.com",
+    serviceType: ["Web design", "Web development"],
+    founder: { "@type": "Person", name: "Oluwatomisin Isogun" },
   },
   {
     "@context": "https://schema.org",
@@ -70,7 +84,7 @@ const structuredData = [
   {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
-    name: "Oluwatomisin Isogun | Websites That Turn Visitors Into Customers",
+    name: shareTitle,
     url: siteUrl,
     mainEntity: {
       "@type": "Person",
@@ -144,25 +158,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Oluwatomisin Isogun | Websites That Turn Visitors Into Customers" },
+      { title: seoTitle },
       {
         name: "description",
-        content:
-          "I build fast, good-looking websites that turn visitors into customers. Fixed price, quick delivery.",
+        content: seoDescription,
       },
       { name: "author", content: "Oluwatomisin Isogun" },
+      { name: "robots", content: "index, follow, max-image-preview:large" },
       { name: "theme-color", content: "#f7f7f5" },
+      { property: "og:site_name", content: "Oluwatomisin Isogun" },
+      { property: "og:locale", content: "en" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-title", content: "Oluwatomisin" },
       {
         property: "og:title",
-        content: "Oluwatomisin Isogun | Websites That Turn Visitors Into Customers",
+        content: shareTitle,
       },
       {
         property: "og:description",
-        content:
-          "I build fast, good-looking websites that turn visitors into customers. Fixed price, quick delivery.",
+        content: seoDescription,
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: siteUrl },
@@ -179,12 +194,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       {
         name: "twitter:title",
-        content: "Oluwatomisin Isogun | Websites That Turn Visitors Into Customers",
+        content: shareTitle,
       },
       {
         name: "twitter:description",
-        content:
-          "I build fast, good-looking websites that turn visitors into customers. Fixed price, quick delivery.",
+        content: seoDescription,
       },
       { name: "twitter:image", content: ogImageUrl },
       {

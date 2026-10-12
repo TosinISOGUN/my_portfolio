@@ -368,12 +368,12 @@
     height: 5rem !important;
   }
 
-  .sam-profile-block h1 {
+  .sam-profile-block .sam-name {
     margin-top: 0.72rem !important;
     font-size: 1.05rem !important;
   }
 
-  .sam-profile-block h2 {
+  .sam-profile-block .sam-headline {
     margin-top: 1rem !important;
     max-width: 20.5rem;
     font-size: clamp(1.4rem, 6.2vw, 1.7rem) !important;
@@ -494,11 +494,11 @@
     height: 60px !important;
   }
 
-  .sam-profile-block h1 {
+  .sam-profile-block .sam-name {
     margin-top: 0.5rem !important;
   }
 
-  .sam-profile-block h2 {
+  .sam-profile-block .sam-headline {
     margin-top: 0.6rem !important;
   }
 

@@ -18,6 +18,7 @@ dist-ssr
 .lovable
 .env.example
 roadmap.md
+CLAUDE.md
 
 # Wrangler / Cloudflare
 .wrangler/

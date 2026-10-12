@@ -31,7 +31,8 @@ export const Route = createFileRoute("/")({
       { property: "og:image:height", content: "630" },
       {
         property: "og:image:alt",
-        content: "Oluwatomisin Isogun, websites that turn visitors into customers",
+        content:
+          "Oluwatomisin Isogun, web design and development. Websites that turn visitors into customers.",
       },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: homeTitle },
@@ -39,7 +40,8 @@ export const Route = createFileRoute("/")({
       { name: "twitter:image", content: ogImageUrl },
       {
         name: "twitter:image:alt",
-        content: "Oluwatomisin Isogun, websites that turn visitors into customers",
+        content:
+          "Oluwatomisin Isogun, web design and development. Websites that turn visitors into customers.",
       },
     ],
     links: [{ rel: "canonical", href: siteUrl }],

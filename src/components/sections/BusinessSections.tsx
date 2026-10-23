@@ -149,7 +149,7 @@ function FaqItem({
         aria-expanded={open}
         aria-controls={`${id}-answer`}
         onClick={onToggle}
-        className="ml-auto flex min-h-[44px] w-fit max-w-[90%] cursor-pointer items-center gap-3 rounded-[22px] rounded-br-[6px] bg-[#1a1a1a] px-4 py-3 text-left text-[0.98rem] font-medium leading-[1.3] tracking-[-0.03em] text-white transition-colors hover:bg-black sm:max-w-[78%]"
+        className="sam-bubble-out ml-auto mr-2.5 flex min-h-[44px] w-fit max-w-[88%] cursor-pointer items-center gap-3 rounded-[20px] rounded-br-none bg-[#1a1a1a] px-4 py-3 text-left text-[0.98rem] font-medium leading-[1.3] tracking-[-0.03em] text-white shadow-[0_1px_0_rgb(0_0_0/0.12)] transition-transform hover:-translate-y-px sm:max-w-[78%]"
       >
         {item.question}
         <ChevronDown
@@ -173,7 +173,7 @@ function FaqItem({
         className="overflow-hidden"
       >
         <motion.div
-          className="flex items-end gap-2 pt-2"
+          className="flex items-end gap-3 pt-2"
           style={{ transformOrigin: "left bottom" }}
           initial={false}
           animate={{ y: open ? 0 : 12, scale: open ? 1 : 0.97 }}
@@ -186,7 +186,7 @@ function FaqItem({
             loading="lazy"
             decoding="async"
           />
-          <div className="max-w-[92%] rounded-[22px] rounded-bl-[6px] bg-white px-4 py-3 text-[0.95rem] font-medium leading-6 tracking-[-0.025em] text-[#111111]/80 sm:max-w-[78%]">
+          <div className="sam-bubble-in max-w-[92%] rounded-[20px] rounded-bl-none bg-white px-4 py-3 text-[0.95rem] font-medium leading-6 tracking-[-0.025em] text-[#111111]/80 shadow-[0_1px_0_rgb(0_0_0/0.08)] sm:max-w-[78%]">
             {item.answer}
             {item.todo ? (
               <>
@@ -222,32 +222,66 @@ export function Faq() {
         Tap a question for a straight answer.
       </p>
 
-      <div className="mt-6 grid gap-3.5">
-        {faqs.map((item, index) => (
-          <FaqItem
-            key={item.question}
-            item={item}
-            id={`faq-${index}`}
-            open={openItems.has(index)}
-            onToggle={() => toggle(index)}
-          />
-        ))}
-      </div>
+      <div className="mt-6 overflow-hidden rounded-[22px] bg-white">
+        <div className="flex items-center gap-3 border-b border-[#111111]/8 px-4 py-3">
+          <span className="relative shrink-0">
+            <img
+              src={profilePhoto}
+              alt="Oluwatomisin Isogun"
+              className="h-10 w-10 rounded-full bg-[#ededed] object-cover object-top"
+              loading="lazy"
+              decoding="async"
+            />
+            <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-white bg-emerald-500" />
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-[0.95rem] font-semibold leading-tight tracking-[-0.03em]">
+              Oluwatomisin Isogun
+            </p>
+            <p className="truncate text-[0.78rem] font-medium tracking-[-0.01em] text-[#111111]/50">
+              Available for projects
+            </p>
+          </div>
+          <a
+            href={bookingUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Book a free call"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#ededed] text-[#111111]/70 transition-colors hover:bg-[#e2e2e2] hover:text-[#111111]"
+          >
+            <Calendar className="h-[18px] w-[18px]" aria-hidden />
+          </a>
+        </div>
 
-      <a
-        href={whatsappUrl}
-        target="_blank"
-        rel="noreferrer"
-        className="mt-6 flex min-h-[48px] items-center gap-3 rounded-full bg-white py-1.5 pl-5 pr-1.5 text-[0.95rem] font-medium tracking-[-0.03em] text-[#111111]/50 transition-colors hover:text-[#111111]/80"
-      >
-        <span className="min-w-0 flex-1 truncate">Still curious? Ask me on WhatsApp</span>
-        <span
-          className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#1a1a1a] text-white"
-          aria-hidden
+        <div className="sam-chat-wallpaper grid gap-3.5 px-3 py-5 sm:px-5">
+          {faqs.map((item, index) => (
+            <FaqItem
+              key={item.question}
+              item={item}
+              id={`faq-${index}`}
+              open={openItems.has(index)}
+              onToggle={() => toggle(index)}
+            />
+          ))}
+        </div>
+
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="flex min-h-[48px] items-center gap-3 border-t border-[#111111]/8 bg-white py-2 pl-4 pr-2 text-[0.95rem] font-medium tracking-[-0.03em] text-[#111111]/45 transition-colors hover:text-[#111111]/75"
         >
-          <Send className="h-4 w-4" />
-        </span>
-      </a>
+          <span className="min-w-0 flex-1 truncate rounded-full bg-[#f2f2f2] px-4 py-2.5">
+            Still curious? Ask me on WhatsApp
+          </span>
+          <span
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#1a1a1a] text-white"
+            aria-hidden
+          >
+            <Send className="h-4 w-4" />
+          </span>
+        </a>
+      </div>
     </section>
   );
 }

@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Calendar, Check, ChevronDown, MessageCircle, Send } from "lucide-react";
 import profilePhoto from "@/assets/Photograph - Oluwatomisin Isogun.jpg";
 import { bookingUrl, whatsappUrl } from "@/data/portfolio";
@@ -125,7 +126,93 @@ const faqs: { question: string; answer: ReactNode; todo?: string }[] = [
   },
 ];
 
+function FaqItem({
+  item,
+  id,
+  open,
+  onToggle,
+}: {
+  item: (typeof faqs)[number];
+  id: string;
+  open: boolean;
+  onToggle: () => void;
+}) {
+  const reduce = useReducedMotion();
+  const ease = [0.22, 1, 0.36, 1] as const;
+  const duration = reduce ? 0 : 0.42;
+
+  return (
+    <div>
+      <button
+        type="button"
+        id={`${id}-question`}
+        aria-expanded={open}
+        aria-controls={`${id}-answer`}
+        onClick={onToggle}
+        className="ml-auto flex min-h-[44px] w-fit max-w-[90%] cursor-pointer items-center gap-3 rounded-[22px] rounded-br-[6px] bg-[#1a1a1a] px-4 py-3 text-left text-[0.98rem] font-medium leading-[1.3] tracking-[-0.03em] text-white transition-colors hover:bg-black sm:max-w-[78%]"
+      >
+        {item.question}
+        <ChevronDown
+          className={`h-4 w-4 shrink-0 text-white/60 transition-transform duration-300 ${
+            open ? "rotate-180" : ""
+          }`}
+          aria-hidden
+        />
+      </button>
+
+      {/* The answer stays in the page when closed (so search engines can read it); it is only
+          collapsed to zero height, hidden from tab order and screen readers via inert. */}
+      <motion.div
+        id={`${id}-answer`}
+        role="region"
+        aria-labelledby={`${id}-question`}
+        inert={!open}
+        initial={false}
+        animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
+        transition={{ duration, ease }}
+        className="overflow-hidden"
+      >
+        <motion.div
+          className="flex items-end gap-2 pt-2"
+          style={{ transformOrigin: "left bottom" }}
+          initial={false}
+          animate={{ y: open ? 0 : 12, scale: open ? 1 : 0.97 }}
+          transition={{ duration, ease, delay: open && !reduce ? 0.05 : 0 }}
+        >
+          <img
+            src={profilePhoto}
+            alt="Oluwatomisin Isogun"
+            className="h-8 w-8 shrink-0 rounded-full bg-white object-cover object-top"
+            loading="lazy"
+            decoding="async"
+          />
+          <div className="max-w-[92%] rounded-[22px] rounded-bl-[6px] bg-white px-4 py-3 text-[0.95rem] font-medium leading-6 tracking-[-0.025em] text-[#111111]/80 sm:max-w-[78%]">
+            {item.answer}
+            {item.todo ? (
+              <>
+                {" "}
+                <Todo>{item.todo}</Todo>
+              </>
+            ) : null}
+          </div>
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+}
+
 export function Faq() {
+  // The first answer starts open so the pattern is clear; any number can be open at once.
+  const [openItems, setOpenItems] = useState<Set<number>>(() => new Set([0]));
+
+  const toggle = (index: number) =>
+    setOpenItems((current) => {
+      const next = new Set(current);
+      if (next.has(index)) next.delete(index);
+      else next.add(index);
+      return next;
+    });
+
   return (
     <section className={cardClass} aria-labelledby="faq-heading">
       <h3 id="faq-heading" className={sectionHeading}>
@@ -137,33 +224,13 @@ export function Faq() {
 
       <div className="mt-6 grid gap-3.5">
         {faqs.map((item, index) => (
-          <details key={item.question} className="group" open={index === 0}>
-            <summary className="ml-auto flex min-h-[44px] w-fit max-w-[90%] cursor-pointer list-none items-center gap-3 rounded-[22px] rounded-br-[6px] bg-[#1a1a1a] px-4 py-3 text-[0.98rem] font-medium leading-[1.3] tracking-[-0.03em] text-white transition-colors hover:bg-black sm:max-w-[78%] [&::-webkit-details-marker]:hidden">
-              {item.question}
-              <ChevronDown
-                className="h-4 w-4 shrink-0 text-white/60 transition-transform group-open:rotate-180"
-                aria-hidden
-              />
-            </summary>
-            <div className="sam-reply mt-2 flex items-end gap-2">
-              <img
-                src={profilePhoto}
-                alt="Oluwatomisin Isogun"
-                className="h-8 w-8 shrink-0 rounded-full bg-white object-cover object-top"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="max-w-[92%] rounded-[22px] rounded-bl-[6px] bg-white px-4 py-3 text-[0.95rem] font-medium leading-6 tracking-[-0.025em] text-[#111111]/80 sm:max-w-[78%]">
-                {item.answer}
-                {item.todo ? (
-                  <>
-                    {" "}
-                    <Todo>{item.todo}</Todo>
-                  </>
-                ) : null}
-              </div>
-            </div>
-          </details>
+          <FaqItem
+            key={item.question}
+            item={item}
+            id={`faq-${index}`}
+            open={openItems.has(index)}
+            onToggle={() => toggle(index)}
+          />
         ))}
       </div>
 

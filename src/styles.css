@@ -861,3 +861,26 @@ button:focus-visible,
     opacity: 0.4;
   }
 }
+
+/* FAQ: the answer bubble slides in when a question is opened. */
+@keyframes sam-reply {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+details[open] > .sam-reply {
+  animation: sam-reply 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: left bottom;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  details[open] > .sam-reply {
+    animation: none;
+  }
+}

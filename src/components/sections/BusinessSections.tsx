@@ -99,6 +99,7 @@ const faqs: { question: string; answer: string; todo?: string }[] = [
   {
     question: "What about hosting and domain?",
     answer: "Your domain purchase and hosting costs are already part of the website price.",
+    todo: "confirm how long domain and hosting are included, and what the client pays after that",
   },
   {
     question: "How do payments work?",

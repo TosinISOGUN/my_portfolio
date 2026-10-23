@@ -35,7 +35,7 @@ describe("client-facing copy rules", () => {
   });
 
   it("keeps every contact link", () => {
-    expect(allText).toContain("cal.com/oluwatomisin-isogun-disku5/30min");
+    expect(allText).toContain("cal.com/oluwatomisin-isogun-disku5/20min");
     expect(allText).toContain("tomisin@isogunlabs.com");
     expect(allText).toContain("github.com/TosinISOGUN");
     expect(allText).toContain("linkedin.com/in/oluwatomisin-isogun");

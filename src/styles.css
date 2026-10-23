@@ -861,3 +861,35 @@ button:focus-visible,
     opacity: 0.4;
   }
 }
+
+/* FAQ chat window: doodle wallpaper behind the messages, and little tails on the bubbles. */
+.sam-chat-wallpaper {
+  background-color: #e4e4e1;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200' fill='none' stroke='%23111' stroke-opacity='.075' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M16 24a8 8 0 0 1 8-8h22a8 8 0 0 1 8 8v12a8 8 0 0 1-8 8H34l-8 7v-7h-2a8 8 0 0 1-8-8z'/><circle cx='140' cy='30' r='12'/><path d='M134 30l4 4 8-8'/><circle cx='44' cy='118' r='13'/><ellipse cx='44' cy='118' rx='5' ry='13'/><path d='M31 118h26'/><rect x='122' y='102' width='30' height='21' rx='3'/><path d='M122 105l15 11 15-11'/><path d='M96 150l4.5 9.5 10.5 1.5-7.6 7.4 1.8 10.4-9.2-4.9-9.2 4.9 1.8-10.4-7.6-7.4 10.5-1.5z'/><rect x='160' y='146' width='16' height='28' rx='4'/><path d='M165 168h6'/><path d='M70 80h22M70 88h14'/><path d='M170 76c0-5 7-5 7 0 0 5-7 9-7 9s-7-4-7-9c0-5 7-5 7 0z' transform='translate(-12 -2)'/></svg>");
+  background-size: 200px 200px;
+}
+
+.sam-bubble-out,
+.sam-bubble-in {
+  position: relative;
+}
+
+.sam-bubble-out::after,
+.sam-bubble-in::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  height: 12px;
+  background: inherit;
+}
+
+.sam-bubble-out::after {
+  right: -9px;
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+
+.sam-bubble-in::after {
+  left: -9px;
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}

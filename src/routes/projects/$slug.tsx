@@ -62,7 +62,7 @@ function ProjectCaseStudyPage() {
   const details = featuredProjects.find((item) => item.slug === project.slug);
 
   useIsomorphicLayoutEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, [project.slug]);
 
   const handleBack = () => {

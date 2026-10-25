@@ -20,12 +20,13 @@ describe("portfolio data", () => {
     expect(caseStudies).toEqual(featured);
   });
 
-  it("leads with the four concept sites, then orders client work from closest-to-a-local-business to most technical", () => {
+  it("leads with the four concept sites and Gloria May Byron, then orders the rest from closest-to-a-local-business to most technical", () => {
     expect(featuredProjects.map((project) => project.slug)).toEqual([
       "velora-beauty",
       "hearthline-realty",
       "juniper-ember",
       "everwell",
+      "gloria-may-byron",
       "samsoni",
       "oyobooking",
       "thomason",
@@ -80,9 +81,22 @@ describe("portfolio data", () => {
     }
   });
 
-  it("keeps Open School Field's cover on the landing screenshot", () => {
-    const study = projectCaseStudies.find((item) => item.slug === "open-school-field");
-    expect(study?.cover).toContain("Screenshot%20(261)");
+  it("uses a tall capture of the home page as the cover of every project", () => {
+    for (const study of projectCaseStudies) {
+      const size = getImageSize(study.cover);
+      expect(size, `${study.slug} cover size`).toBeDefined();
+      expect(
+        (size?.height ?? 0) / (size?.width ?? 1),
+        `${study.slug} cover is tall`,
+      ).toBeGreaterThan(1.2);
+      expect(study.gallery[0], `${study.slug} gallery starts with the cover`).toBe(study.cover);
+    }
+  });
+
+  it("gives every project an accent colour for its case-study page", () => {
+    for (const project of featuredProjects) {
+      expect(project.accent, `${project.slug} accent`).toMatch(/^#[0-9a-fA-F]{6}$/);
+    }
   });
 
   it("has work history with at least one role and no empty entries", () => {

@@ -1,19 +1,26 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useInView,
+  useReducedMotion,
+  type MotionStyle,
+} from "framer-motion";
 import {
   ArrowDownToLine,
   ArrowRight,
   ArrowUpRight,
   Calendar,
+  Facebook,
   Github,
   MessageCircle,
 } from "lucide-react";
 import resumePdf from "@/assets/OLUWATOMISIN_ISOGUN_RESUME.pdf";
 import { SkeletonImage } from "@/components/SkeletonImage";
-import { CtaBlock, Faq, WebsitesHeading } from "@/components/sections/BusinessSections";
+import { CtaBlock, Faq } from "@/components/sections/BusinessSections";
 import { SiteFooter } from "@/components/sections/SiteFooter";
-import profilePhoto from "@/assets/Photograph - Oluwatomisin Isogun.jpg";
+import profilePhoto from "@/assets/profile-photo.webp";
 import {
   bookingUrl,
   whatsappUrl,
@@ -28,17 +35,19 @@ import {
 } from "@/data/portfolio";
 import { getPendingCaseStudyReturnView, rememberCaseStudyReturn } from "@/lib/navigation-memory";
 
-type ViewMode = "case-studies" | "work-history" | "samples" | "certifications";
+type ViewMode = "websites" | "case-studies" | "work-history" | "samples" | "certifications";
 type CaseStudy = (typeof projectCaseStudies)[number];
 type CaseStudyCardProject = (typeof featuredProjects)[number] & {
   caseStudy: CaseStudy | undefined;
 };
 
-// The tabs that are shown. "samples" (Work samples) and "certifications" are hidden for now: their
-// views, components and data are all still below. To bring a tab back, add its name to this list.
-const viewOrder: ViewMode[] = ["case-studies", "work-history"];
+// The tabs that are shown. "work-history", "samples" (Work samples) and "certifications" are hidden
+// for now: their views, components and data are all still below. To bring a tab back, add its name
+// to this list.
+const viewOrder: ViewMode[] = ["websites", "case-studies"];
 const viewLabels: Record<ViewMode, string> = {
-  "case-studies": "Websites I've built",
+  websites: "Websites I've built",
+  "case-studies": "Case studies",
   "work-history": "Work history",
   samples: "Work samples",
   certifications: "Certifications",
@@ -47,7 +56,7 @@ const viewLabels: Record<ViewMode, string> = {
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 export function ReferencePortfolioHome() {
-  const [view, setView] = useState<ViewMode>("case-studies");
+  const [view, setView] = useState<ViewMode>("websites");
   const contentScrollRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
 
@@ -147,21 +156,33 @@ export function ReferencePortfolioHome() {
                     <WorkSampleCard key={`${sample.title}-${sample.image}`} sample={sample} />
                   ))}
                 </motion.div>
-              ) : view === "case-studies" ? (
+              ) : view === "websites" ? (
                 <motion.div
-                  key="case-studies"
+                  key="websites"
                   className="grid gap-8"
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -14 }}
                   transition={{ duration: 0.25 }}
                 >
-                  <WebsitesHeading />
                   {workSamples.map((project) => (
                     <WebsiteFrame key={project.slug} project={project} />
                   ))}
                   <CtaBlock />
                   <Faq />
+                </motion.div>
+              ) : view === "case-studies" ? (
+                <motion.div
+                  key="case-studies"
+                  className="grid gap-10"
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -14 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  {workSamples.map((project) => (
+                    <CaseStudyCover key={project.slug} project={project} />
+                  ))}
                 </motion.div>
               ) : view === "work-history" ? (
                 <motion.div
@@ -231,7 +252,7 @@ function IdentityPanel() {
             <img
               src={profilePhoto}
               alt="Oluwatomisin Isogun"
-              className="h-full w-full origin-top translate-x-[4%] scale-[1.12] object-cover object-top"
+              className="h-full w-full object-cover object-top"
             />
           </figure>
 
@@ -314,6 +335,15 @@ function IdentityPanel() {
           >
             <Github className="h-4 w-4" aria-hidden />
           </a>
+          <a
+            href={profile.facebook}
+            target="_blank"
+            rel="noreferrer"
+            className="sam-social-pill"
+            aria-label="Facebook"
+          >
+            <Facebook className="h-4 w-4" aria-hidden />
+          </a>
           <a href={profile.linkedin} target="_blank" rel="noreferrer" className="sam-social-pill">
             LinkedIn
           </a>
@@ -387,7 +417,7 @@ function ViewSwitcher({
                 transition={{ type: "spring", stiffness: 420, damping: 35 }}
               />
             ) : null}
-            {item === "case-studies" ? (
+            {item === "websites" ? (
               <>
                 <span className="min-[521px]:hidden">Websites</span>
                 <span className="max-[520px]:hidden">{viewLabels[item]}</span>
@@ -726,24 +756,111 @@ function WebsiteFrame({ project }: { project: CaseStudyCardProject }) {
         </div>
       </Link>
 
-      <div className="mt-3 flex justify-end">
-        <Link
-          to="/projects/$slug"
-          params={{ slug: project.slug }}
-          onClick={goToCaseStudy}
-          className="group inline-flex items-center gap-2 border-b border-[#111111] pb-0.5 text-[1.05rem] font-medium tracking-[-0.035em] text-[#111111] transition-opacity hover:opacity-65"
-        >
-          Read full case study
-          <span className="sr-only">
-            : {project.title}
-            {concept ? ", concept project" : ""}
+      <CaseStudyLink slug={project.slug} title={project.title} concept={concept} />
+    </motion.article>
+  );
+}
+
+/** The one underlined link under a project, as on samwrks.in: "Read full case study" and an arrow. */
+function CaseStudyLink({
+  slug,
+  title,
+  concept,
+}: {
+  slug: string;
+  title: string;
+  concept: boolean;
+}) {
+  return (
+    <div className="mt-3 flex justify-end">
+      <Link
+        to="/projects/$slug"
+        params={{ slug }}
+        onClick={rememberCaseStudyReturn}
+        className="group inline-flex items-center gap-2 border-b border-[#111111] pb-0.5 text-[1.05rem] font-medium tracking-[-0.035em] text-[#111111] transition-opacity hover:opacity-65"
+      >
+        Read full case study
+        <span className="sr-only">
+          : {title}
+          {concept ? ", concept project" : ""}
+        </span>
+        <ArrowRight
+          className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+          aria-hidden
+        />
+      </Link>
+    </div>
+  );
+}
+
+/**
+ * One project in the "Case studies" tab, in the style of samwrks.in's case study covers: a tinted
+ * card with the kind of project at the top, a framed picture of the site, the project name in
+ * large type and a handwritten byline, then the link to the full case study. The tint comes from
+ * the project's own accent colour. The picture is a link for mouse and touch, and is hidden from
+ * keyboard and screen readers, who use the text link instead.
+ */
+function CaseStudyCover({ project }: { project: CaseStudyCardProject }) {
+  const reduce = useReducedMotion();
+  const study = project.caseStudy;
+  if (!study?.cover) return null;
+
+  const concept = project.labels.includes("Concept project");
+  const tint = { "--accent": project.accent } as MotionStyle;
+
+  return (
+    <motion.article
+      style={tint}
+      initial={reduce ? false : { opacity: 0, y: 36 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.05 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <Link
+        to="/projects/$slug"
+        params={{ slug: project.slug }}
+        onClick={rememberCaseStudyReturn}
+        aria-hidden
+        tabIndex={-1}
+        className="group block overflow-hidden rounded-[26px] border border-[color-mix(in_oklab,var(--accent)_26%,white)] bg-[color-mix(in_oklab,var(--accent)_10%,white)] px-5 pt-7 text-center sm:px-10 sm:pt-10"
+      >
+        {concept ? (
+          <span className="mb-4 inline-block rounded-full bg-white/80 px-3 py-1 text-[0.74rem] font-semibold tracking-[-0.01em] text-[var(--accent)]">
+            Concept project
           </span>
-          <ArrowRight
-            className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
-            aria-hidden
-          />
-        </Link>
-      </div>
+        ) : null}
+        <p className="text-[clamp(1.5rem,4.4vw,3.1rem)] font-semibold leading-none tracking-[-0.06em] text-[var(--accent)]">
+          {study.eyebrow}
+        </p>
+
+        <div className="mx-auto mt-6 w-full max-w-[640px] overflow-hidden rounded-t-[20px] border-[7px] border-b-0 border-[#111111] bg-white shadow-[0_24px_60px_-28px_rgb(0_0_0/0.5)]">
+          <div className="aspect-[16/10] overflow-hidden">
+            <img
+              src={study.cover}
+              alt={`${project.title} website preview`}
+              className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03] motion-reduce:transition-none"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+
+        <div className="pb-7 pt-6 sm:pb-9">
+          <p className="text-[clamp(2.4rem,9vw,6rem)] font-extrabold uppercase leading-[0.88] tracking-[-0.06em] text-[var(--accent)] [overflow-wrap:anywhere]">
+            {project.title}
+          </p>
+          <p className="sam-handwritten mt-4 flex items-center justify-center gap-2 text-[1.2rem] text-[#111111]/70">
+            <img
+              src={profilePhoto}
+              alt="Oluwatomisin Isogun"
+              className="h-7 w-7 rounded-full object-cover"
+            />
+            -by Oluwatomisin
+          </p>
+        </div>
+      </Link>
+
+      <CaseStudyLink slug={project.slug} title={project.title} concept={concept} />
     </motion.article>
   );
 }

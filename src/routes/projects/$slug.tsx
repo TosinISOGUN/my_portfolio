@@ -1,12 +1,22 @@
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, type CSSProperties } from "react";
 import { Link, createFileRoute, notFound, useRouter } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Github } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { SkeletonImage } from "@/components/SkeletonImage";
-import { featuredProjects, projectCaseStudies } from "@/data/portfolio";
+import { SiteFooter } from "@/components/sections/SiteFooter";
+import { featuredProjects, getImageSize, projectCaseStudies } from "@/data/portfolio";
 import { absoluteUrl } from "@/lib/seo";
 import { prepareCaseStudyReturnRestore } from "@/lib/navigation-memory";
 
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+
+type CaseStudy = (typeof projectCaseStudies)[number];
+
+/** A share picture that is roughly landscape, so link previews do not crop a tall capture. */
+const getShareImage = (study: CaseStudy) =>
+  study.gallery.find((image) => {
+    const size = getImageSize(image);
+    return size ? size.width / size.height >= 1.2 && size.width / size.height <= 2.2 : false;
+  }) ?? study.cover;
 
 export const Route = createFileRoute("/projects/$slug")({
   loader: ({ params }) => {
@@ -18,7 +28,7 @@ export const Route = createFileRoute("/projects/$slug")({
     if (!loaderData) return {};
 
     const projectUrl = absoluteUrl(`/projects/${loaderData.slug}`);
-    const projectImageUrl = absoluteUrl(loaderData.cover);
+    const projectImageUrl = absoluteUrl(getShareImage(loaderData));
     const title = `${loaderData.title}: website design and development | Oluwatomisin Isogun`;
     const description = `${loaderData.summary} Designed and built by Oluwatomisin Isogun.`;
 
@@ -48,11 +58,23 @@ export const Route = createFileRoute("/projects/$slug")({
   component: ProjectCaseStudyPage,
 });
 
+/** A section heading with a coloured bar on its left, as on samwrks.in's case studies. */
+function BarHeading({ children, id }: { children: string; id?: string }) {
+  return (
+    <h2
+      id={id}
+      className="border-l-[3px] border-[var(--accent)] pl-3 text-[1.3rem] font-semibold leading-tight tracking-[-0.045em]"
+    >
+      {children}
+    </h2>
+  );
+}
+
 function ProjectCaseStudyPage() {
   const project = Route.useLoaderData();
   const router = useRouter();
 
-  // Neighbours follow the order of the Case Studies tab on the home page.
+  // Neighbours follow the order of the Websites tab on the home page.
   const order = featuredProjects.map((item) => item.slug);
   const position = order.indexOf(project.slug);
   const previousSlug = position > 0 ? order[position - 1] : undefined;
@@ -60,7 +82,8 @@ function ProjectCaseStudyPage() {
   const previousProject = featuredProjects.find((item) => item.slug === previousSlug);
   const nextProject = featuredProjects.find((item) => item.slug === nextSlug);
   const details = featuredProjects.find((item) => item.slug === project.slug);
-
+  const concept = details?.labels.includes("Concept project") ?? false;
+  const tint = { "--accent": details?.accent ?? "#1a1a1a" } as CSSProperties;
   useIsomorphicLayoutEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, [project.slug]);
@@ -76,156 +99,107 @@ function ProjectCaseStudyPage() {
   };
 
   return (
-    <main className="sam-page min-h-dvh bg-[#f7f7f5] px-5 py-6 text-[#111111] sm:px-8 sm:py-8">
-      <div className="mx-auto max-w-[1180px]">
-        <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <button type="button" onClick={handleBack} className="sam-social-pill w-fit gap-2">
-            <ArrowLeft className="h-4 w-4" aria-hidden />
-            Back
-          </button>
-          <div className="flex flex-wrap gap-3">
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="sam-pill bg-[#1a1a1a] text-white hover:bg-black"
+    <main
+      className="sam-page min-h-dvh bg-[color-mix(in_oklab,var(--accent)_4%,white)] text-[#111111]"
+      style={tint}
+    >
+      <div className="mx-auto max-w-[1180px] px-4 py-5 sm:px-8 sm:py-8">
+        <section className="grid gap-10 overflow-hidden rounded-[28px] bg-gradient-to-br from-[color-mix(in_oklab,var(--accent)_18%,white)] to-[color-mix(in_oklab,var(--accent)_5%,white)] p-6 sm:p-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-14">
+          <div className="min-w-0">
+            <button
+              type="button"
+              onClick={handleBack}
+              className="inline-flex items-center gap-2 text-[0.78rem] font-semibold uppercase tracking-[0.1em] text-[#111111]/55 transition-colors hover:text-[#111111]"
             >
-              Live project
-              <ArrowUpRight className="h-4 w-4" aria-hidden />
-            </a>
-            {project.githubUrl ? (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="sam-social-pill"
-                aria-label="Open source code"
-              >
-                <Github className="h-4 w-4" aria-hidden />
-              </a>
-            ) : null}
-          </div>
-        </header>
+              <ArrowLeft className="h-4 w-4" aria-hidden />
+              Back to home
+            </button>
 
-        <section className="py-12 sm:py-16">
-          <p className="text-[1rem] font-semibold tracking-[-0.035em] text-[#111111]/45">
-            {project.eyebrow}
-          </p>
-          <div className="mt-4 grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
-            <div className="min-w-0">
-              <h1 className="max-w-5xl text-[clamp(3.2rem,10vw,8.6rem)] font-semibold leading-[0.86] tracking-[-0.1em] [overflow-wrap:anywhere]">
-                {project.title}
-              </h1>
-              <p className="mt-7 max-w-3xl text-[1.12rem] font-medium leading-8 tracking-[-0.04em] text-[#111111]/58">
-                {project.summary}
+            <div className="mt-8 flex flex-wrap items-center gap-2">
+              <p className="text-[1rem] font-semibold tracking-[-0.035em] text-[var(--accent)]">
+                {project.eyebrow}
               </p>
+              {concept ? (
+                <span className="rounded-full bg-white/80 px-3 py-1 text-[0.74rem] font-semibold tracking-[-0.01em] text-[var(--accent)]">
+                  Concept project
+                </span>
+              ) : null}
             </div>
-            <aside className="grid gap-5 rounded-[31px] bg-[#ededed] p-5">
+            <h1 className="mt-3 text-[clamp(2.6rem,7vw,5.4rem)] font-semibold leading-[0.92] tracking-[-0.08em] [overflow-wrap:anywhere]">
+              {project.title}
+            </h1>
+
+            <div className="mt-9 grid gap-7">
               <div>
-                <p className="text-[0.92rem] font-semibold tracking-[-0.03em] text-[#111111]/42">
-                  Role
-                </p>
-                <p className="mt-2 text-[1.2rem] font-semibold tracking-[-0.045em]">
-                  {project.role}
+                <BarHeading>Project Overview</BarHeading>
+                <p className="mt-3 max-w-xl text-[1rem] font-medium leading-7 tracking-[-0.03em] text-[#111111]/65">
+                  {project.summary}
                 </p>
               </div>
-              {details ? (
-                <div>
-                  <p className="text-[0.92rem] font-semibold tracking-[-0.03em] text-[#111111]/42">
-                    Stack
-                  </p>
-                  <ul className="mt-2 flex flex-wrap gap-2">
-                    {details.tags.map((tag) => (
-                      <li
-                        key={tag}
-                        className="rounded-full bg-white px-3 py-1.5 text-[0.82rem] font-semibold tracking-[-0.02em] text-[#111111]/60"
-                      >
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-            </aside>
-          </div>
-        </section>
-
-        <img
-          src={project.cover}
-          alt={`${project.title} cover screenshot`}
-          className="aspect-[2.28/1] w-full rounded-[31px] object-cover object-top"
-          decoding="async"
-        />
-
-        <section className="grid gap-4 py-8 sm:py-10 lg:grid-cols-3">
-          {[
-            ["Challenge", project.challenge],
-            ["Approach", project.approach],
-            ["Outcome", project.outcome],
-          ].map(([label, value]) => (
-            <article key={label} className="rounded-[31px] bg-[#ededed] p-5">
-              <h2 className="text-[1.2rem] font-semibold tracking-[-0.05em]">{label}</h2>
-              <p className="mt-4 text-[1rem] font-medium leading-7 tracking-[-0.035em] text-[#111111]/56">
-                {value}
-              </p>
-            </article>
-          ))}
-        </section>
-
-        <section className="rounded-[31px] bg-[#ededed] p-5 sm:p-6">
-          <div className="grid gap-7 lg:grid-cols-[300px_minmax(0,1fr)]">
-            <div>
-              <p className="text-[0.95rem] font-semibold tracking-[-0.035em] text-[#111111]/42">
-                Technical decisions
-              </p>
-              <h2 className="mt-3 text-[clamp(2.4rem,6vw,4.6rem)] font-semibold leading-[0.9] tracking-[-0.09em]">
-                The judgment behind the interface.
-              </h2>
+              <div>
+                <BarHeading>Problem</BarHeading>
+                <p className="mt-3 max-w-xl text-[1rem] font-medium leading-7 tracking-[-0.03em] text-[#111111]/65">
+                  {project.challenge}
+                </p>
+              </div>
+              <div>
+                <BarHeading>Solution</BarHeading>
+                <p className="mt-3 max-w-xl text-[1rem] font-medium leading-7 tracking-[-0.03em] text-[#111111]/65">
+                  {project.approach}
+                </p>
+              </div>
             </div>
-            <div className="grid gap-3">
-              {project.decisions.map((decision) => (
-                <article key={decision.label} className="rounded-[24px] bg-white p-5">
-                  <h3 className="text-[1.08rem] font-semibold tracking-[-0.045em]">
-                    {decision.label}
-                  </h3>
-                  <p className="mt-3 text-[1rem] font-medium leading-7 tracking-[-0.035em] text-[#111111]/56">
-                    {decision.value}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
 
-        <section className="py-8 sm:py-10">
-          <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-[0.95rem] font-semibold tracking-[-0.035em] text-[#111111]/42">
-                Screens
-              </p>
-              <h2 className="mt-2 text-[clamp(2.4rem,6vw,4.8rem)] font-semibold leading-[0.9] tracking-[-0.09em]">
-                Interface signals.
-              </h2>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {project.metrics.map((metric) => (
-                <span
-                  key={metric}
-                  className="rounded-full bg-[#ededed] px-3 py-1.5 text-[0.82rem] font-semibold tracking-[-0.02em] text-[#111111]/54"
+            <div className="mt-9 flex flex-wrap items-center gap-3">
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="sam-pill bg-[#1a1a1a] text-white hover:bg-black"
+              >
+                Live project
+                <ArrowUpRight className="h-4 w-4" aria-hidden />
+              </a>
+              {/* Repository links are hidden for now. To show them again, restore the `githubUrl`
+                  lines in src/data/portfolio.ts, import `Github` from lucide-react and uncomment:
+              {project.githubUrl ? (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="sam-social-pill"
+                  aria-label="Open source code"
                 >
-                  {metric}
-                </span>
-              ))}
+                  <Github className="h-4 w-4" aria-hidden />
+                </a>
+              ) : null}
+              */}
             </div>
           </div>
 
-          <div className="grid gap-4">
+          <div className="self-center">
+            <div className="mx-auto w-full max-w-[420px] overflow-hidden rounded-[30px] border-[8px] border-[#111111] bg-white shadow-[0_34px_70px_-34px_rgb(0_0_0/0.55)]">
+              <div className="aspect-[3/4] overflow-hidden">
+                <img
+                  src={project.cover}
+                  alt={`${project.title} website, top of the home page`}
+                  className="h-full w-full object-cover object-top"
+                  decoding="async"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="screens-heading" className="pb-12 pt-10 sm:pb-16 sm:pt-12">
+          <BarHeading id="screens-heading">Screens</BarHeading>
+          <div className="mt-6 grid gap-5">
             {project.gallery.map((image, index) => (
               <SkeletonImage
                 key={`${project.slug}-${index}`}
                 src={image}
                 alt={`${project.title} screenshot ${index + 1} of ${project.gallery.length}`}
-                className="rounded-[31px] bg-[#ededed]"
+                className="rounded-[24px] border border-[#111111]/8 bg-white"
               />
             ))}
           </div>
@@ -239,7 +213,7 @@ function ProjectCaseStudyPage() {
             <Link
               to="/projects/$slug"
               params={{ slug: previousProject.slug }}
-              className="group grid gap-2 rounded-[31px] bg-[#ededed] p-5 transition-colors hover:bg-white"
+              className="group grid gap-2 rounded-[24px] border border-[color-mix(in_oklab,var(--accent)_20%,white)] bg-white/70 p-5 transition-colors hover:bg-white"
             >
               <span className="flex items-center gap-2 text-[0.92rem] font-semibold tracking-[-0.03em] text-[#111111]/42">
                 <ArrowLeft className="h-4 w-4" aria-hidden />
@@ -256,7 +230,7 @@ function ProjectCaseStudyPage() {
             <Link
               to="/projects/$slug"
               params={{ slug: nextProject.slug }}
-              className="group grid gap-2 rounded-[31px] bg-[#ededed] p-5 transition-colors hover:bg-white sm:text-right"
+              className="group grid gap-2 rounded-[24px] border border-[color-mix(in_oklab,var(--accent)_20%,white)] bg-white/70 p-5 transition-colors hover:bg-white sm:text-right"
             >
               <span className="flex items-center gap-2 text-[0.92rem] font-semibold tracking-[-0.03em] text-[#111111]/42 sm:justify-end">
                 Next case study
@@ -269,6 +243,7 @@ function ProjectCaseStudyPage() {
           ) : null}
         </nav>
       </div>
+      <SiteFooter />
     </main>
   );
 }

@@ -101,7 +101,11 @@ export const restorePendingCaseStudyReturn = ({ persist = false } = {}) => {
       return false;
     }
 
-    window.scrollTo({ top: Number(returnPoint.y), left: Number(returnPoint.x), behavior: "instant" });
+    window.scrollTo({
+      top: Number(returnPoint.y),
+      left: Number(returnPoint.x),
+      behavior: "instant",
+    });
 
     if (returnPoint.scrollRoot) {
       const scrollRoot = document.querySelector<HTMLElement>(

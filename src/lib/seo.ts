@@ -1,5 +1,5 @@
 export const siteUrl = "https://portfolio.isogunlabs.com";
-export const ogImageUrl = new URL("/og-image.jpg", siteUrl).toString();
+export const ogImageUrl = new URL("/og-image-v2.jpg", siteUrl).toString();
 
 /** Search result title: leads with what people type into Google. */
 export const seoTitle = "Freelance Web Designer and Developer | Oluwatomisin Isogun";

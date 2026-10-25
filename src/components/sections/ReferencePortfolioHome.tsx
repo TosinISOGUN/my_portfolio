@@ -1,10 +1,18 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
-import { ArrowDownToLine, ArrowUpRight, Calendar, Github, MessageCircle, Send } from "lucide-react";
+import {
+  ArrowDownToLine,
+  ArrowRight,
+  ArrowUpRight,
+  Calendar,
+  Github,
+  MessageCircle,
+} from "lucide-react";
 import resumePdf from "@/assets/OLUWATOMISIN_ISOGUN_RESUME.pdf";
 import { SkeletonImage } from "@/components/SkeletonImage";
 import { CtaBlock, Faq, WebsitesHeading } from "@/components/sections/BusinessSections";
+import { SiteFooter } from "@/components/sections/SiteFooter";
 import profilePhoto from "@/assets/Photograph - Oluwatomisin Isogun.jpg";
 import {
   bookingUrl,
@@ -26,7 +34,9 @@ type CaseStudyCardProject = (typeof featuredProjects)[number] & {
   caseStudy: CaseStudy | undefined;
 };
 
-const viewOrder: ViewMode[] = ["case-studies", "work-history", "samples", "certifications"];
+// The tabs that are shown. "samples" (Work samples) and "certifications" are hidden for now: their
+// views, components and data are all still below. To bring a tab back, add its name to this list.
+const viewOrder: ViewMode[] = ["case-studies", "work-history"];
 const viewLabels: Record<ViewMode, string> = {
   "case-studies": "Websites I've built",
   "work-history": "Work history",
@@ -91,17 +101,19 @@ export function ReferencePortfolioHome() {
 
     setView(nextView);
 
+    // The whole page scrolls, so a new tab starts at the top of the page on wide screens and at
+    // the top of the tab content on phones, where the profile sits above it.
     window.requestAnimationFrame(() => {
-      contentScrollRef.current?.scrollTo({ top: 0, left: 0, behavior: "auto" });
-
       if (window.innerWidth < 1024) {
-        contentScrollRef.current?.scrollIntoView({ block: "start" });
+        contentScrollRef.current?.scrollIntoView({ block: "start", behavior: "instant" });
+      } else {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
       }
     });
   };
 
   return (
-    <main className="sam-page min-h-screen bg-white text-[#111111] lg:h-screen lg:overflow-hidden">
+    <main className="sam-page min-h-screen bg-white text-[#111111]">
       <div className="grid min-h-screen lg:grid-cols-[clamp(280px,24vw,330px)_minmax(0,1fr)] xl:grid-cols-[380px_minmax(0,1fr)]">
         <IdentityPanel />
 
@@ -113,7 +125,7 @@ export function ReferencePortfolioHome() {
           tabIndex={0}
           data-case-study-scroll-root="home-work"
           data-case-study-return-view={view}
-          className="min-w-0 border-[#111111]/10 lg:h-screen lg:overflow-y-auto lg:border-l"
+          className="min-w-0 border-[#111111]/10 lg:border-l"
         >
           <div className="sticky top-0 z-20 border-b border-[#111111]/10 bg-white/92 px-3 py-2.5 backdrop-blur-md sm:px-8 sm:py-3 lg:px-8">
             <ViewSwitcher value={view} onChange={handleViewChange} />
@@ -145,8 +157,8 @@ export function ReferencePortfolioHome() {
                   transition={{ duration: 0.25 }}
                 >
                   <WebsitesHeading />
-                  {workSamples.map((project, index) => (
-                    <CaseStudyCard key={project.title} project={project} index={index} />
+                  {workSamples.map((project) => (
+                    <WebsiteFrame key={project.slug} project={project} />
                   ))}
                   <CtaBlock />
                   <Faq />
@@ -194,6 +206,7 @@ export function ReferencePortfolioHome() {
           </div>
         </section>
       </div>
+      <SiteFooter />
     </main>
   );
 }
@@ -203,7 +216,7 @@ function IdentityPanel() {
 
   return (
     <motion.aside
-      className="sam-identity-panel flex min-h-0 flex-col gap-12 px-8 py-8 sm:px-10 sm:py-10 lg:h-screen lg:min-h-0 lg:justify-between lg:gap-0 lg:overflow-y-auto lg:[scrollbar-width:thin] lg:px-8 lg:py-2 xl:px-8 xl:py-5"
+      className="sam-identity-panel flex min-h-0 flex-col gap-12 px-8 py-8 sm:px-10 sm:py-10 lg:sticky lg:top-0 lg:h-screen lg:min-h-0 lg:self-start lg:justify-between lg:gap-0 lg:overflow-y-auto lg:[scrollbar-width:thin] lg:px-8 lg:py-2 xl:px-8 xl:py-5"
       initial={reduce ? false : { opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.75, type: "spring", bounce: 0, stiffness: 90 }}
@@ -349,7 +362,7 @@ function ViewSwitcher({
     <div
       role="tablist"
       aria-label="Portfolio sections"
-      className="relative flex h-[28px] w-fit min-w-[440px] max-w-full items-center overflow-x-auto rounded-full bg-[#ededed] p-0 sm:h-[30px] max-[520px]:min-w-0 max-[520px]:w-full"
+      className="relative flex h-[28px] w-fit min-w-[300px] max-w-full items-center overflow-x-auto rounded-full bg-[#ededed] p-0 sm:h-[30px] max-[520px]:min-w-0 max-[520px]:w-full"
     >
       {viewOrder.map((item) => {
         const active = value === item;
@@ -676,119 +689,60 @@ function WorkHistoryCard({
   );
 }
 
-function CaseStudyCard({ project, index }: { project: CaseStudyCardProject; index: number }) {
+/**
+ * One project in the "Websites I've built" tab, shown the way samwrks.in shows its work: a large
+ * picture of the site in a rounded frame, then one link to the case study. The picture itself is
+ * a link for mouse and touch users; it is hidden from keyboard and screen readers, who get the
+ * text link (which names the project and says when it is a concept) instead of two stops.
+ */
+function WebsiteFrame({ project }: { project: CaseStudyCardProject }) {
   const reduce = useReducedMotion();
-  const caseStudy = project.caseStudy;
-  const orderedImages = getLandingFirstImages(project);
-  const previewImages = orderedImages.slice(0, 3);
-  const cover = orderedImages[0];
+  const cover = project.caseStudy?.cover;
+  if (!cover) return null;
+
+  const concept = project.labels.includes("Concept project");
+  const goToCaseStudy = rememberCaseStudyReturn;
 
   return (
     <motion.article
-      className="group overflow-hidden rounded-[26px] bg-[#ededed] text-[#111111]"
-      initial={reduce ? false : { opacity: 0, y: 42, scale: 0.96 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      initial={reduce ? false : { opacity: 0, y: 36 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.05 }}
-      transition={{ duration: 0.68, type: "spring", bounce: 0.1 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
     >
       <Link
         to="/projects/$slug"
         params={{ slug: project.slug }}
-        onClick={rememberCaseStudyReturn}
-        className="block overflow-hidden bg-white"
+        onClick={goToCaseStudy}
+        aria-hidden
+        tabIndex={-1}
+        className="group block overflow-hidden rounded-[26px] bg-[#ededed]"
       >
-        {cover ? (
-          <img
+        <div className="transition-transform duration-700 group-hover:scale-[1.012] motion-reduce:transition-none">
+          <SkeletonImage
             src={cover}
-            alt={`${project.title} interface preview`}
-            className="aspect-[1.55/1] w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.015] md:aspect-[2.15/1]"
-            loading="lazy"
-            decoding="async"
+            alt={`${project.title}${concept ? " (concept project)" : ""} website preview`}
           />
-        ) : null}
+        </div>
       </Link>
 
-      <div className="grid gap-7 px-5 py-5 sm:px-7 sm:py-7 xl:grid-cols-[minmax(0,1fr)_300px] xl:items-end">
-        <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-white px-3 py-1 text-[0.78rem] font-semibold tracking-[-0.02em] text-[#111111]/44">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <span className="rounded-full bg-white px-3 py-1 text-[0.78rem] font-semibold tracking-[-0.02em] text-[#111111]/44">
-              {caseStudy?.eyebrow ?? project.studio}
-            </span>
-            <span className="rounded-full bg-white px-3 py-1 text-[0.78rem] font-semibold tracking-[-0.02em] text-[#111111]/44">
-              Design and development
-            </span>
-          </div>
-
-          <Link
-            to="/projects/$slug"
-            params={{ slug: project.slug }}
-            onClick={rememberCaseStudyReturn}
-            className="mt-5 block"
-          >
-            <h3 className="max-w-4xl text-[clamp(2.15rem,10vw,6.8rem)] font-semibold leading-[0.9] tracking-[-0.085em] sm:leading-[0.88] sm:tracking-[-0.095em]">
-              {project.title}
-            </h3>
-          </Link>
-
-          <p className="mt-5 max-w-3xl text-[1rem] font-medium leading-7 tracking-[-0.035em] text-[#111111]/55 sm:text-[1.08rem]">
-            {caseStudy?.summary ?? project.result}
-          </p>
-
-          <div className="mt-6 flex flex-wrap gap-2">
-            {project.labels.map((label) => (
-              <span
-                key={label}
-                className="rounded-full bg-white px-3 py-1.5 text-[0.82rem] font-semibold tracking-[-0.02em] text-[#111111]/58"
-              >
-                {label}
-              </span>
-            ))}
-          </div>
-          <p className="mt-3 text-[0.74rem] font-medium tracking-[-0.01em] text-[#111111]/38">
-            {project.tags.join(" · ")}
-          </p>
-        </div>
-
-        <div className="grid gap-4">
-          {previewImages.length ? (
-            <div className="hidden grid-cols-3 gap-2 md:grid">
-              {previewImages.map((image, previewIndex) => (
-                <img
-                  key={`${image}-${previewIndex}`}
-                  src={image}
-                  alt={`${project.title} screenshot ${previewIndex + 1}`}
-                  className="aspect-[4/3] rounded-[14px] bg-white object-cover object-top"
-                  loading="lazy"
-                  decoding="async"
-                />
-              ))}
-            </div>
-          ) : null}
-
-          <div className="flex flex-wrap gap-2">
-            <Link
-              to="/projects/$slug"
-              params={{ slug: project.slug }}
-              onClick={rememberCaseStudyReturn}
-              className="sam-pill bg-[#1a1a1a] text-white hover:bg-black"
-            >
-              Case study
-              <ArrowUpRight className="h-4 w-4" aria-hidden />
-            </Link>
-            <a
-              href={caseStudy?.liveUrl ?? project.link}
-              target="_blank"
-              rel="noreferrer"
-              className="sam-pill bg-white text-[#111111] hover:bg-[#f2f2f2]"
-            >
-              Live site
-              <ArrowUpRight className="h-4 w-4" aria-hidden />
-            </a>
-          </div>
-        </div>
+      <div className="mt-3 flex justify-end">
+        <Link
+          to="/projects/$slug"
+          params={{ slug: project.slug }}
+          onClick={goToCaseStudy}
+          className="group inline-flex items-center gap-2 border-b border-[#111111] pb-0.5 text-[1.05rem] font-medium tracking-[-0.035em] text-[#111111] transition-opacity hover:opacity-65"
+        >
+          Read full case study
+          <span className="sr-only">
+            : {project.title}
+            {concept ? ", concept project" : ""}
+          </span>
+          <ArrowRight
+            className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+            aria-hidden
+          />
+        </Link>
       </div>
     </motion.article>
   );
@@ -799,14 +753,6 @@ function getShuffleRank(value: string) {
     Array.from(value).reduce((rank, char, index) => rank + char.charCodeAt(0) * (index + 17), 0) %
     997
   );
-}
-
-function getLandingFirstImages(project: CaseStudyCardProject) {
-  const gallery = project.caseStudy?.gallery.filter(Boolean) ?? [];
-  const preferredCover = project.caseStudy?.cover ?? gallery[0];
-  const remaining = gallery.filter((image) => image !== preferredCover);
-
-  return [preferredCover, ...remaining].filter((image): image is string => Boolean(image));
 }
 
 function getCertificationPriority(title: string) {

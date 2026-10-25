@@ -5,6 +5,22 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://portfolio.isogunlabs.com/projects/velora-beauty</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://portfolio.isogunlabs.com/projects/hearthline-realty</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://portfolio.isogunlabs.com/projects/juniper-ember</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://portfolio.isogunlabs.com/projects/everwell</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://portfolio.isogunlabs.com/projects/open-school-field</loc>
     <priority>0.8</priority>
   </url>

@@ -20,8 +20,12 @@ describe("portfolio data", () => {
     expect(caseStudies).toEqual(featured);
   });
 
-  it("orders projects from closest-to-a-local-business to most technical", () => {
+  it("leads with the four concept sites, then orders client work from closest-to-a-local-business to most technical", () => {
     expect(featuredProjects.map((project) => project.slug)).toEqual([
+      "velora-beauty",
+      "hearthline-realty",
+      "juniper-ember",
+      "everwell",
       "samsoni",
       "oyobooking",
       "thomason",
@@ -39,6 +43,18 @@ describe("portfolio data", () => {
       expect(project.labels.length, `${project.slug} labels`).toBeGreaterThan(0);
       const study = projectCaseStudies.find((item) => item.slug === project.slug);
       expect(study?.summary.length ?? 0, `${project.slug} summary`).toBeLessThan(110);
+    }
+  });
+
+  it("marks every concept site as a concept, and nobody else", () => {
+    const concepts = ["velora-beauty", "hearthline-realty", "juniper-ember", "everwell", "payflow"];
+    for (const project of featuredProjects) {
+      const marked = project.labels.includes("Concept project");
+      expect(marked, `${project.slug} concept label`).toBe(concepts.includes(project.slug));
+    }
+    for (const slug of concepts) {
+      const study = projectCaseStudies.find((item) => item.slug === slug);
+      expect(study?.summary, `${slug} summary`).toMatch(/^Concept:/);
     }
   });
 

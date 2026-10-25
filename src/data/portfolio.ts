@@ -110,6 +110,38 @@ const thomasonScreens = getScreens(
   }) as ScreenshotModule,
 );
 
+const velouraScreens = getScreens(
+  import.meta.glob("../assets/product_showcase/velora-beauty/*.webp", {
+    eager: true,
+    import: "default",
+    query: "?url",
+  }) as ScreenshotModule,
+);
+
+const hearthlineScreens = getScreens(
+  import.meta.glob("../assets/product_showcase/hearthline-realty/*.webp", {
+    eager: true,
+    import: "default",
+    query: "?url",
+  }) as ScreenshotModule,
+);
+
+const juniperScreens = getScreens(
+  import.meta.glob("../assets/product_showcase/juniper-ember/*.webp", {
+    eager: true,
+    import: "default",
+    query: "?url",
+  }) as ScreenshotModule,
+);
+
+const everwellScreens = getScreens(
+  import.meta.glob("../assets/product_showcase/everwell/*.webp", {
+    eager: true,
+    import: "default",
+    query: "?url",
+  }) as ScreenshotModule,
+);
+
 const certificationFiles = import.meta.glob("../assets/certifications/*.{png,jpeg,jpg}", {
   eager: true,
   import: "default",
@@ -244,6 +276,11 @@ const nachie271 = screenAt(nachieScreens, 0);
 const payflowLanding = screenAt(payflowScreens, 0);
 const samsoniLanding = screenAt(samsoniScreens, 1);
 const thomasonLanding = screenAt(thomasonScreens, 0);
+// The four concept sites: the cover is a tall capture of the home page (file 01-home).
+const veloraHome = screenAt(velouraScreens, 0);
+const hearthlineHome = screenAt(hearthlineScreens, 0);
+const juniperHome = screenAt(juniperScreens, 0);
+const everwellHome = screenAt(everwellScreens, 0);
 
 export const profile = {
   name: "Oluwatomisin Isogun",
@@ -388,7 +425,65 @@ export const certifications = certificationModules.map(([path, image], index) =>
   };
 });
 
+// The first four are concept sites built for fictional businesses. They lead the list so a
+// business owner sees them first; each says "Concept project" so nobody mistakes them for clients.
 export const featuredProjects = [
+  {
+    title: "Velora Beauty",
+    slug: "velora-beauty",
+    studio: "Beauty brand concept",
+    tags: ["React 19", "TanStack Start", "Tailwind CSS", "Shop and bag flow"],
+    labels: ["Concept project", "Online shop", "Mobile-friendly"],
+    signals: ["Shop and collections", "Routine builder", "Bag and checkout"],
+    link: "https://velorabeautyy.vercel.app",
+    github: "https://github.com/TosinISOGUN/velora_beauty",
+    problem:
+      "A concept brief for a fictional beauty label that needed to feel colour-forward and confident while keeping shopping simple.",
+    result:
+      "A demo storefront with collections, product pages, a routine builder, a bag and a checkout.",
+  },
+  {
+    title: "Hearthline Realty",
+    slug: "hearthline-realty",
+    studio: "Real estate brokerage concept",
+    tags: ["React 19", "TanStack Start", "Leaflet map", "Search in the page address"],
+    labels: ["Concept project", "Home search and map", "Mobile-friendly"],
+    signals: ["Home search", "Map view", "Showing requests"],
+    link: "https://hearthlinerealty.vercel.app",
+    github: "https://github.com/TosinISOGUN/hearthline_realty",
+    problem:
+      "A concept brief for a fictional boutique brokerage where buyers find a home quickly and sellers see a clear way to get in touch.",
+    result:
+      "A demo site with home search, a list and map view, home pages with galleries, and showing, valuation and contact forms.",
+  },
+  {
+    title: "Juniper & Ember",
+    slug: "juniper-ember",
+    studio: "Restaurant concept",
+    tags: ["React 19", "TanStack Start", "Tailwind CSS", "Ordering demo"],
+    labels: ["Concept project", "Menu and ordering", "Table reservations"],
+    signals: ["Tabbed menu", "Pickup ordering", "Reservations"],
+    link: "https://juniperandember.vercel.app/",
+    github: "https://github.com/TosinISOGUN/juniper_and_ember",
+    problem:
+      "A concept brief for a fictional wood-fired restaurant that needed to sell its mood on the first screen and still make the menu, ordering and booking easy to reach.",
+    result:
+      "A demo site with a tabbed menu, pickup ordering with a cart, reservations, a gallery and a light and dark theme.",
+  },
+  {
+    title: "Everwell",
+    slug: "everwell",
+    studio: "Clinic website concept",
+    tags: ["React 19", "TanStack Start", "Tailwind CSS", "Accessible forms"],
+    labels: ["Concept project", "Clear service pages", "Mobile-friendly"],
+    signals: ["Service pages", "Plain language", "Contact form"],
+    link: "https://everwelldental.vercel.app",
+    github: "https://github.com/TosinISOGUN/everwell_dental",
+    problem:
+      "A concept brief for a fictional clinic where people choosing a practice need plain language, clear services and an easy way to get in touch.",
+    result:
+      "A demo site with a services overview, a page for each service, a practice page and a contact form.",
+  },
   {
     title: "Samsoni",
     slug: "samsoni",
@@ -519,6 +614,146 @@ export const featuredProjects = [
 ];
 
 export const projectCaseStudies = [
+  {
+    slug: "velora-beauty",
+    title: "Velora Beauty",
+    eyebrow: "Beauty Brand Concept",
+    role: "Design and development",
+    liveUrl: "https://velorabeautyy.vercel.app",
+    githubUrl: "https://github.com/TosinISOGUN/velora_beauty",
+    cover: veloraHome,
+    summary: "Concept: online beauty shop with a routine builder and a bag.",
+    challenge:
+      "A concept project for a fictional beauty label aimed at adult women of many ages and skin tones. The site had to feel colour-forward and confident while keeping shopping simple. Velora is not a real brand.",
+    approach:
+      "I built fifteen pages: home, shop, three collections, six product pages, a routine builder, our story, a bag, checkout and contact. Every top-level page opens on a full-bleed photograph, and product packaging is drawn as shaded vector art that takes the colour of the selected shade.",
+    outcome:
+      "A complete demo storefront with a dark and a light theme. Prices, shades and policies are sample content: nothing is charged or shipped, and no form sends anything.",
+    metrics: ["Concept project", "15 pages", "Shop and bag flow", "Dark and light themes"],
+    decisions: [
+      {
+        label: "Photography First",
+        value:
+          "Each page opens on one large photograph and a short line of type, so the mood is clear before the visitor reads anything.",
+      },
+      {
+        label: "Shade-aware Products",
+        value:
+          "Packaging is vector art that changes with the selected shade, so the product on screen matches the choice being made.",
+      },
+      {
+        label: "Honest Demo",
+        value:
+          "The site says plainly that it is a concept: no reviews, no health claims, and no shade-matching promise.",
+      },
+    ],
+    gallery: velouraScreens,
+  },
+  {
+    slug: "hearthline-realty",
+    title: "Hearthline Realty",
+    eyebrow: "Real Estate Concept",
+    role: "Design and development",
+    liveUrl: "https://hearthlinerealty.vercel.app",
+    githubUrl: "https://github.com/TosinISOGUN/hearthline_realty",
+    cover: hearthlineHome,
+    summary: "Concept: real estate site with home search, a map and showing requests.",
+    challenge:
+      "A concept project for a fictional boutique brokerage in Raleigh. Buyers needed to find a home quickly, and sellers needed a clear way to get in touch. Hearthline is not a real brokerage.",
+    approach:
+      "I built eight pages plus a page for each sample home. Search filters by place, price, bedrooms, type and features, and keeps its state in the page address. Visitors can switch between a list and a map, open a photo gallery, save homes for the visit, and send a showing, valuation or contact request.",
+    outcome:
+      "A complete demo site. The homes, prices and agents are sample content, the map shows approximate areas only, and the forms send nothing.",
+    metrics: ["Concept project", "Home search", "Map view", "Showing requests"],
+    decisions: [
+      {
+        label: "Search You Can Share",
+        value:
+          "Filters apply instantly and live in the page address, so any search can be sent as a link and still work.",
+      },
+      {
+        label: "Map On Request",
+        value:
+          "The map and its tiles load only when someone opens a map, which keeps the first load light.",
+      },
+      {
+        label: "Honest Samples",
+        value:
+          "Every home is labelled as a sample listing, and the site invents no reviews, awards or statistics.",
+      },
+    ],
+    gallery: hearthlineScreens,
+  },
+  {
+    slug: "juniper-ember",
+    title: "Juniper & Ember",
+    eyebrow: "Restaurant Concept",
+    role: "Design and development",
+    liveUrl: "https://juniperandember.vercel.app/",
+    githubUrl: "https://github.com/TosinISOGUN/juniper_and_ember",
+    cover: juniperHome,
+    summary: "Concept: restaurant site with a menu, pickup ordering and reservations.",
+    challenge:
+      "A concept project for a fictional wood-fired restaurant in Austin. The site had to sell the mood on the first screen and still make the menu, ordering and booking easy to reach. Juniper & Ember is not a real restaurant.",
+    approach:
+      "I built nine pages: a tabbed menu, pickup ordering with a cart and a demo checkout, reservations, a gallery with a lightbox, and a dark and a cream theme. Every top-level page opens on a full-bleed photograph.",
+    outcome:
+      "A complete demo site. The address, hours, menu and prices are sample content, and nothing books a table or takes an order.",
+    metrics: ["Concept project", "9 pages", "Pickup ordering", "Reservations"],
+    decisions: [
+      {
+        label: "Mood First",
+        value:
+          "A large photograph and a short headline open each page, so visitors feel the place before they read the details.",
+      },
+      {
+        label: "Booking That Follows The Hours",
+        value:
+          "Reservation times only offer what is served that day, so a visitor cannot pick a time the kitchen is closed.",
+      },
+      {
+        label: "Light Motion",
+        value:
+          "Animation uses only movement and fade, and everything shows in its finished state for visitors who prefer reduced motion.",
+      },
+    ],
+    gallery: juniperScreens,
+  },
+  {
+    slug: "everwell",
+    title: "Everwell",
+    eyebrow: "Clinic Website Concept",
+    role: "Design and development",
+    liveUrl: "https://everwelldental.vercel.app",
+    githubUrl: "https://github.com/TosinISOGUN/everwell_dental",
+    cover: everwellHome,
+    summary: "Concept: clinic website with clear service pages and an easy contact form.",
+    challenge:
+      "A concept project for a fictional clinic in Charlotte. People choosing a practice need plain language, clear services and an easy way to get in touch. Everwell is not a real practice.",
+    approach:
+      "I built ten pages: home, a services overview with a page for each service, the practice, a page for new visitors, contact and a privacy notice. The wording avoids jargon, and the contact form is clearly marked as a demo.",
+    outcome:
+      "A complete demo site with sample details. The photographs are stock images, the team is fictional, and the form sends nothing.",
+    metrics: ["Concept project", "10 pages", "Service pages", "Plain language"],
+    decisions: [
+      {
+        label: "Plain Language",
+        value:
+          "Services are explained in short, everyday wording, so a visitor can understand each one without looking anything up.",
+      },
+      {
+        label: "One Page Per Service",
+        value:
+          "Each service has its own page, so people can land on exactly what they searched for.",
+      },
+      {
+        label: "Honest Demo",
+        value:
+          "No reviews, credentials, fees or compliance claims appear anywhere, and the site collects no health information.",
+      },
+    ],
+    gallery: everwellScreens,
+  },
   {
     slug: "open-school-field",
     title: "Open School Field",
@@ -841,6 +1076,10 @@ const showcaseFiles = import.meta.glob("../assets/product_showcase/*/*.webp", {
 }) as ScreenshotModule;
 
 const heroSources: Record<string, { folder: string; primary: string; extra?: string[] }> = {
+  "velora-beauty": { folder: "velora-beauty", primary: "01-home.webp" },
+  "hearthline-realty": { folder: "hearthline-realty", primary: "01-home.webp" },
+  "juniper-ember": { folder: "juniper-ember", primary: "01-home.webp" },
+  everwell: { folder: "everwell", primary: "01-home.webp" },
   "nachie-maridadi": { folder: "nachie maridadi", primary: "Screenshot (271).webp" },
   "open-school-field": {
     folder: "open school field",

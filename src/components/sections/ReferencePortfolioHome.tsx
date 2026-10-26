@@ -369,7 +369,7 @@ function ViewSwitcher({
     <div
       role="tablist"
       aria-label="Portfolio sections"
-      className="relative flex h-[28px] w-fit min-w-[300px] max-w-full items-center overflow-x-auto rounded-full bg-[#ededed] p-0 sm:h-[30px] max-[520px]:min-w-0 max-[520px]:w-full"
+      className="relative flex h-[28px] w-fit min-w-[300px] max-w-full items-center overflow-hidden rounded-full bg-[#ededed] p-0 sm:h-[30px] max-[520px]:min-w-0 max-[520px]:w-full"
     >
       {viewOrder.map((item) => {
         const active = value === item;
@@ -383,17 +383,10 @@ function ViewSwitcher({
             aria-selected={active}
             aria-controls="portfolio-panel"
             onClick={() => onChange(item)}
-            className={`relative z-10 h-full flex-1 whitespace-nowrap rounded-full px-2 text-[0.68rem] font-medium max-[359px]:px-1 max-[359px]:text-[0.62rem] tracking-[-0.035em] transition-colors sm:px-4 sm:text-[0.74rem] ${
-              active ? "text-white" : "text-[#111111]/50 hover:text-[#111111]/80"
+            className={`relative h-full flex-1 whitespace-nowrap rounded-full px-2 text-[0.68rem] font-medium max-[359px]:px-1 max-[359px]:text-[0.62rem] tracking-[-0.035em] sm:px-4 sm:text-[0.74rem] ${
+              active ? "bg-[#1a1a1a] text-white" : "text-[#111111]/50 hover:text-[#111111]/80"
             }`}
           >
-            {active ? (
-              <motion.span
-                layoutId="sam-active-tab"
-                className="absolute inset-0 -z-10 rounded-full bg-[#1a1a1a]"
-                transition={{ type: "spring", stiffness: 420, damping: 35 }}
-              />
-            ) : null}
             {item === "websites" ? (
               <>
                 <span className="min-[521px]:hidden">Websites</span>

@@ -359,10 +359,7 @@ const gloriaHome = screenAt(gloriaScreens, 0);
 
 // The Websites tab normally shows each project's tall home-page capture. A project listed here
 // shows this picture there instead (the tall capture is still used on its other pages).
-export const websitePictureOverrides: Record<string, string> = {
-  // Open School Field: its original landing-page screenshot.
-  "open-school-field": osf261,
-};
+export const websitePictureOverrides: Record<string, string> = {};
 
 export const profile = {
   name: "Oluwatomisin Isogun",

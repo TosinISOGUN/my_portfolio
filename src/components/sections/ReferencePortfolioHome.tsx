@@ -268,7 +268,7 @@ function IdentityPanel() {
               rel="noreferrer"
               className="sam-pill sam-tilt-button bg-[#1a1a1a] text-white hover:bg-black"
             >
-              <Calendar className="h-[18px] w-[18px]" aria-hidden />
+              <Calendar className="h-[15px] w-[15px]" aria-hidden />
               Book a free call
             </a>
             <a
@@ -277,7 +277,7 @@ function IdentityPanel() {
               rel="noreferrer"
               className="sam-pill sam-tilt-button bg-[#ededed] text-[#1a1a1a] hover:bg-white"
             >
-              <MessageCircle className="h-[18px] w-[18px]" aria-hidden />
+              <MessageCircle className="h-[15px] w-[15px]" aria-hidden />
               Chat on WhatsApp
             </a>
           </div>

@@ -39,7 +39,7 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "product_showcase/_tall/infinitative.webp": { width: 1440, height: 2200 },
   "product_showcase/_tall/learncity.webp": { width: 1440, height: 2200 },
   "product_showcase/_tall/nachie-maridadi.webp": { width: 1440, height: 2200 },
-  "product_showcase/_tall/open-school-field.webp": { width: 1440, height: 2200 },
+  "product_showcase/_tall/open-school-field.webp": { width: 1600, height: 2059 },
   "product_showcase/_tall/oyobooking.webp": { width: 1600, height: 2444 },
   "product_showcase/_tall/payflow.webp": { width: 1440, height: 2200 },
   "product_showcase/_tall/samsoni.webp": { width: 1600, height: 2444 },

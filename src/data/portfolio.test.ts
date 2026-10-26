@@ -123,8 +123,7 @@ describe("portfolio data", () => {
     }
   });
 
-  it("shows Open School Field's landing screenshot on the Websites tab", () => {
-    expect(websitePictureOverrides["open-school-field"]).toContain("Screenshot%20(261)");
+  it("points every Websites-tab picture override at a real project", () => {
     for (const slug of Object.keys(websitePictureOverrides)) {
       expect(
         featuredProjects.some((project) => project.slug === slug),

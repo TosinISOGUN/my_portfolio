@@ -96,9 +96,9 @@
 @theme {
   --font-display: "Archivo Black", ui-sans-serif, system-ui, sans-serif;
   --font-sans:
-    "SF Pro Display Medium", "SF Pro Display Regular", "SF Pro Display",
-    "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display",
-    "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+    "SF Pro Display Medium", "SF Pro Display Regular", "SF Pro Display", "SF Pro Text",
+    -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", ui-sans-serif,
+    system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   --color-cream: #ffffff;
   --color-charcoal: oklch(0.27 0.008 60);
@@ -108,9 +108,9 @@
 
 :root {
   --sam-font-sans:
-    "SF Pro Display Medium", "SF Pro Display Regular", "SF Pro Display",
-    "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display",
-    "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+    "SF Pro Display Medium", "SF Pro Display Regular", "SF Pro Display", "SF Pro Text",
+    -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", ui-sans-serif,
+    system-ui, sans-serif;
   --radius: 0.625rem;
   --background: #ffffff;
 
@@ -234,6 +234,14 @@
     color 180ms ease;
 }
 
+/* The hero's two buttons are a size smaller than the pill default. */
+.sam-action-row .sam-pill {
+  min-height: 36px;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+}
+
 .sam-pill:hover {
   transform: translateY(-1px);
 }
@@ -313,9 +321,9 @@
   background: white;
 }
 
-
 @keyframes sam-status-breathe {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.28;
     transform: scale(1);
   }
@@ -408,7 +416,12 @@
   }
 
   /* Keep the two buttons side by side on phones (hero and the bottom call to action). */
-  .sam-action-row .sam-pill,
+  .sam-action-row .sam-pill {
+    min-height: 34px;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
   .sam-cta-row .sam-pill {
     gap: 0.4rem;
     padding: 0.5rem 0.85rem;
@@ -599,7 +612,6 @@
   }
 }
 
-
 @media (min-width: 1024px) and (max-height: 820px) {
   .sam-identity-panel {
     /* The panel never scrolls on its own: the wheel over it scrolls the page, as on samwrks.in. */
@@ -678,13 +690,7 @@
 .showcase-carousel {
   --showcase-gap: 1.25rem;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    transparent,
-    black 7%,
-    black 93%,
-    transparent
-  );
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 7%, black 93%, transparent);
   mask-image: linear-gradient(90deg, transparent, black 7%, black 93%, transparent);
 }
 
@@ -733,7 +739,6 @@
   }
 }
 
-
 @media (min-width: 1024px) {
   .showcase-carousel__card {
     width: 46vw;
@@ -755,13 +760,7 @@
 .case-study-carousel {
   --gallery-gap: 1.25rem;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    transparent,
-    black 8%,
-    black 92%,
-    transparent
-  );
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
   mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
 }
 
@@ -809,7 +808,6 @@
   }
 }
 
-
 @media (min-width: 1024px) {
   .case-study-carousel__image {
     width: 52vw;
@@ -834,12 +832,6 @@
     padding-bottom: 1.25rem;
   }
 }
-
-
-
-
-
-
 
 /* Keyboard focus: visible ring on everything interactive. */
 a:focus-visible,

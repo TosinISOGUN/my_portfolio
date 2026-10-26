@@ -15,6 +15,7 @@ import {
   whatsappUrl,
   certifications,
   featuredProjects,
+  websitePictureOverrides,
   getHeroRank,
   profile,
   projectCaseStudies,
@@ -48,11 +49,15 @@ export function ReferencePortfolioHome() {
   const [view, setView] = useState<ViewMode>("websites");
   const contentScrollRef = useRef<HTMLElement>(null);
   const switchedByVisitor = useRef(false);
+  const [animateIn, setAnimateIn] = useState(true);
   const reduce = useReducedMotion();
 
   useIsomorphicLayoutEffect(() => {
     const pendingView = getPendingCaseStudyReturnView();
-    if (isViewMode(pendingView)) setView(pendingView);
+    if (isViewMode(pendingView)) {
+      setView(pendingView);
+      setAnimateIn(false);
+    }
   }, []);
 
   const workSamples = useMemo(
@@ -98,6 +103,7 @@ export function ReferencePortfolioHome() {
   const handleViewChange = (nextView: ViewMode) => {
     if (nextView === view) return;
     switchedByVisitor.current = true;
+    setAnimateIn(false);
     setView(nextView);
   };
 
@@ -141,54 +147,30 @@ export function ReferencePortfolioHome() {
             <h2 className="sr-only">{viewLabels[view]}</h2>
             <>
               {view === "samples" ? (
-                <motion.div
-                  key="samples"
-                  className="grid gap-7"
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25 }}
-                >
+                <motion.div key="samples" className="grid gap-7" initial={false}>
                   {sampleScreens.map((sample) => (
                     <WorkSampleCard key={`${sample.title}-${sample.image}`} sample={sample} />
                   ))}
                 </motion.div>
               ) : view === "websites" ? (
-                <motion.div
-                  key="websites"
-                  className="grid gap-8"
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25 }}
-                >
+                <motion.div key="websites" className="grid gap-8" initial={false}>
                   {workSamples.map((project) => (
                     <div key={project.slug} className="grid gap-8">
-                      <WebsiteFrame project={project} />
-                      <WebsitePhones project={project} />
+                      <WebsiteFrame project={project} animateIn={animateIn} />
+                      <WebsitePhones project={project} animateIn={animateIn} />
                     </div>
                   ))}
                   <CtaBlock />
                   <Faq />
                 </motion.div>
               ) : view === "case-studies" ? (
-                <motion.div
-                  key="case-studies"
-                  className="grid gap-10"
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25 }}
-                >
+                <motion.div key="case-studies" className="grid gap-10" initial={false}>
                   {workSamples.map((project) => (
-                    <CaseStudyCover key={project.slug} project={project} />
+                    <CaseStudyCover key={project.slug} project={project} animateIn={animateIn} />
                   ))}
                 </motion.div>
               ) : view === "work-history" ? (
-                <motion.div
-                  key="work-history"
-                  className="grid gap-0"
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25 }}
-                >
+                <motion.div key="work-history" className="grid gap-0" initial={false}>
                   {workHistory.map((entry, index) => (
                     <WorkHistoryCard
                       key={`${entry.company}-${entry.role}`}
@@ -202,9 +184,7 @@ export function ReferencePortfolioHome() {
                 <motion.div
                   key="certifications"
                   className="grid gap-8 overflow-x-clip py-2"
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25 }}
+                  initial={false}
                 >
                   <p className="max-w-2xl text-[1.05rem] font-medium leading-7 tracking-[-0.035em] text-[#111111]/58">
                     I run projects on a clear process.
@@ -721,9 +701,15 @@ function WorkHistoryCard({
  * picture of the site in a rounded frame and nothing else. The picture is the link to the case
  * study, named for keyboard and screen readers with the project title (and "concept project").
  */
-function WebsiteFrame({ project }: { project: CaseStudyCardProject }) {
-  const reduce = useReducedMotion();
-  const cover = project.caseStudy?.cover;
+function WebsiteFrame({
+  project,
+  animateIn,
+}: {
+  project: CaseStudyCardProject;
+  animateIn: boolean;
+}) {
+  const reduce = useReducedMotion() || !animateIn;
+  const cover = websitePictureOverrides[project.slug] ?? project.caseStudy?.cover;
   if (!cover) return null;
 
   const concept = project.labels.includes("Concept project");
@@ -758,8 +744,14 @@ function WebsiteFrame({ project }: { project: CaseStudyCardProject }) {
  * Like the desktop picture it opens the case study, and it is hidden from keyboard and screen
  * readers, who already have the desktop picture's link.
  */
-function WebsitePhones({ project }: { project: CaseStudyCardProject }) {
-  const reduce = useReducedMotion();
+function WebsitePhones({
+  project,
+  animateIn,
+}: {
+  project: CaseStudyCardProject;
+  animateIn: boolean;
+}) {
+  const reduce = useReducedMotion() || !animateIn;
   const phones = project.caseStudy?.mobile ?? [];
   if (!phones.length) return null;
 
@@ -823,8 +815,14 @@ function CaseStudyLink({
  * the project's own accent colour. The picture is a link for mouse and touch, and is hidden from
  * keyboard and screen readers, who use the text link instead.
  */
-function CaseStudyCover({ project }: { project: CaseStudyCardProject }) {
-  const reduce = useReducedMotion();
+function CaseStudyCover({
+  project,
+  animateIn,
+}: {
+  project: CaseStudyCardProject;
+  animateIn: boolean;
+}) {
+  const reduce = useReducedMotion() || !animateIn;
   const study = project.caseStudy;
   if (!study?.cover) return null;
 

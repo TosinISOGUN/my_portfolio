@@ -5,6 +5,7 @@ import {
   getHeroRank,
   getImageSize,
   projectCaseStudies,
+  websitePictureOverrides,
   workHistory,
 } from "@/data/portfolio";
 
@@ -108,6 +109,16 @@ describe("portfolio data", () => {
   it("gives every project an accent colour for its case-study page", () => {
     for (const project of featuredProjects) {
       expect(project.accent, `${project.slug} accent`).toMatch(/^#[0-9a-fA-F]{6}$/);
+    }
+  });
+
+  it("shows Open School Field's landing screenshot on the Websites tab", () => {
+    expect(websitePictureOverrides["open-school-field"]).toContain("Screenshot%20(261)");
+    for (const slug of Object.keys(websitePictureOverrides)) {
+      expect(
+        featuredProjects.some((project) => project.slug === slug),
+        `${slug} exists`,
+      ).toBe(true);
     }
   });
 

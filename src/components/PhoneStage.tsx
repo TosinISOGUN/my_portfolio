@@ -21,16 +21,24 @@ type PhoneStageProps = {
  */
 export function PhoneStage({ screens, title, className = "" }: PhoneStageProps) {
   if (!screens.length) return null;
+  // Three phones share the width, so each is narrower than when there are two.
+  const three = screens.length >= 3;
 
   return (
     <div
       className={`overflow-hidden rounded-[12px] bg-[#ececec] px-4 py-9 sm:px-8 sm:py-12 ${className}`}
     >
-      <div className="mx-auto flex max-w-[860px] items-center justify-center gap-4 sm:gap-12">
+      <div
+        className={`mx-auto flex items-center justify-center ${
+          three ? "max-w-[1000px] gap-3 sm:gap-8" : "max-w-[860px] gap-4 sm:gap-12"
+        }`}
+      >
         {screens.map((screen, index) => (
           <div
             key={screen.src}
-            className="grid aspect-[270/585] w-[46%] max-w-[360px] grid-rows-[41fr_544fr] overflow-hidden rounded-[15%/7%] border border-black/15 bg-white shadow-[0_36px_60px_-40px_rgb(0_0_0/0.5)]"
+            className={`grid aspect-[270/585] grid-rows-[41fr_544fr] ${
+              three ? "w-[31%] max-w-[300px]" : "w-[46%] max-w-[360px]"
+            } overflow-hidden rounded-[15%/7%] border border-black/15 bg-white shadow-[0_36px_60px_-40px_rgb(0_0_0/0.5)]`}
           >
             <div
               aria-hidden

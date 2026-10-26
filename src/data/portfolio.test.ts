@@ -22,12 +22,13 @@ describe("portfolio data", () => {
     expect(caseStudies).toEqual(featured);
   });
 
-  it("leads with the four concept sites and Gloria May Byron, then orders the rest from closest-to-a-local-business to most technical", () => {
+  it("leads with the five concept sites and Gloria May Byron, then orders the rest from closest-to-a-local-business to most technical", () => {
     expect(featuredProjects.map((project) => project.slug)).toEqual([
       "velora-beauty",
       "hearthline-realty",
       "juniper-ember",
       "everwell",
+      "alder-rowe",
       "gloria-may-byron",
       "thomason",
       "nachie-maridadi",
@@ -50,7 +51,14 @@ describe("portfolio data", () => {
   });
 
   it("marks every concept site as a concept, and nobody else", () => {
-    const concepts = ["velora-beauty", "hearthline-realty", "juniper-ember", "everwell", "payflow"];
+    const concepts = [
+      "velora-beauty",
+      "hearthline-realty",
+      "juniper-ember",
+      "everwell",
+      "alder-rowe",
+      "payflow",
+    ];
     for (const project of featuredProjects) {
       const marked = project.labels.includes("Concept project");
       expect(marked, `${project.slug} concept label`).toBe(concepts.includes(project.slug));
@@ -61,11 +69,13 @@ describe("portfolio data", () => {
     }
   });
 
-  it("keeps phone screenshots as optimized WebP with known sizes, two per project", () => {
+  it("keeps phone screenshots as optimized WebP with known sizes, two per project, three for Alder & Rowe", () => {
     const withPhones = projectCaseStudies.filter((study) => study.mobile.length > 0);
     expect(withPhones.length).toBeGreaterThan(0);
     for (const study of withPhones) {
-      expect(study.mobile.length, `${study.slug} phone screens`).toBe(2);
+      expect(study.mobile.length, `${study.slug} phone screens`).toBe(
+        study.slug === "alder-rowe" ? 3 : 2,
+      );
       for (const { src: image } of study.mobile) {
         expect(image, `${study.slug} phone screenshot`).toMatch(/\.webp(\?.*)?$/);
         expect(getImageSize(image), `${study.slug} phone size`).toBeDefined();

@@ -6,6 +6,24 @@ export type MobileTone = {
   bottomLight: boolean;
 };
 export const mobileTones: Record<string, MobileTone> = {
+  "product_showcase/_mobile/alder-rowe-1.webp": {
+    top: "#f6f5ed",
+    topLight: true,
+    bottom: "#898a83",
+    bottomLight: false,
+  },
+  "product_showcase/_mobile/alder-rowe-2.webp": {
+    top: "#f6f5ee",
+    topLight: true,
+    bottom: "#eeebe4",
+    bottomLight: true,
+  },
+  "product_showcase/_mobile/alder-rowe-3.webp": {
+    top: "#e8e7e2",
+    topLight: true,
+    bottom: "#f5f6f6",
+    bottomLight: true,
+  },
   "product_showcase/_mobile/everwell-1.webp": {
     top: "#315051",
     topLight: false,

@@ -145,6 +145,14 @@ const everwellScreens = getScreens(
   }) as ScreenshotModule,
 );
 
+const alderScreens = getScreens(
+  import.meta.glob("../assets/product_showcase/alder-rowe/*.webp", {
+    eager: true,
+    import: "default",
+    query: "?url",
+  }) as ScreenshotModule,
+);
+
 const gloriaScreens = getScreens(
   import.meta.glob("../assets/product_showcase/gloria-may-byron/*.webp", {
     eager: true,
@@ -341,11 +349,12 @@ const nachie271 = screenAt(nachieScreens, 0);
 const payflowLanding = screenAt(payflowScreens, 0);
 const samsoniLanding = screenAt(samsoniScreens, 1);
 const thomasonLanding = screenAt(thomasonScreens, 0);
-// The four concept sites: the cover is a tall capture of the home page (file 01-home).
+// The five concept sites: the cover is a tall capture of the home page (file 01-home).
 const veloraHome = screenAt(velouraScreens, 0);
 const hearthlineHome = screenAt(hearthlineScreens, 0);
 const juniperHome = screenAt(juniperScreens, 0);
 const everwellHome = screenAt(everwellScreens, 0);
+const alderHome = screenAt(alderScreens, 0);
 const gloriaHome = screenAt(gloriaScreens, 0);
 
 // The Websites tab normally shows each project's tall home-page capture. A project listed here
@@ -563,6 +572,21 @@ export const featuredProjects = [
       "A concept brief for a fictional clinic where people choosing a practice need plain language, clear services and an easy way to get in touch.",
     result:
       "A demo site with a services overview, a page for each service, a practice page and a contact form.",
+  },
+  {
+    title: "Alder & Rowe",
+    slug: "alder-rowe",
+    accent: "#17283B",
+    studio: "Family law firm concept",
+    tags: ["React 19", "TanStack Start", "Tailwind CSS", "Accessible forms"],
+    labels: ["Concept project", "Practice area pages", "Mobile-friendly"],
+    signals: ["Practice area pages", "Plain-language articles", "Consultation form"],
+    link: "https://alder-rowe.vercel.app/",
+    // github: "https://github.com/TosinISOGUN/alder_rowe",
+    problem:
+      "A concept brief for a fictional family law firm where people facing a hard moment need calm, plain information and an easy first step.",
+    result:
+      "A demo site with five practice area pages, three articles, a firm and process page, and a consultation form that sends nothing.",
   },
   {
     title: "Gloria May Byron",
@@ -860,6 +884,42 @@ export const projectCaseStudies = [
     ],
     gallery: everwellScreens,
     mobile: mobileFor("everwell"),
+  },
+  {
+    slug: "alder-rowe",
+    title: "Alder & Rowe",
+    eyebrow: "Law Firm Concept",
+    role: "Design and development",
+    liveUrl: "https://alder-rowe.vercel.app/",
+    // githubUrl: "https://github.com/TosinISOGUN/alder_rowe",
+    cover: alderHome,
+    summary: "Concept: family law site with clear practice pages and a consultation form.",
+    challenge:
+      "A concept project for a fictional family law practice in Charlotte. People facing a divorce or a custody question need calm, plain information and an easy first step. Alder & Rowe is not a real firm.",
+    approach:
+      "I built twelve pages: home, an overview and a page for each of five practice areas, the firm, the process, an insights library with three articles, contact, a privacy page and a legal disclaimer. The consultation form checks every field and is clearly marked as a demo. The legal points were checked against North Carolina sources.",
+    outcome:
+      "A complete demo site. The attorneys, address and phone number are sample content, the photographs are stock images, and the form sends nothing.",
+    metrics: ["Concept project", "12 pages", "5 practice areas", "Consultation form"],
+    decisions: [
+      {
+        label: "Plain Language",
+        value:
+          "Each practice page explains the questions people usually have in everyday words, so a visitor can follow them without a lawyer.",
+      },
+      {
+        label: "Checked Facts",
+        value:
+          "The North Carolina rules on the pages were checked against statute text, and the site says plainly that it is general information, not legal advice.",
+      },
+      {
+        label: "Honest Demo",
+        value:
+          "No awards, case results or credentials appear anywhere, the attorneys are marked as fictional profiles, and the form sends nothing.",
+      },
+    ],
+    gallery: alderScreens,
+    mobile: mobileFor("alder-rowe"),
   },
   {
     slug: "gloria-may-byron",
@@ -1231,6 +1291,7 @@ const heroSources: Record<string, { folder: string; primary: string; extra?: str
   "hearthline-realty": { folder: "hearthline-realty", primary: "01-home.webp" },
   "juniper-ember": { folder: "juniper-ember", primary: "01-home.webp" },
   everwell: { folder: "everwell", primary: "01-home.webp" },
+  "alder-rowe": { folder: "alder-rowe", primary: "01-home.webp" },
   "gloria-may-byron": { folder: "gloria-may-byron", primary: "01-home.webp" },
   "nachie-maridadi": { folder: "nachie maridadi", primary: "Screenshot (271).webp" },
   "open-school-field": {

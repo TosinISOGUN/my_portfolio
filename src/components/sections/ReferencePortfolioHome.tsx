@@ -26,6 +26,12 @@ import {
 } from "@/data/portfolio";
 import { getPendingCaseStudyReturnView, rememberCaseStudyReturn } from "@/lib/navigation-memory";
 
+/**
+ * When a project animates in: as soon as any part of it is within 200px of the screen, so on a
+ * phone it starts before a long picture has scrolled far into view.
+ */
+const projectInView = { once: true, amount: "some", margin: "0px 0px 200px 0px" } as const;
+
 type ViewMode = "websites" | "case-studies" | "work-history" | "samples" | "certifications";
 type CaseStudy = (typeof projectCaseStudies)[number];
 type CaseStudyCardProject = (typeof featuredProjects)[number] & {
@@ -736,7 +742,7 @@ function WebsiteFrame({
     <motion.article
       initial={reduce ? false : { opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.05 }}
+      viewport={projectInView}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: index < 3 ? index * 0.09 : 0 }}
     >
       <Link
@@ -783,7 +789,7 @@ function WebsitePhones({
     <motion.div
       initial={reduce ? false : { opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.05 }}
+      viewport={projectInView}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: index < 3 ? index * 0.09 : 0 }}
     >
       <Link
@@ -860,7 +866,7 @@ function CaseStudyCover({
       style={tint}
       initial={reduce ? false : { opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.05 }}
+      viewport={projectInView}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: index < 3 ? index * 0.09 : 0 }}
     >
       <Link

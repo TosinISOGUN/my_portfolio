@@ -7,16 +7,11 @@ import {
   useReducedMotion,
   type MotionStyle,
 } from "framer-motion";
-import {
-  ArrowDownToLine,
-  ArrowRight,
-  ArrowUpRight,
-  Calendar,
-  Facebook,
-  Github,
-  MessageCircle,
-} from "lucide-react";
-import resumePdf from "@/assets/OLUWATOMISIN_ISOGUN_RESUME.pdf";
+import { ArrowRight, ArrowUpRight, Calendar, Facebook, Github, MessageCircle } from "lucide-react";
+// The resume link is hidden for now. To show it again, uncomment this import, add
+// ArrowDownToLine to the lucide-react import, and uncomment the Resume link in IdentityPanel.
+// import resumePdf from "@/assets/OLUWATOMISIN_ISOGUN_RESUME.pdf";
+import { PhoneStage } from "@/components/PhoneStage";
 import { SkeletonImage } from "@/components/SkeletonImage";
 import { CtaBlock, Faq } from "@/components/sections/BusinessSections";
 import { SiteFooter } from "@/components/sections/SiteFooter";
@@ -58,6 +53,8 @@ const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : us
 export function ReferencePortfolioHome() {
   const [view, setView] = useState<ViewMode>("websites");
   const contentScrollRef = useRef<HTMLElement>(null);
+  const tabContentRef = useRef<HTMLDivElement>(null);
+  const switchedByVisitor = useRef(false);
   const reduce = useReducedMotion();
 
   useIsomorphicLayoutEffect(() => {
@@ -108,17 +105,28 @@ export function ReferencePortfolioHome() {
   const handleViewChange = (nextView: ViewMode) => {
     if (nextView === view) return;
 
+    // The old tab fades out where it is. Its height is held until it has gone, so the page can
+    // not shrink and clamp the scroll position, and the jump to the top happens only after that,
+    // while the panel is empty, instead of flashing the top of the old tab.
+    const holder = tabContentRef.current;
+    if (holder) holder.style.minHeight = `${holder.offsetHeight}px`;
+    switchedByVisitor.current = true;
     setView(nextView);
+  };
+
+  const handleExitComplete = () => {
+    // A tab restored after returning from a case study must keep its restored scroll position.
+    if (!switchedByVisitor.current) return;
+    switchedByVisitor.current = false;
 
     // The whole page scrolls, so a new tab starts at the top of the page on wide screens and at
     // the top of the tab content on phones, where the profile sits above it.
-    window.requestAnimationFrame(() => {
-      if (window.innerWidth < 1024) {
-        contentScrollRef.current?.scrollIntoView({ block: "start", behavior: "instant" });
-      } else {
-        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-      }
-    });
+    if (window.innerWidth < 1024) {
+      contentScrollRef.current?.scrollIntoView({ block: "start", behavior: "instant" });
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
+    if (tabContentRef.current) tabContentRef.current.style.minHeight = "";
   };
 
   return (
@@ -136,13 +144,13 @@ export function ReferencePortfolioHome() {
           data-case-study-return-view={view}
           className="min-w-0 border-[#111111]/10 lg:border-l"
         >
-          <div className="sticky top-0 z-20 border-b border-[#111111]/10 bg-white/92 px-3 py-2.5 backdrop-blur-md sm:px-8 sm:py-3 lg:px-8">
+          <div className="sticky top-0 z-20 border-b border-[#111111]/10 bg-white/92 px-3 py-2.5 backdrop-blur-md sm:px-8 sm:py-3 lg:px-5">
             <ViewSwitcher value={view} onChange={handleViewChange} />
           </div>
 
-          <div className="px-3 py-4 sm:px-8 sm:py-5 lg:px-8">
+          <div ref={tabContentRef} className="px-3 py-4 sm:px-8 sm:py-5 lg:px-5">
             <h2 className="sr-only">{viewLabels[view]}</h2>
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait" onExitComplete={handleExitComplete}>
               {view === "samples" ? (
                 <motion.div
                   key="samples"
@@ -166,7 +174,10 @@ export function ReferencePortfolioHome() {
                   transition={{ duration: 0.25 }}
                 >
                   {workSamples.map((project) => (
-                    <WebsiteFrame key={project.slug} project={project} />
+                    <div key={project.slug} className="grid gap-8">
+                      <WebsiteFrame project={project} />
+                      <WebsitePhones project={project} />
+                    </div>
                   ))}
                   <CtaBlock />
                   <Faq />
@@ -237,7 +248,7 @@ function IdentityPanel() {
 
   return (
     <motion.aside
-      className="sam-identity-panel flex min-h-0 flex-col gap-12 px-8 py-8 sm:px-10 sm:py-10 lg:sticky lg:top-0 lg:h-screen lg:min-h-0 lg:self-start lg:justify-between lg:gap-0 lg:overflow-y-auto lg:[scrollbar-width:thin] lg:px-8 lg:py-2 xl:px-8 xl:py-5"
+      className="sam-identity-panel flex min-h-0 flex-col gap-12 px-8 py-8 sm:px-10 sm:py-10 lg:sticky lg:top-0 lg:h-screen lg:min-h-0 lg:self-start lg:justify-between lg:gap-0 lg:overflow-hidden lg:px-8 lg:py-2 xl:px-8 xl:py-5"
       initial={reduce ? false : { opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.75, type: "spring", bounce: 0, stiffness: 90 }}
@@ -291,6 +302,7 @@ function IdentityPanel() {
             </a>
           </div>
 
+          {/* Resume link, hidden for now (see the note by the imports above):
           <a
             href={resumePdf}
             target="_blank"
@@ -300,6 +312,7 @@ function IdentityPanel() {
             <ArrowDownToLine className="h-3.5 w-3.5" aria-hidden />
             Resume
           </a>
+          */}
 
           <TrustLine />
 
@@ -721,9 +734,8 @@ function WorkHistoryCard({
 
 /**
  * One project in the "Websites I've built" tab, shown the way samwrks.in shows its work: a large
- * picture of the site in a rounded frame, then one link to the case study. The picture itself is
- * a link for mouse and touch users; it is hidden from keyboard and screen readers, who get the
- * text link (which names the project and says when it is a concept) instead of two stops.
+ * picture of the site in a rounded frame and nothing else. The picture is the link to the case
+ * study, named for keyboard and screen readers with the project title (and "concept project").
  */
 function WebsiteFrame({ project }: { project: CaseStudyCardProject }) {
   const reduce = useReducedMotion();
@@ -731,7 +743,6 @@ function WebsiteFrame({ project }: { project: CaseStudyCardProject }) {
   if (!cover) return null;
 
   const concept = project.labels.includes("Concept project");
-  const goToCaseStudy = rememberCaseStudyReturn;
 
   return (
     <motion.article
@@ -743,10 +754,9 @@ function WebsiteFrame({ project }: { project: CaseStudyCardProject }) {
       <Link
         to="/projects/$slug"
         params={{ slug: project.slug }}
-        onClick={goToCaseStudy}
-        aria-hidden
-        tabIndex={-1}
-        className="group block overflow-hidden rounded-[26px] bg-[#ededed]"
+        onClick={rememberCaseStudyReturn}
+        aria-label={`${project.title}${concept ? ", concept project" : ""}: read the case study`}
+        className="group block overflow-hidden rounded-[12px] bg-[#ededed]"
       >
         <div className="transition-transform duration-700 group-hover:scale-[1.012] motion-reduce:transition-none">
           <SkeletonImage
@@ -755,9 +765,38 @@ function WebsiteFrame({ project }: { project: CaseStudyCardProject }) {
           />
         </div>
       </Link>
-
-      <CaseStudyLink slug={project.slug} title={project.title} concept={concept} />
     </motion.article>
+  );
+}
+
+/**
+ * The mobile view of a project, in phone frames, for the projects that have phone screenshots.
+ * Like the desktop picture it opens the case study, and it is hidden from keyboard and screen
+ * readers, who already have the desktop picture's link.
+ */
+function WebsitePhones({ project }: { project: CaseStudyCardProject }) {
+  const reduce = useReducedMotion();
+  const phones = project.caseStudy?.mobile ?? [];
+  if (!phones.length) return null;
+
+  return (
+    <motion.div
+      initial={reduce ? false : { opacity: 0, y: 36 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.05 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <Link
+        to="/projects/$slug"
+        params={{ slug: project.slug }}
+        onClick={rememberCaseStudyReturn}
+        aria-hidden
+        tabIndex={-1}
+        className="block"
+      >
+        <PhoneStage screens={phones} title={project.title} />
+      </Link>
+    </motion.div>
   );
 }
 
@@ -833,7 +872,7 @@ function CaseStudyCover({ project }: { project: CaseStudyCardProject }) {
           {study.eyebrow}
         </p>
 
-        <div className="mx-auto mt-6 w-full max-w-[640px] overflow-hidden rounded-t-[20px] border-[7px] border-b-0 border-[#111111] bg-white shadow-[0_24px_60px_-28px_rgb(0_0_0/0.5)]">
+        <div className="mx-auto mt-6 w-full max-w-[640px] overflow-hidden rounded-t-[10px] border-[7px] border-b-0 border-[#111111] bg-white shadow-[0_24px_60px_-28px_rgb(0_0_0/0.5)]">
           <div className="aspect-[16/10] overflow-hidden">
             <img
               src={study.cover}

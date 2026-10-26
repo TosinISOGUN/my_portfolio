@@ -4,9 +4,12 @@ import learncityLogo from "@/assets/portfolio/LC_logo.png";
 import nachieLogo from "@/assets/portfolio/nachie_maridadi_favicon.png";
 import oyoLogo from "@/assets/portfolio/oyo-state-logo-card.png";
 import { imageSizes } from "./image-sizes.generated";
+import { mobileTones, type MobileTone } from "./mobile-tones.generated";
 
 type ScreenshotModule = Record<string, string>;
 export type ImageSize = { width: number; height: number };
+/** A phone screenshot and the colours at its top and bottom edge (see mobile-tones.generated.ts). */
+export type MobileScreen = MobileTone & { src: string };
 
 // Maps a built image URL to its pixel size, so components can reserve space before it loads.
 const sizeByUrl = new Map<string, ImageSize>();
@@ -166,6 +169,27 @@ const withTall = (slug: string, screens: string[]) => {
   const tall = tallFor(slug, "");
   return tall ? [tall, ...screens] : screens;
 };
+
+// Phone-sized screenshots in product_showcase/_mobile/<slug>-1.webp, -2.webp (two per project, for
+// the projects that have them). They are shown inside phone frames next to the desktop picture.
+const mobileModules = import.meta.glob("../assets/product_showcase/_mobile/*.webp", {
+  eager: true,
+  import: "default",
+  query: "?url",
+}) as ScreenshotModule;
+registerSizes(mobileModules);
+
+const mobileFor = (slug: string): MobileScreen[] =>
+  Object.entries(mobileModules)
+    .filter(([path]) => {
+      const file = path.split("/").pop() ?? "";
+      return file.startsWith(`${slug}-`) && /^\d+\.webp$/.test(file.slice(slug.length + 1));
+    })
+    .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+    .flatMap(([path, src]) => {
+      const tone = mobileTones[path.replace("../assets/", "")];
+      return tone ? [{ src, ...tone }] : [];
+    });
 
 const certificationFiles = import.meta.glob("../assets/certifications/*.{png,jpeg,jpg}", {
   eager: true,
@@ -532,36 +556,6 @@ export const featuredProjects = [
       "A photography-led artist website with music and video pages, news, a photo gallery, an awards page and a contact page.",
   },
   {
-    title: "Samsoni",
-    slug: "samsoni",
-    accent: "#1769B5",
-    studio: "Water delivery storefront",
-    tags: ["React", "Local Commerce", "WhatsApp Ordering"],
-    labels: ["WhatsApp ordering", "Delivery plans", "Mobile-friendly"],
-    signals: ["Product browsing", "Recurring delivery plans", "WhatsApp conversion"],
-    link: "https://samsoni.vercel.app/",
-    problem:
-      "The brand needed a direct commerce surface that could communicate quality, delivery coverage, and product options quickly.",
-    result:
-      "A fast local-business storefront that turns bottled and sachet water supply into a simple, conversion-oriented flow.",
-  },
-  {
-    title: "OYOBOOKING",
-    slug: "oyobooking",
-    accent: "#8E2B3C",
-    studio: "Oyo State booking platform",
-    logo: oyoLogo,
-    tags: ["React", "API Integration", "Accessibility"],
-    labels: ["Online booking", "Easy to use", "Mobile-friendly"],
-    signals: ["Public booking UX", "API-backed flows", "Responsive facility pages"],
-    link: "https://oyobooking.ng",
-    // github: "https://github.com/TosinISOGUN/oyo_booking.com",
-    problem:
-      "Public-facing booking flows need to handle real users, changing data, and high clarity without collapsing into form clutter.",
-    result:
-      "A fast, responsive booking experience with API-backed flows, accessible interface patterns, and production-oriented UX.",
-  },
-  {
     title: "Thomason",
     slug: "thomason",
     accent: "#6F4A2E",
@@ -667,6 +661,36 @@ export const featuredProjects = [
     result:
       "A polished HR/payroll product site with a premium landing page, platform storytelling, pricing surfaces, and responsive product presentation.",
   },
+  {
+    title: "Samsoni",
+    slug: "samsoni",
+    accent: "#1769B5",
+    studio: "Water delivery storefront",
+    tags: ["React", "Local Commerce", "WhatsApp Ordering"],
+    labels: ["WhatsApp ordering", "Delivery plans", "Mobile-friendly"],
+    signals: ["Product browsing", "Recurring delivery plans", "WhatsApp conversion"],
+    link: "https://samsoni.vercel.app/",
+    problem:
+      "The brand needed a direct commerce surface that could communicate quality, delivery coverage, and product options quickly.",
+    result:
+      "A fast local-business storefront that turns bottled and sachet water supply into a simple, conversion-oriented flow.",
+  },
+  {
+    title: "OYOBOOKING",
+    slug: "oyobooking",
+    accent: "#8E2B3C",
+    studio: "Oyo State booking platform",
+    logo: oyoLogo,
+    tags: ["React", "API Integration", "Accessibility"],
+    labels: ["Online booking", "Easy to use", "Mobile-friendly"],
+    signals: ["Public booking UX", "API-backed flows", "Responsive facility pages"],
+    link: "https://oyobooking.ng",
+    // github: "https://github.com/TosinISOGUN/oyo_booking.com",
+    problem:
+      "Public-facing booking flows need to handle real users, changing data, and high clarity without collapsing into form clutter.",
+    result:
+      "A fast, responsive booking experience with API-backed flows, accessible interface patterns, and production-oriented UX.",
+  },
 ];
 
 export const projectCaseStudies = [
@@ -704,6 +728,7 @@ export const projectCaseStudies = [
       },
     ],
     gallery: velouraScreens,
+    mobile: mobileFor("velora-beauty"),
   },
   {
     slug: "hearthline-realty",
@@ -739,6 +764,7 @@ export const projectCaseStudies = [
       },
     ],
     gallery: hearthlineScreens,
+    mobile: mobileFor("hearthline-realty"),
   },
   {
     slug: "juniper-ember",
@@ -774,6 +800,7 @@ export const projectCaseStudies = [
       },
     ],
     gallery: juniperScreens,
+    mobile: mobileFor("juniper-ember"),
   },
   {
     slug: "everwell",
@@ -809,6 +836,7 @@ export const projectCaseStudies = [
       },
     ],
     gallery: everwellScreens,
+    mobile: mobileFor("everwell"),
   },
   {
     slug: "gloria-may-byron",
@@ -843,6 +871,7 @@ export const projectCaseStudies = [
       },
     ],
     gallery: gloriaScreens,
+    mobile: mobileFor("gloria-may-byron"),
   },
   {
     slug: "open-school-field",
@@ -877,6 +906,7 @@ export const projectCaseStudies = [
       },
     ],
     gallery: withTall("open-school-field", openSchoolFieldScreens),
+    mobile: mobileFor("open-school-field"),
   },
   {
     slug: "oyobooking",
@@ -912,6 +942,7 @@ export const projectCaseStudies = [
       },
     ],
     gallery: withTall("oyobooking", oyoBookingScreens),
+    mobile: mobileFor("oyobooking"),
   },
   {
     slug: "infinitative",
@@ -946,6 +977,7 @@ export const projectCaseStudies = [
       },
     ],
     gallery: withTall("infinitative", infinitativeScreens),
+    mobile: mobileFor("infinitative"),
   },
   {
     slug: "payflow",
@@ -980,6 +1012,7 @@ export const projectCaseStudies = [
       },
     ],
     gallery: withTall("payflow", payflowScreens),
+    mobile: mobileFor("payflow"),
   },
   {
     slug: "samsoni",
@@ -1014,6 +1047,7 @@ export const projectCaseStudies = [
       },
     ],
     gallery: withTall("samsoni", samsoniScreens),
+    mobile: mobileFor("samsoni"),
   },
   {
     slug: "thomason",
@@ -1048,6 +1082,7 @@ export const projectCaseStudies = [
       },
     ],
     gallery: withTall("thomason", thomasonScreens),
+    mobile: mobileFor("thomason"),
   },
   {
     slug: "c-homes",
@@ -1083,6 +1118,7 @@ export const projectCaseStudies = [
       },
     ],
     gallery: withTall("c-homes", cHomesScreens),
+    mobile: mobileFor("c-homes"),
   },
   {
     slug: "learncity",
@@ -1118,6 +1154,7 @@ export const projectCaseStudies = [
       },
     ],
     gallery: withTall("learncity", learncityScreens),
+    mobile: mobileFor("learncity"),
   },
   {
     slug: "nachie-maridadi",
@@ -1154,6 +1191,7 @@ export const projectCaseStudies = [
       },
     ],
     gallery: withTall("nachie-maridadi", nachieScreens),
+    mobile: mobileFor("nachie-maridadi"),
   },
 ];
 

@@ -600,9 +600,8 @@
 
 @media (min-width: 1024px) and (max-height: 820px) {
   .sam-identity-panel {
-    overflow-y: auto !important;
-    overscroll-behavior: contain;
-    scrollbar-gutter: stable;
+    /* The panel never scrolls on its own: the wheel over it scrolls the page, as on samwrks.in. */
+    overflow-y: hidden !important;
     padding-top: 0.65rem !important;
     padding-bottom: 0.9rem !important;
   }

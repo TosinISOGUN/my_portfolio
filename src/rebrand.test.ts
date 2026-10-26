@@ -40,7 +40,6 @@ describe("client-facing copy rules", () => {
     expect(allText).toContain("github.com/TosinISOGUN");
     expect(allText).toContain("linkedin.com/in/oluwatomisin-isogun");
     expect(allText).toContain("upwork.com/freelancers");
-    expect(allText).toContain("OLUWATOMISIN_ISOGUN_RESUME.pdf");
     expect(allText).toContain("wa.me/2348164376172");
     expect(allText).toContain("facebook.com/profile.php?id=61595720432735");
   });

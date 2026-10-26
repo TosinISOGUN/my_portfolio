@@ -27,8 +27,6 @@ describe("portfolio data", () => {
       "juniper-ember",
       "everwell",
       "gloria-may-byron",
-      "samsoni",
-      "oyobooking",
       "thomason",
       "nachie-maridadi",
       "c-homes",
@@ -36,6 +34,8 @@ describe("portfolio data", () => {
       "open-school-field",
       "learncity",
       "payflow",
+      "samsoni",
+      "oyobooking",
     ]);
   });
 
@@ -56,6 +56,18 @@ describe("portfolio data", () => {
     for (const slug of concepts) {
       const study = projectCaseStudies.find((item) => item.slug === slug);
       expect(study?.summary, `${slug} summary`).toMatch(/^Concept:/);
+    }
+  });
+
+  it("keeps phone screenshots as optimized WebP with known sizes, two per project", () => {
+    const withPhones = projectCaseStudies.filter((study) => study.mobile.length > 0);
+    expect(withPhones.length).toBeGreaterThan(0);
+    for (const study of withPhones) {
+      expect(study.mobile.length, `${study.slug} phone screens`).toBe(2);
+      for (const { src: image } of study.mobile) {
+        expect(image, `${study.slug} phone screenshot`).toMatch(/\.webp(\?.*)?$/);
+        expect(getImageSize(image), `${study.slug} phone size`).toBeDefined();
+      }
     }
   });
 

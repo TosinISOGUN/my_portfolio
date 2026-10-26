@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, type CSSProperties } from "react";
 import { Link, createFileRoute, notFound, useRouter } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { PhoneStage } from "@/components/PhoneStage";
 import { SkeletonImage } from "@/components/SkeletonImage";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { featuredProjects, getImageSize, projectCaseStudies } from "@/data/portfolio";
@@ -178,7 +179,7 @@ function ProjectCaseStudyPage() {
           </div>
 
           <div className="self-center">
-            <div className="mx-auto w-full max-w-[420px] overflow-hidden rounded-[30px] border-[8px] border-[#111111] bg-white shadow-[0_34px_70px_-34px_rgb(0_0_0/0.55)]">
+            <div className="mx-auto w-full max-w-[420px] overflow-hidden rounded-[16px] border-[8px] border-[#111111] bg-white shadow-[0_34px_70px_-34px_rgb(0_0_0/0.55)]">
               <div className="aspect-[3/4] overflow-hidden">
                 <img
                   src={project.cover}
@@ -191,6 +192,13 @@ function ProjectCaseStudyPage() {
           </div>
         </section>
 
+        {project.mobile.length ? (
+          <section aria-labelledby="mobile-heading" className="pt-10 sm:pt-12">
+            <BarHeading id="mobile-heading">On mobile</BarHeading>
+            <PhoneStage className="mt-6" screens={project.mobile} title={project.title} />
+          </section>
+        ) : null}
+
         <section aria-labelledby="screens-heading" className="pb-12 pt-10 sm:pb-16 sm:pt-12">
           <BarHeading id="screens-heading">Screens</BarHeading>
           <div className="mt-6 grid gap-5">
@@ -199,7 +207,7 @@ function ProjectCaseStudyPage() {
                 key={`${project.slug}-${index}`}
                 src={image}
                 alt={`${project.title} screenshot ${index + 1} of ${project.gallery.length}`}
-                className="rounded-[24px] border border-[#111111]/8 bg-white"
+                className="rounded-[12px] border border-[#111111]/8 bg-white"
               />
             ))}
           </div>

@@ -191,6 +191,22 @@ const mobileFor = (slug: string): MobileScreen[] =>
       return tone ? [{ src, ...tone }] : [];
     });
 
+// Collages: one long page split into two columns side by side, in product_showcase/_collage/<slug>.webp,
+// for the projects that have one (shown as an extra picture on the Websites tab).
+const collageModules = import.meta.glob("../assets/product_showcase/_collage/*.webp", {
+  eager: true,
+  import: "default",
+  query: "?url",
+}) as ScreenshotModule;
+registerSizes(collageModules);
+
+export const websiteCollages: Record<string, string> = Object.fromEntries(
+  Object.entries(collageModules).map(([path, url]) => [
+    (path.split("/").pop() ?? "").replace(".webp", ""),
+    url,
+  ]),
+);
+
 const certificationFiles = import.meta.glob("../assets/certifications/*.{png,jpeg,jpg}", {
   eager: true,
   import: "default",

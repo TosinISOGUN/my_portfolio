@@ -5,6 +5,7 @@ import {
   getHeroRank,
   getImageSize,
   projectCaseStudies,
+  websiteCollages,
   websitePictureOverrides,
   workHistory,
 } from "@/data/portfolio";
@@ -119,6 +120,19 @@ describe("portfolio data", () => {
         featuredProjects.some((project) => project.slug === slug),
         `${slug} exists`,
       ).toBe(true);
+    }
+  });
+
+  it("keeps collages as optimized WebP with known sizes, for real projects", () => {
+    const slugs = Object.keys(websiteCollages);
+    expect(slugs.length).toBeGreaterThan(0);
+    for (const slug of slugs) {
+      expect(
+        featuredProjects.some((project) => project.slug === slug),
+        `${slug} exists`,
+      ).toBe(true);
+      expect(websiteCollages[slug], `${slug} collage`).toMatch(/\.webp(\?.*)?$/);
+      expect(getImageSize(websiteCollages[slug] ?? ""), `${slug} collage size`).toBeDefined();
     }
   });
 

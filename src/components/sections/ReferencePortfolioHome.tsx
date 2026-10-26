@@ -15,6 +15,7 @@ import {
   whatsappUrl,
   certifications,
   featuredProjects,
+  websiteCollages,
   websitePictureOverrides,
   getHeroRank,
   profile,
@@ -103,7 +104,6 @@ export function ReferencePortfolioHome() {
   const handleViewChange = (nextView: ViewMode) => {
     if (nextView === view) return;
     switchedByVisitor.current = true;
-    setAnimateIn(false);
     setView(nextView);
   };
 
@@ -154,10 +154,18 @@ export function ReferencePortfolioHome() {
                 </motion.div>
               ) : view === "websites" ? (
                 <motion.div key="websites" className="grid gap-8" initial={false}>
-                  {workSamples.map((project) => (
+                  {workSamples.map((project, index) => (
                     <div key={project.slug} className="grid gap-8">
-                      <WebsiteFrame project={project} animateIn={animateIn} />
-                      <WebsitePhones project={project} animateIn={animateIn} />
+                      <WebsiteFrame project={project} animateIn={animateIn} index={index} />
+                      {websiteCollages[project.slug] ? (
+                        <WebsiteFrame
+                          project={project}
+                          animateIn={animateIn}
+                          index={index}
+                          picture={websiteCollages[project.slug]}
+                        />
+                      ) : null}
+                      <WebsitePhones project={project} animateIn={animateIn} index={index} />
                     </div>
                   ))}
                   <CtaBlock />
@@ -165,8 +173,13 @@ export function ReferencePortfolioHome() {
                 </motion.div>
               ) : view === "case-studies" ? (
                 <motion.div key="case-studies" className="grid gap-10" initial={false}>
-                  {workSamples.map((project) => (
-                    <CaseStudyCover key={project.slug} project={project} animateIn={animateIn} />
+                  {workSamples.map((project, index) => (
+                    <CaseStudyCover
+                      key={project.slug}
+                      project={project}
+                      animateIn={animateIn}
+                      index={index}
+                    />
                   ))}
                 </motion.div>
               ) : view === "work-history" ? (
@@ -697,12 +710,18 @@ function WorkHistoryCard({
 function WebsiteFrame({
   project,
   animateIn,
+  index = 0,
+  picture,
 }: {
   project: CaseStudyCardProject;
   animateIn: boolean;
+  index?: number;
+  /** A different picture for this project (the collage). It repeats the main link, so it is hidden from keyboards and screen readers. */
+  picture?: string | undefined;
 }) {
   const reduce = useReducedMotion() || !animateIn;
-  const cover = websitePictureOverrides[project.slug] ?? project.caseStudy?.cover;
+  const overview = picture !== undefined;
+  const cover = picture ?? websitePictureOverrides[project.slug] ?? project.caseStudy?.cover;
   if (!cover) return null;
 
   const concept = project.labels.includes("Concept project");
@@ -712,19 +731,23 @@ function WebsiteFrame({
       initial={reduce ? false : { opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.05 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: index < 3 ? index * 0.09 : 0 }}
     >
       <Link
         to="/projects/$slug"
         params={{ slug: project.slug }}
         onClick={rememberCaseStudyReturn}
-        aria-label={`${project.title}${concept ? ", concept project" : ""}: read the case study`}
+        {...(overview
+          ? { "aria-hidden": true, tabIndex: -1 }
+          : {
+              "aria-label": `${project.title}${concept ? ", concept project" : ""}: read the case study`,
+            })}
         className="group block overflow-hidden rounded-[12px] bg-[#ededed]"
       >
         <div className="transition-transform duration-700 group-hover:scale-[1.012] motion-reduce:transition-none">
           <SkeletonImage
             src={cover}
-            alt={`${project.title}${concept ? " (concept project)" : ""} website preview`}
+            alt={`${project.title}${concept ? " (concept project)" : ""} ${overview ? "whole home page, in columns" : "website preview"}`}
           />
         </div>
       </Link>
@@ -740,9 +763,11 @@ function WebsiteFrame({
 function WebsitePhones({
   project,
   animateIn,
+  index = 0,
 }: {
   project: CaseStudyCardProject;
   animateIn: boolean;
+  index?: number;
 }) {
   const reduce = useReducedMotion() || !animateIn;
   const phones = project.caseStudy?.mobile ?? [];
@@ -753,7 +778,7 @@ function WebsitePhones({
       initial={reduce ? false : { opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.05 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: index < 3 ? index * 0.09 : 0 }}
     >
       <Link
         to="/projects/$slug"
@@ -811,9 +836,11 @@ function CaseStudyLink({
 function CaseStudyCover({
   project,
   animateIn,
+  index = 0,
 }: {
   project: CaseStudyCardProject;
   animateIn: boolean;
+  index?: number;
 }) {
   const reduce = useReducedMotion() || !animateIn;
   const study = project.caseStudy;
@@ -828,7 +855,7 @@ function CaseStudyCover({
       initial={reduce ? false : { opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.05 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: index < 3 ? index * 0.09 : 0 }}
     >
       <Link
         to="/projects/$slug"

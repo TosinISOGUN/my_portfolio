@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion, useInView, useReducedMotion, type MotionStyle } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Calendar, Facebook, Github, MessageCircle } from "lucide-react";
@@ -139,7 +139,7 @@ export function ReferencePortfolioHome() {
           data-case-study-return-view={view}
           className="min-w-0 border-[#111111]/10 lg:border-l"
         >
-          <div className="sticky top-0 z-20 border-b border-[#111111]/10 bg-white/92 px-3 py-2.5 backdrop-blur-md sm:px-8 sm:py-3 lg:px-5">
+          <div className="sticky top-0 z-20 border-b border-[#111111]/10 bg-white px-3 py-2.5 sm:px-8 sm:py-3 lg:px-5">
             <ViewSwitcher value={view} onChange={handleViewChange} />
           </div>
 
@@ -155,18 +155,21 @@ export function ReferencePortfolioHome() {
               ) : view === "websites" ? (
                 <motion.div key="websites" className="grid gap-8" initial={false}>
                   {workSamples.map((project, index) => (
-                    <div key={project.slug} className="grid gap-8">
-                      <WebsiteFrame project={project} animateIn={animateIn} index={index} />
-                      {websiteCollages[project.slug] ? (
-                        <WebsiteFrame
-                          project={project}
-                          animateIn={animateIn}
-                          index={index}
-                          picture={websiteCollages[project.slug]}
-                        />
-                      ) : null}
-                      <WebsitePhones project={project} animateIn={animateIn} index={index} />
-                    </div>
+                    <Fragment key={project.slug}>
+                      {index > 0 ? <hr className="my-2 h-px border-0 bg-[#111111]/10" /> : null}
+                      <div className="grid gap-8">
+                        <WebsiteFrame project={project} animateIn={animateIn} index={index} />
+                        {websiteCollages[project.slug] ? (
+                          <WebsiteFrame
+                            project={project}
+                            animateIn={animateIn}
+                            index={index}
+                            picture={websiteCollages[project.slug]}
+                          />
+                        ) : null}
+                        <WebsitePhones project={project} animateIn={animateIn} index={index} />
+                      </div>
+                    </Fragment>
                   ))}
                   <CtaBlock />
                   <Faq />

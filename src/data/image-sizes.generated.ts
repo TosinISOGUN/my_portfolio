@@ -18,7 +18,7 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "certifications/Certificate (Scrum-Fundamentals-Certified).png": { width: 878, height: 677 },
   "certifications/Certificate (Six-Sigma-Yellow-Belt).png": { width: 877, height: 676 },
   "certifications/Certificate (Tata - Data Visualisation).png": { width: 1263, height: 893 },
-  "product_showcase/_collage/alder-rowe.webp": { width: 1600, height: 3256 },
+  "product_showcase/_collage/alder-rowe.webp": { width: 1600, height: 3173 },
   "product_showcase/_collage/gloria-may-byron.webp": { width: 1600, height: 2935 },
   "product_showcase/_collage/hearthline-realty.webp": { width: 1600, height: 2309 },
   "product_showcase/_collage/velora-beauty.webp": { width: 1600, height: 2389 },

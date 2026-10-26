@@ -7,9 +7,9 @@ export type MobileTone = {
 };
 export const mobileTones: Record<string, MobileTone> = {
   "product_showcase/_mobile/alder-rowe-1.webp": {
-    top: "#f6f5ed",
-    topLight: true,
-    bottom: "#898a83",
+    top: "#262a2f",
+    topLight: false,
+    bottom: "#1c2735",
     bottomLight: false,
   },
   "product_showcase/_mobile/alder-rowe-2.webp": {

@@ -1,12 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import {
-  AnimatePresence,
-  motion,
-  useInView,
-  useReducedMotion,
-  type MotionStyle,
-} from "framer-motion";
+import { motion, useInView, useReducedMotion, type MotionStyle } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Calendar, Facebook, Github, MessageCircle } from "lucide-react";
 // The resume link is hidden for now. To show it again, uncomment this import, add
 // ArrowDownToLine to the lucide-react import, and uncomment the Resume link in IdentityPanel.
@@ -53,7 +47,6 @@ const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : us
 export function ReferencePortfolioHome() {
   const [view, setView] = useState<ViewMode>("websites");
   const contentScrollRef = useRef<HTMLElement>(null);
-  const tabContentRef = useRef<HTMLDivElement>(null);
   const switchedByVisitor = useRef(false);
   const reduce = useReducedMotion();
 
@@ -104,18 +97,15 @@ export function ReferencePortfolioHome() {
 
   const handleViewChange = (nextView: ViewMode) => {
     if (nextView === view) return;
-
-    // The old tab fades out where it is. Its height is held until it has gone, so the page can
-    // not shrink and clamp the scroll position, and the jump to the top happens only after that,
-    // while the panel is empty, instead of flashing the top of the old tab.
-    const holder = tabContentRef.current;
-    if (holder) holder.style.minHeight = `${holder.offsetHeight}px`;
     switchedByVisitor.current = true;
     setView(nextView);
   };
 
-  const handleExitComplete = () => {
-    // A tab restored after returning from a case study must keep its restored scroll position.
+  // The new tab replaces the old one in a single step (no fade-out and no empty gap, which made
+  // the page flicker and the scrollbar jump). The jump to the top happens in the same frame,
+  // before anything is painted. It only runs for a tab the visitor picked, so a tab restored
+  // after returning from a case study keeps its restored scroll position.
+  useIsomorphicLayoutEffect(() => {
     if (!switchedByVisitor.current) return;
     switchedByVisitor.current = false;
 
@@ -126,8 +116,7 @@ export function ReferencePortfolioHome() {
     } else {
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     }
-    if (tabContentRef.current) tabContentRef.current.style.minHeight = "";
-  };
+  }, [view]);
 
   return (
     <main className="sam-page min-h-screen bg-white text-[#111111]">
@@ -148,16 +137,15 @@ export function ReferencePortfolioHome() {
             <ViewSwitcher value={view} onChange={handleViewChange} />
           </div>
 
-          <div ref={tabContentRef} className="px-3 py-4 sm:px-8 sm:py-5 lg:px-5">
+          <div className="px-3 py-4 sm:px-8 sm:py-5 lg:px-5">
             <h2 className="sr-only">{viewLabels[view]}</h2>
-            <AnimatePresence mode="wait" onExitComplete={handleExitComplete}>
+            <>
               {view === "samples" ? (
                 <motion.div
                   key="samples"
                   className="grid gap-7"
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -14 }}
                   transition={{ duration: 0.25 }}
                 >
                   {sampleScreens.map((sample) => (
@@ -170,7 +158,6 @@ export function ReferencePortfolioHome() {
                   className="grid gap-8"
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -14 }}
                   transition={{ duration: 0.25 }}
                 >
                   {workSamples.map((project) => (
@@ -188,7 +175,6 @@ export function ReferencePortfolioHome() {
                   className="grid gap-10"
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -14 }}
                   transition={{ duration: 0.25 }}
                 >
                   {workSamples.map((project) => (
@@ -201,7 +187,6 @@ export function ReferencePortfolioHome() {
                   className="grid gap-0"
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -14 }}
                   transition={{ duration: 0.25 }}
                 >
                   {workHistory.map((entry, index) => (
@@ -219,7 +204,6 @@ export function ReferencePortfolioHome() {
                   className="grid gap-8 overflow-x-clip py-2"
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -14 }}
                   transition={{ duration: 0.25 }}
                 >
                   <p className="max-w-2xl text-[1.05rem] font-medium leading-7 tracking-[-0.035em] text-[#111111]/58">
@@ -234,7 +218,7 @@ export function ReferencePortfolioHome() {
                   ))}
                 </motion.div>
               )}
-            </AnimatePresence>
+            </>
           </div>
         </section>
       </div>

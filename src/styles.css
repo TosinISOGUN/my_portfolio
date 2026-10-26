@@ -185,6 +185,8 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Keep the page width the same whether or not a scrollbar is showing. */
+    scrollbar-gutter: stable;
   }
 
   * {

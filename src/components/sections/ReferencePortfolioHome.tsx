@@ -20,7 +20,7 @@ import {
   getHeroRank,
   profile,
   projectCaseStudies,
-  skills,
+  // skills, // the "Built with" tech stack in IdentityPanel is commented out; restore this with it
   workHistory,
   type WorkHistoryEntry,
 } from "@/data/portfolio";
@@ -296,6 +296,8 @@ function IdentityPanel() {
 
           <TrustLine />
 
+          {/* The "Built with" tech stack is hidden for now. To show it again, uncomment this block
+          and the skills import above.
           <div className="sam-stack-block mt-5 max-w-[390px] lg:mt-3 xl:mt-4">
             <p className="text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[#111111]/32">
               Built with
@@ -311,6 +313,7 @@ function IdentityPanel() {
               ))}
             </div>
           </div>
+          */}
         </div>
       </div>
 

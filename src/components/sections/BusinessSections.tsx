@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Calendar, Check, ChevronDown, MessageCircle, Send } from "lucide-react";
-import profilePhoto from "@/assets/Photograph - Oluwatomisin Isogun.jpg";
+import profilePhoto from "@/assets/profile-photo.webp";
 import { bookingUrl, whatsappUrl } from "@/data/portfolio";
 
 /**

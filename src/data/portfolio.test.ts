@@ -5,6 +5,8 @@ import {
   getHeroRank,
   getImageSize,
   projectCaseStudies,
+  websiteCollages,
+  websitePictureOverrides,
   workHistory,
 } from "@/data/portfolio";
 
@@ -20,10 +22,14 @@ describe("portfolio data", () => {
     expect(caseStudies).toEqual(featured);
   });
 
-  it("orders projects from closest-to-a-local-business to most technical", () => {
+  it("leads with the five concept sites and Gloria May Byron, then orders the rest from closest-to-a-local-business to most technical", () => {
     expect(featuredProjects.map((project) => project.slug)).toEqual([
-      "samsoni",
-      "oyobooking",
+      "velora-beauty",
+      "hearthline-realty",
+      "juniper-ember",
+      "everwell",
+      "alder-rowe",
+      "gloria-may-byron",
       "thomason",
       "nachie-maridadi",
       "c-homes",
@@ -31,6 +37,8 @@ describe("portfolio data", () => {
       "open-school-field",
       "learncity",
       "payflow",
+      "samsoni",
+      "oyobooking",
     ]);
   });
 
@@ -39,6 +47,39 @@ describe("portfolio data", () => {
       expect(project.labels.length, `${project.slug} labels`).toBeGreaterThan(0);
       const study = projectCaseStudies.find((item) => item.slug === project.slug);
       expect(study?.summary.length ?? 0, `${project.slug} summary`).toBeLessThan(110);
+    }
+  });
+
+  it("marks every concept site as a concept, and nobody else", () => {
+    const concepts = [
+      "velora-beauty",
+      "hearthline-realty",
+      "juniper-ember",
+      "everwell",
+      "alder-rowe",
+      "payflow",
+    ];
+    for (const project of featuredProjects) {
+      const marked = project.labels.includes("Concept project");
+      expect(marked, `${project.slug} concept label`).toBe(concepts.includes(project.slug));
+    }
+    for (const slug of concepts) {
+      const study = projectCaseStudies.find((item) => item.slug === slug);
+      expect(study?.summary, `${slug} summary`).toMatch(/^Concept:/);
+    }
+  });
+
+  it("keeps phone screenshots as optimized WebP with known sizes, two per project, three for Alder & Rowe", () => {
+    const withPhones = projectCaseStudies.filter((study) => study.mobile.length > 0);
+    expect(withPhones.length).toBeGreaterThan(0);
+    for (const study of withPhones) {
+      expect(study.mobile.length, `${study.slug} phone screens`).toBe(
+        study.slug === "alder-rowe" ? 3 : 2,
+      );
+      for (const { src: image } of study.mobile) {
+        expect(image, `${study.slug} phone screenshot`).toMatch(/\.webp(\?.*)?$/);
+        expect(getImageSize(image), `${study.slug} phone size`).toBeDefined();
+      }
     }
   });
 
@@ -64,9 +105,44 @@ describe("portfolio data", () => {
     }
   });
 
-  it("keeps Open School Field's cover on the landing screenshot", () => {
-    const study = projectCaseStudies.find((item) => item.slug === "open-school-field");
-    expect(study?.cover).toContain("Screenshot%20(261)");
+  it("uses a tall capture of the home page as the cover of every project", () => {
+    for (const study of projectCaseStudies) {
+      const size = getImageSize(study.cover);
+      expect(size, `${study.slug} cover size`).toBeDefined();
+      expect(
+        (size?.height ?? 0) / (size?.width ?? 1),
+        `${study.slug} cover is tall`,
+      ).toBeGreaterThan(1.2);
+      expect(study.gallery[0], `${study.slug} gallery starts with the cover`).toBe(study.cover);
+    }
+  });
+
+  it("gives every project an accent colour for its case-study page", () => {
+    for (const project of featuredProjects) {
+      expect(project.accent, `${project.slug} accent`).toMatch(/^#[0-9a-fA-F]{6}$/);
+    }
+  });
+
+  it("points every Websites-tab picture override at a real project", () => {
+    for (const slug of Object.keys(websitePictureOverrides)) {
+      expect(
+        featuredProjects.some((project) => project.slug === slug),
+        `${slug} exists`,
+      ).toBe(true);
+    }
+  });
+
+  it("keeps collages as optimized WebP with known sizes, for real projects", () => {
+    const slugs = Object.keys(websiteCollages);
+    expect(slugs.length).toBeGreaterThan(0);
+    for (const slug of slugs) {
+      expect(
+        featuredProjects.some((project) => project.slug === slug),
+        `${slug} exists`,
+      ).toBe(true);
+      expect(websiteCollages[slug], `${slug} collage`).toMatch(/\.webp(\?.*)?$/);
+      expect(getImageSize(websiteCollages[slug] ?? ""), `${slug} collage size`).toBeDefined();
+    }
   });
 
   it("has work history with at least one role and no empty entries", () => {

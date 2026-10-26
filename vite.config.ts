@@ -18,6 +18,12 @@ export default defineConfig({
     },
     pages: [
       { path: "/" },
+      { path: "/projects/velora-beauty" },
+      { path: "/projects/hearthline-realty" },
+      { path: "/projects/juniper-ember" },
+      { path: "/projects/everwell" },
+      { path: "/projects/alder-rowe" },
+      { path: "/projects/gloria-may-byron" },
       { path: "/projects/open-school-field" },
       { path: "/projects/oyobooking" },
       { path: "/projects/infinitative" },

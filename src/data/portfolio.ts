@@ -4,9 +4,12 @@ import learncityLogo from "@/assets/portfolio/LC_logo.png";
 import nachieLogo from "@/assets/portfolio/nachie_maridadi_favicon.png";
 import oyoLogo from "@/assets/portfolio/oyo-state-logo-card.png";
 import { imageSizes } from "./image-sizes.generated";
+import { mobileTones, type MobileTone } from "./mobile-tones.generated";
 
 type ScreenshotModule = Record<string, string>;
 export type ImageSize = { width: number; height: number };
+/** A phone screenshot and the colours at its top and bottom edge (see mobile-tones.generated.ts). */
+export type MobileScreen = MobileTone & { src: string };
 
 // Maps a built image URL to its pixel size, so components can reserve space before it loads.
 const sizeByUrl = new Map<string, ImageSize>();
@@ -108,6 +111,108 @@ const thomasonScreens = getScreens(
     import: "default",
     query: "?url",
   }) as ScreenshotModule,
+);
+
+const velouraScreens = getScreens(
+  import.meta.glob("../assets/product_showcase/velora-beauty/*.webp", {
+    eager: true,
+    import: "default",
+    query: "?url",
+  }) as ScreenshotModule,
+);
+
+const hearthlineScreens = getScreens(
+  import.meta.glob("../assets/product_showcase/hearthline-realty/*.webp", {
+    eager: true,
+    import: "default",
+    query: "?url",
+  }) as ScreenshotModule,
+);
+
+const juniperScreens = getScreens(
+  import.meta.glob("../assets/product_showcase/juniper-ember/*.webp", {
+    eager: true,
+    import: "default",
+    query: "?url",
+  }) as ScreenshotModule,
+);
+
+const everwellScreens = getScreens(
+  import.meta.glob("../assets/product_showcase/everwell/*.webp", {
+    eager: true,
+    import: "default",
+    query: "?url",
+  }) as ScreenshotModule,
+);
+
+const alderScreens = getScreens(
+  import.meta.glob("../assets/product_showcase/alder-rowe/*.webp", {
+    eager: true,
+    import: "default",
+    query: "?url",
+  }) as ScreenshotModule,
+);
+
+const gloriaScreens = getScreens(
+  import.meta.glob("../assets/product_showcase/gloria-may-byron/*.webp", {
+    eager: true,
+    import: "default",
+    query: "?url",
+  }) as ScreenshotModule,
+);
+
+// A tall capture of each older site's home page, in product_showcase/_tall/<slug>.webp. It is the
+// cover and the first gallery picture, so every project is shown the same way.
+const tallModules = import.meta.glob("../assets/product_showcase/_tall/*.webp", {
+  eager: true,
+  import: "default",
+  query: "?url",
+}) as ScreenshotModule;
+registerSizes(tallModules);
+
+const tallFor = (slug: string, fallback: string) =>
+  Object.entries(tallModules).find(([path]) => path.endsWith(`/${slug}.webp`))?.[1] ?? fallback;
+
+const withTall = (slug: string, screens: string[]) => {
+  const tall = tallFor(slug, "");
+  return tall ? [tall, ...screens] : screens;
+};
+
+// Phone-sized screenshots in product_showcase/_mobile/<slug>-1.webp, -2.webp (two per project, for
+// the projects that have them). They are shown inside phone frames next to the desktop picture.
+const mobileModules = import.meta.glob("../assets/product_showcase/_mobile/*.webp", {
+  eager: true,
+  import: "default",
+  query: "?url",
+}) as ScreenshotModule;
+registerSizes(mobileModules);
+
+const mobileFor = (slug: string): MobileScreen[] =>
+  Object.entries(mobileModules)
+    .filter(([path]) => {
+      const file = path.split("/").pop() ?? "";
+      return file.startsWith(`${slug}-`) && /^\d+\.webp$/.test(file.slice(slug.length + 1));
+    })
+    .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+    .flatMap(([path, src]) => {
+      const tone = mobileTones[path.replace("../assets/", "")];
+      return tone ? [{ src, ...tone }] : [];
+    });
+
+// Collages: one long page split into two columns side by side, in product_showcase/_collage/<slug>.webp,
+// for the projects that have one (shown as an extra picture on the Websites tab).
+const collageModules = import.meta.glob("../assets/product_showcase/_collage/*.webp", {
+  eager: true,
+  import: "default",
+  query: "?url",
+}) as ScreenshotModule;
+registerSizes(collageModules);
+
+export const websiteCollages: Record<string, string> = Object.fromEntries(
+  Object.entries(collageModules).map(([path, url]) => [
+    (path.split("/").pop() ?? "").replace(".webp", ""),
+    url,
+  ]),
 );
 
 const certificationFiles = import.meta.glob("../assets/certifications/*.{png,jpeg,jpg}", {
@@ -244,6 +349,17 @@ const nachie271 = screenAt(nachieScreens, 0);
 const payflowLanding = screenAt(payflowScreens, 0);
 const samsoniLanding = screenAt(samsoniScreens, 1);
 const thomasonLanding = screenAt(thomasonScreens, 0);
+// The five concept sites: the cover is a tall capture of the home page (file 01-home).
+const veloraHome = screenAt(velouraScreens, 0);
+const hearthlineHome = screenAt(hearthlineScreens, 0);
+const juniperHome = screenAt(juniperScreens, 0);
+const everwellHome = screenAt(everwellScreens, 0);
+const alderHome = screenAt(alderScreens, 0);
+const gloriaHome = screenAt(gloriaScreens, 0);
+
+// The Websites tab normally shows each project's tall home-page capture. A project listed here
+// shows this picture there instead (the tall capture is still used on its other pages).
+export const websitePictureOverrides: Record<string, string> = {};
 
 export const profile = {
   name: "Oluwatomisin Isogun",
@@ -252,6 +368,7 @@ export const profile = {
   github: "https://github.com/TosinISOGUN",
   linkedin: "https://www.linkedin.com/in/oluwatomisin-isogun-a38740356/",
   upwork: "https://www.upwork.com/freelancers/~0136c2f689158ada21?mp_source=share",
+  facebook: "https://www.facebook.com/profile.php?id=61595720432735",
 };
 
 /** Opens WhatsApp with a short starter message. Number is in international format, no plus or zeros. */
@@ -388,38 +505,104 @@ export const certifications = certificationModules.map(([path, image], index) =>
   };
 });
 
+// Repository links ("github" here, "githubUrl" on the case studies) are commented out on purpose;
+// uncomment them, and the block in src/routes/projects/$slug.tsx, to show them again.
+// The first four are concept sites built for fictional businesses. They lead the list so a
+// business owner sees them first; each says "Concept project" so nobody mistakes them for clients.
 export const featuredProjects = [
   {
-    title: "Samsoni",
-    slug: "samsoni",
-    studio: "Water delivery storefront",
-    tags: ["React", "Local Commerce", "WhatsApp Ordering"],
-    labels: ["WhatsApp ordering", "Delivery plans", "Mobile-friendly"],
-    signals: ["Product browsing", "Recurring delivery plans", "WhatsApp conversion"],
-    link: "https://samsoni.vercel.app/",
+    title: "Velora Beauty",
+    slug: "velora-beauty",
+    accent: "#243B7A",
+    studio: "Beauty brand concept",
+    tags: ["React 19", "TanStack Start", "Tailwind CSS", "Shop and bag flow"],
+    labels: ["Concept project", "Online shop", "Mobile-friendly"],
+    signals: ["Shop and collections", "Routine builder", "Bag and checkout"],
+    link: "https://velorabeautyy.vercel.app",
+    // github: "https://github.com/TosinISOGUN/velora_beauty",
     problem:
-      "The brand needed a direct commerce surface that could communicate quality, delivery coverage, and product options quickly.",
+      "A concept brief for a fictional beauty label that needed to feel colour-forward and confident while keeping shopping simple.",
     result:
-      "A fast local-business storefront that turns bottled and sachet water supply into a simple, conversion-oriented flow.",
+      "A demo storefront with collections, product pages, a routine builder, a bag and a checkout.",
   },
   {
-    title: "OYOBOOKING",
-    slug: "oyobooking",
-    studio: "Oyo State booking platform",
-    logo: oyoLogo,
-    tags: ["React", "API Integration", "Accessibility"],
-    labels: ["Online booking", "Easy to use", "Mobile-friendly"],
-    signals: ["Public booking UX", "API-backed flows", "Responsive facility pages"],
-    link: "https://oyobooking.ng",
-    github: "https://github.com/TosinISOGUN/oyo_booking.com",
+    title: "Hearthline Realty",
+    slug: "hearthline-realty",
+    accent: "#2F5D4B",
+    studio: "Real estate brokerage concept",
+    tags: ["React 19", "TanStack Start", "Leaflet map", "Search in the page address"],
+    labels: ["Concept project", "Home search and map", "Mobile-friendly"],
+    signals: ["Home search", "Map view", "Showing requests"],
+    link: "https://hearthlinerealty.vercel.app",
+    // github: "https://github.com/TosinISOGUN/hearthline_realty",
     problem:
-      "Public-facing booking flows need to handle real users, changing data, and high clarity without collapsing into form clutter.",
+      "A concept brief for a fictional boutique brokerage where buyers find a home quickly and sellers see a clear way to get in touch.",
     result:
-      "A fast, responsive booking experience with API-backed flows, accessible interface patterns, and production-oriented UX.",
+      "A demo site with home search, a list and map view, home pages with galleries, and showing, valuation and contact forms.",
+  },
+  {
+    title: "Juniper & Ember",
+    slug: "juniper-ember",
+    accent: "#B4542F",
+    studio: "Restaurant concept",
+    tags: ["React 19", "TanStack Start", "Tailwind CSS", "Ordering demo"],
+    labels: ["Concept project", "Menu and ordering", "Table reservations"],
+    signals: ["Tabbed menu", "Pickup ordering", "Reservations"],
+    link: "https://juniperandember.vercel.app/",
+    // github: "https://github.com/TosinISOGUN/juniper_and_ember",
+    problem:
+      "A concept brief for a fictional wood-fired restaurant that needed to sell its mood on the first screen and still make the menu, ordering and booking easy to reach.",
+    result:
+      "A demo site with a tabbed menu, pickup ordering with a cart, reservations, a gallery and a light and dark theme.",
+  },
+  {
+    title: "Everwell",
+    slug: "everwell",
+    accent: "#2F6F66",
+    studio: "Clinic website concept",
+    tags: ["React 19", "TanStack Start", "Tailwind CSS", "Accessible forms"],
+    labels: ["Concept project", "Clear service pages", "Mobile-friendly"],
+    signals: ["Service pages", "Plain language", "Contact form"],
+    link: "https://everwelldental.vercel.app",
+    // github: "https://github.com/TosinISOGUN/everwell_dental",
+    problem:
+      "A concept brief for a fictional clinic where people choosing a practice need plain language, clear services and an easy way to get in touch.",
+    result:
+      "A demo site with a services overview, a page for each service, a practice page and a contact form.",
+  },
+  {
+    title: "Alder & Rowe",
+    slug: "alder-rowe",
+    accent: "#17283B",
+    studio: "Family law firm concept",
+    tags: ["React 19", "TanStack Start", "Tailwind CSS", "Accessible forms"],
+    labels: ["Concept project", "Practice area pages", "Mobile-friendly"],
+    signals: ["Practice area pages", "Plain-language articles", "Consultation form"],
+    link: "https://alder-rowe.vercel.app/",
+    // github: "https://github.com/TosinISOGUN/alder_rowe",
+    problem:
+      "A concept brief for a fictional family law firm where people facing a hard moment need calm, plain information and an easy first step.",
+    result:
+      "A demo site with five practice area pages, three articles, a firm and process page, and a consultation form that sends nothing.",
+  },
+  {
+    title: "Gloria May Byron",
+    slug: "gloria-may-byron",
+    accent: "#1F5C6B",
+    studio: "Singer and songwriter website",
+    tags: ["React 19", "TanStack Start", "Tailwind CSS", "Scroll-driven motion"],
+    labels: ["Artist website", "Music and videos", "Mobile-friendly"],
+    signals: ["Music and videos", "News and announcements", "Awards"],
+    link: "https://gloriamaybyron.vercel.app",
+    problem:
+      "An independent artist needed one place that shows her music, news, photos and awards and makes it easy to get in touch.",
+    result:
+      "A photography-led artist website with music and video pages, news, a photo gallery, an awards page and a contact page.",
   },
   {
     title: "Thomason",
     slug: "thomason",
+    accent: "#6F4A2E",
     studio: "Coffee and hospitality website",
     tags: ["React", "Editorial Layout", "Hospitality UX"],
     labels: ["Menu discovery", "Full-screen photography", "Mobile-friendly"],
@@ -433,13 +616,14 @@ export const featuredProjects = [
   {
     title: "Nachie Maridadi",
     slug: "nachie-maridadi",
+    accent: "#B5651D",
     studio: "Commerce landing",
     logo: nachieLogo,
     tags: ["React", "Brand UI", "Commerce UX"],
     labels: ["Online storefront", "Product showcase", "Mobile-friendly"],
     signals: ["Product storytelling", "Responsive storefront", "Purchase confidence"],
     link: "https://nachiemaridadi.vercel.app/",
-    github: "https://github.com/TosinISOGUN/nachie_maridadi",
+    // github: "https://github.com/TosinISOGUN/nachie_maridadi",
     problem:
       "The brand needed a polished commerce surface that presents products clearly and builds enough confidence to buy.",
     result:
@@ -448,13 +632,14 @@ export const featuredProjects = [
   {
     title: "C-HOMES",
     slug: "c-homes",
+    accent: "#1F4E6B",
     studio: "CMS-driven property marketplace",
     logo: cHomesLogo,
     tags: ["React", "Sanity CMS", "Content Management"],
     labels: ["Editable listings", "Search-friendly pages", "Mobile-friendly"],
     signals: ["CMS content model", "Property listing UX", "Search-friendly frontend"],
     link: "https://c-homes.vercel.app/",
-    github: "https://github.com/TosinISOGUN/c-homes",
+    // github: "https://github.com/TosinISOGUN/c-homes",
     problem:
       "Property platforms need structured content, search-friendly pages, and a management workflow that can keep listings current.",
     result:
@@ -463,6 +648,7 @@ export const featuredProjects = [
   {
     title: "Infinitative",
     slug: "infinitative",
+    accent: "#1E2A4A",
     studio: "Multi-vendor commerce marketplace",
     logo: infinitativeLogo,
     tags: ["React", "Marketplace UX", "Cart Flow"],
@@ -477,6 +663,7 @@ export const featuredProjects = [
   {
     title: "Open School Field",
     slug: "open-school-field",
+    accent: "#9B4A57",
     studio: "Oyo State school facility marketplace",
     logo: oyoLogo,
     tags: ["React 19", "TanStack Router", "TanStack Query", "PWA", "Yoruba i18n"],
@@ -491,13 +678,14 @@ export const featuredProjects = [
   {
     title: "Learncity",
     slug: "learncity",
+    accent: "#2E8B3E",
     studio: "Academy platform",
     logo: learncityLogo,
     tags: ["React", "Responsive UI", "Landing Systems"],
     labels: ["Program pages", "Easy navigation", "Mobile-friendly"],
     signals: ["Education UX", "Program discovery", "Conversion-focused layout"],
     link: "https://learncityacademy.com/",
-    github: "https://github.com/TosinISOGUN/learncity",
+    // github: "https://github.com/TosinISOGUN/learncity",
     problem:
       "Prospective learners need to understand program value quickly without getting lost in dense academy content.",
     result:
@@ -506,6 +694,7 @@ export const featuredProjects = [
   {
     title: "Payflow",
     slug: "payflow",
+    accent: "#2563EB",
     studio: "Payroll and compliance platform",
     tags: ["React", "Product Marketing UI", "Pricing Flow"],
     labels: ["Concept project", "Pricing page", "Mobile-friendly"],
@@ -516,16 +705,261 @@ export const featuredProjects = [
     result:
       "A polished HR/payroll product site with a premium landing page, platform storytelling, pricing surfaces, and responsive product presentation.",
   },
+  {
+    title: "Samsoni",
+    slug: "samsoni",
+    accent: "#1769B5",
+    studio: "Water delivery storefront",
+    tags: ["React", "Local Commerce", "WhatsApp Ordering"],
+    labels: ["WhatsApp ordering", "Delivery plans", "Mobile-friendly"],
+    signals: ["Product browsing", "Recurring delivery plans", "WhatsApp conversion"],
+    link: "https://samsoni.vercel.app/",
+    problem:
+      "The brand needed a direct commerce surface that could communicate quality, delivery coverage, and product options quickly.",
+    result:
+      "A fast local-business storefront that turns bottled and sachet water supply into a simple, conversion-oriented flow.",
+  },
+  {
+    title: "OYOBOOKING",
+    slug: "oyobooking",
+    accent: "#8E2B3C",
+    studio: "Oyo State booking platform",
+    logo: oyoLogo,
+    tags: ["React", "API Integration", "Accessibility"],
+    labels: ["Online booking", "Easy to use", "Mobile-friendly"],
+    signals: ["Public booking UX", "API-backed flows", "Responsive facility pages"],
+    link: "https://oyobooking.ng",
+    // github: "https://github.com/TosinISOGUN/oyo_booking.com",
+    problem:
+      "Public-facing booking flows need to handle real users, changing data, and high clarity without collapsing into form clutter.",
+    result:
+      "A fast, responsive booking experience with API-backed flows, accessible interface patterns, and production-oriented UX.",
+  },
 ];
 
 export const projectCaseStudies = [
+  {
+    slug: "velora-beauty",
+    title: "Velora Beauty",
+    eyebrow: "Beauty Brand Concept",
+    role: "Design and development",
+    liveUrl: "https://velorabeautyy.vercel.app",
+    // githubUrl: "https://github.com/TosinISOGUN/velora_beauty",
+    cover: veloraHome,
+    summary: "Concept: online beauty shop with a routine builder and a bag.",
+    challenge:
+      "A concept project for a fictional beauty label aimed at adult women of many ages and skin tones. The site had to feel colour-forward and confident while keeping shopping simple. Velora is not a real brand.",
+    approach:
+      "I built fifteen pages: home, shop, three collections, six product pages, a routine builder, our story, a bag, checkout and contact. Every top-level page opens on a full-bleed photograph, and product packaging is drawn as shaded vector art that takes the colour of the selected shade.",
+    outcome:
+      "A complete demo storefront with a dark and a light theme. Prices, shades and policies are sample content: nothing is charged or shipped, and no form sends anything.",
+    metrics: ["Concept project", "15 pages", "Shop and bag flow", "Dark and light themes"],
+    decisions: [
+      {
+        label: "Photography First",
+        value:
+          "Each page opens on one large photograph and a short line of type, so the mood is clear before the visitor reads anything.",
+      },
+      {
+        label: "Shade-aware Products",
+        value:
+          "Packaging is vector art that changes with the selected shade, so the product on screen matches the choice being made.",
+      },
+      {
+        label: "Honest Demo",
+        value:
+          "The site says plainly that it is a concept: no reviews, no health claims, and no shade-matching promise.",
+      },
+    ],
+    gallery: velouraScreens,
+    mobile: mobileFor("velora-beauty"),
+  },
+  {
+    slug: "hearthline-realty",
+    title: "Hearthline Realty",
+    eyebrow: "Real Estate Concept",
+    role: "Design and development",
+    liveUrl: "https://hearthlinerealty.vercel.app",
+    // githubUrl: "https://github.com/TosinISOGUN/hearthline_realty",
+    cover: hearthlineHome,
+    summary: "Concept: real estate site with home search, a map and showing requests.",
+    challenge:
+      "A concept project for a fictional boutique brokerage in Raleigh. Buyers needed to find a home quickly, and sellers needed a clear way to get in touch. Hearthline is not a real brokerage.",
+    approach:
+      "I built eight pages plus a page for each sample home. Search filters by place, price, bedrooms, type and features, and keeps its state in the page address. Visitors can switch between a list and a map, open a photo gallery, save homes for the visit, and send a showing, valuation or contact request.",
+    outcome:
+      "A complete demo site. The homes, prices and agents are sample content, the map shows approximate areas only, and the forms send nothing.",
+    metrics: ["Concept project", "Home search", "Map view", "Showing requests"],
+    decisions: [
+      {
+        label: "Search You Can Share",
+        value:
+          "Filters apply instantly and live in the page address, so any search can be sent as a link and still work.",
+      },
+      {
+        label: "Map On Request",
+        value:
+          "The map and its tiles load only when someone opens a map, which keeps the first load light.",
+      },
+      {
+        label: "Honest Samples",
+        value:
+          "Every home is labelled as a sample listing, and the site invents no reviews, awards or statistics.",
+      },
+    ],
+    gallery: hearthlineScreens,
+    mobile: mobileFor("hearthline-realty"),
+  },
+  {
+    slug: "juniper-ember",
+    title: "Juniper & Ember",
+    eyebrow: "Restaurant Concept",
+    role: "Design and development",
+    liveUrl: "https://juniperandember.vercel.app/",
+    // githubUrl: "https://github.com/TosinISOGUN/juniper_and_ember",
+    cover: juniperHome,
+    summary: "Concept: restaurant site with a menu, pickup ordering and reservations.",
+    challenge:
+      "A concept project for a fictional wood-fired restaurant in Austin. The site had to sell the mood on the first screen and still make the menu, ordering and booking easy to reach. Juniper & Ember is not a real restaurant.",
+    approach:
+      "I built nine pages: a tabbed menu, pickup ordering with a cart and a demo checkout, reservations, a gallery with a lightbox, and a dark and a cream theme. Every top-level page opens on a full-bleed photograph.",
+    outcome:
+      "A complete demo site. The address, hours, menu and prices are sample content, and nothing books a table or takes an order.",
+    metrics: ["Concept project", "9 pages", "Pickup ordering", "Reservations"],
+    decisions: [
+      {
+        label: "Mood First",
+        value:
+          "A large photograph and a short headline open each page, so visitors feel the place before they read the details.",
+      },
+      {
+        label: "Booking That Follows The Hours",
+        value:
+          "Reservation times only offer what is served that day, so a visitor cannot pick a time the kitchen is closed.",
+      },
+      {
+        label: "Light Motion",
+        value:
+          "Animation uses only movement and fade, and everything shows in its finished state for visitors who prefer reduced motion.",
+      },
+    ],
+    gallery: juniperScreens,
+    mobile: mobileFor("juniper-ember"),
+  },
+  {
+    slug: "everwell",
+    title: "Everwell",
+    eyebrow: "Clinic Website Concept",
+    role: "Design and development",
+    liveUrl: "https://everwelldental.vercel.app",
+    // githubUrl: "https://github.com/TosinISOGUN/everwell_dental",
+    cover: everwellHome,
+    summary: "Concept: clinic website with clear service pages and an easy contact form.",
+    challenge:
+      "A concept project for a fictional clinic in Charlotte. People choosing a practice need plain language, clear services and an easy way to get in touch. Everwell is not a real practice.",
+    approach:
+      "I built ten pages: home, a services overview with a page for each service, the practice, a page for new visitors, contact and a privacy notice. The wording avoids jargon, and the contact form is clearly marked as a demo.",
+    outcome:
+      "A complete demo site with sample details. The photographs are stock images, the team is fictional, and the form sends nothing.",
+    metrics: ["Concept project", "10 pages", "Service pages", "Plain language"],
+    decisions: [
+      {
+        label: "Plain Language",
+        value:
+          "Services are explained in short, everyday wording, so a visitor can understand each one without looking anything up.",
+      },
+      {
+        label: "One Page Per Service",
+        value:
+          "Each service has its own page, so people can land on exactly what they searched for.",
+      },
+      {
+        label: "Honest Demo",
+        value:
+          "No reviews, credentials, fees or compliance claims appear anywhere, and the site collects no health information.",
+      },
+    ],
+    gallery: everwellScreens,
+    mobile: mobileFor("everwell"),
+  },
+  {
+    slug: "alder-rowe",
+    title: "Alder & Rowe",
+    eyebrow: "Law Firm Concept",
+    role: "Design and development",
+    liveUrl: "https://alder-rowe.vercel.app/",
+    // githubUrl: "https://github.com/TosinISOGUN/alder_rowe",
+    cover: alderHome,
+    summary: "Concept: family law site with clear practice pages and a consultation form.",
+    challenge:
+      "A concept project for a fictional family law practice in Charlotte. People facing a divorce or a custody question need calm, plain information and an easy first step. Alder & Rowe is not a real firm.",
+    approach:
+      "I built twelve pages: home, an overview and a page for each of five practice areas, the firm, the process, an insights library with three articles, contact, a privacy page and a legal disclaimer. The consultation form checks every field and is clearly marked as a demo. The legal points were checked against North Carolina sources.",
+    outcome:
+      "A complete demo site. The attorneys, address and phone number are sample content, the photographs are stock images, and the form sends nothing.",
+    metrics: ["Concept project", "12 pages", "5 practice areas", "Consultation form"],
+    decisions: [
+      {
+        label: "Plain Language",
+        value:
+          "Each practice page explains the questions people usually have in everyday words, so a visitor can follow them without a lawyer.",
+      },
+      {
+        label: "Checked Facts",
+        value:
+          "The North Carolina rules on the pages were checked against statute text, and the site says plainly that it is general information, not legal advice.",
+      },
+      {
+        label: "Honest Demo",
+        value:
+          "No awards, case results or credentials appear anywhere, the attorneys are marked as fictional profiles, and the form sends nothing.",
+      },
+    ],
+    gallery: alderScreens,
+    mobile: mobileFor("alder-rowe"),
+  },
+  {
+    slug: "gloria-may-byron",
+    title: "Gloria May Byron",
+    eyebrow: "Artist Website",
+    role: "Design and development",
+    liveUrl: "https://gloriamaybyron.vercel.app",
+    cover: gloriaHome,
+    summary: "Website for an independent singer and songwriter, with music, news and awards.",
+    challenge:
+      "An independent artist needed one place that shows her music, news, photos and awards, and makes it easy for people to book or contact her.",
+    approach:
+      "I rebuilt her site as seven pages: home, about, music, announcements, gallery, awards and contact. Every page opens on a full-bleed photograph, pages fade into each other, and the home page has a pinned statement whose words light up as you scroll.",
+    outcome:
+      "A fast, photography-led site with a light and a dark theme, built from her own words, credits and links. Platform and press logos keep their brand colours.",
+    metrics: ["Artist website", "7 pages", "Light and dark themes", "Scroll-driven motion"],
+    decisions: [
+      {
+        label: "Photography First",
+        value:
+          "Each page opens on a large photograph of her, so visitors meet the artist before they read a word.",
+      },
+      {
+        label: "Her Own Content",
+        value:
+          "All copy, credits, awards, videos and links come from her own website, so nothing about her is invented.",
+      },
+      {
+        label: "Motion That Respects Settings",
+        value:
+          "Scroll animation is done in CSS and shows its finished state for visitors who prefer reduced motion.",
+      },
+    ],
+    gallery: gloriaScreens,
+    mobile: mobileFor("gloria-may-byron"),
+  },
   {
     slug: "open-school-field",
     title: "Open School Field",
     eyebrow: "Booking Platform",
     role: "Frontend Developer",
     liveUrl: "https://open-school-field-five.vercel.app",
-    cover: osf261,
+    cover: tallFor("open-school-field", osf261),
     summary: "Facility booking platform for schools across Oyo State, in English and Yoruba.",
     challenge:
       "The product needed to feel simple for public renters while supporting deep operational workflows for schools, agents, finance, disputes, reports, and platform admins.",
@@ -551,7 +985,8 @@ export const projectCaseStudies = [
           "English and Yoruba language switching makes the booking flow more useful for local users who may not prefer English.",
       },
     ],
-    gallery: openSchoolFieldScreens,
+    gallery: withTall("open-school-field", openSchoolFieldScreens),
+    mobile: mobileFor("open-school-field"),
   },
   {
     slug: "oyobooking",
@@ -559,8 +994,8 @@ export const projectCaseStudies = [
     eyebrow: "Public Booking",
     role: "Frontend Developer",
     liveUrl: "https://oyobooking.ng",
-    githubUrl: "https://github.com/TosinISOGUN/oyo_booking.com",
-    cover: oyo258,
+    // githubUrl: "https://github.com/TosinISOGUN/oyo_booking.com",
+    cover: tallFor("oyobooking", oyo258),
     summary: "Public booking site where people find and reserve facilities online.",
     challenge:
       "The experience had to keep public-sector booking flows clear while handling changing facility data and user actions.",
@@ -586,7 +1021,8 @@ export const projectCaseStudies = [
           "Facility presentation, labels, and calls to action are designed to make public-sector booking feel clear and reliable.",
       },
     ],
-    gallery: oyoBookingScreens,
+    gallery: withTall("oyobooking", oyoBookingScreens),
+    mobile: mobileFor("oyobooking"),
   },
   {
     slug: "infinitative",
@@ -594,7 +1030,7 @@ export const projectCaseStudies = [
     eyebrow: "Commerce Marketplace",
     role: "Frontend Developer",
     liveUrl: "https://infinitative-aft.vercel.app/",
-    cover: infinitativeLanding,
+    cover: tallFor("infinitative", infinitativeLanding),
     summary: "Multi-vendor marketplace with vendor pages and a cart.",
     challenge:
       "The marketplace needed to feel premium and trustworthy while keeping products, vendors, search, cart actions, and checkout information easy to understand.",
@@ -620,7 +1056,8 @@ export const projectCaseStudies = [
           "Cart controls, order summary, and secure checkout cues keep the purchase path familiar and low-friction.",
       },
     ],
-    gallery: infinitativeScreens,
+    gallery: withTall("infinitative", infinitativeScreens),
+    mobile: mobileFor("infinitative"),
   },
   {
     slug: "payflow",
@@ -628,7 +1065,7 @@ export const projectCaseStudies = [
     eyebrow: "Payroll Platform",
     role: "Frontend Developer",
     liveUrl: "https://payflow-rose-ten.vercel.app/",
-    cover: payflowLanding,
+    cover: tallFor("payflow", payflowLanding),
     summary: "Concept: payroll platform website with a pricing flow.",
     challenge:
       "Payroll and compliance products can feel dense quickly, so the interface needed to communicate operational depth without overwhelming buyers.",
@@ -654,7 +1091,8 @@ export const projectCaseStudies = [
           "The interface uses generous space, calm color, and clear CTAs to keep an operational product from feeling heavy.",
       },
     ],
-    gallery: payflowScreens,
+    gallery: withTall("payflow", payflowScreens),
+    mobile: mobileFor("payflow"),
   },
   {
     slug: "samsoni",
@@ -662,7 +1100,7 @@ export const projectCaseStudies = [
     eyebrow: "Local Commerce",
     role: "Frontend Developer",
     liveUrl: "https://samsoni.vercel.app/",
-    cover: samsoniLanding,
+    cover: tallFor("samsoni", samsoniLanding),
     summary: "Water delivery website for Lagos where customers order on WhatsApp.",
     challenge:
       "The brand needed a direct commerce surface that could communicate quality, delivery coverage, and product options quickly.",
@@ -688,7 +1126,8 @@ export const projectCaseStudies = [
           "Recurring plans make the site useful for homes, offices, and events that need predictable delivery instead of one-off orders.",
       },
     ],
-    gallery: samsoniScreens,
+    gallery: withTall("samsoni", samsoniScreens),
+    mobile: mobileFor("samsoni"),
   },
   {
     slug: "thomason",
@@ -696,7 +1135,7 @@ export const projectCaseStudies = [
     eyebrow: "Hospitality Website",
     role: "Frontend Developer",
     liveUrl: "https://thomason.vercel.app/",
-    cover: thomasonLanding,
+    cover: tallFor("thomason", thomasonLanding),
     summary: "Hospitality website with full-bleed imagery and easy menu discovery.",
     challenge:
       "Hospitality pages need to sell a feeling quickly while still making practical content like the menu easy to reach.",
@@ -722,7 +1161,8 @@ export const projectCaseStudies = [
           "The layout keeps the same premium tone across devices instead of collapsing into a generic restaurant template.",
       },
     ],
-    gallery: thomasonScreens,
+    gallery: withTall("thomason", thomasonScreens),
+    mobile: mobileFor("thomason"),
   },
   {
     slug: "c-homes",
@@ -730,8 +1170,8 @@ export const projectCaseStudies = [
     eyebrow: "CMS Marketplace",
     role: "Frontend Developer",
     liveUrl: "https://c-homes.vercel.app/",
-    githubUrl: "https://github.com/TosinISOGUN/c-homes",
-    cover: cHomes274,
+    // githubUrl: "https://github.com/TosinISOGUN/c-homes",
+    cover: tallFor("c-homes", cHomes274),
     summary: "Property listings site the owner can update without a developer.",
     challenge:
       "Property content changes constantly, so the frontend needed to support structured content without becoming brittle.",
@@ -757,7 +1197,8 @@ export const projectCaseStudies = [
           "Reusable layout patterns keep the marketplace flexible as property categories and listing content change.",
       },
     ],
-    gallery: cHomesScreens,
+    gallery: withTall("c-homes", cHomesScreens),
+    mobile: mobileFor("c-homes"),
   },
   {
     slug: "learncity",
@@ -765,8 +1206,8 @@ export const projectCaseStudies = [
     eyebrow: "Education Platform",
     role: "Frontend Developer",
     liveUrl: "https://learncityacademy.com/",
-    githubUrl: "https://github.com/TosinISOGUN/learncity",
-    cover: learncity278,
+    // githubUrl: "https://github.com/TosinISOGUN/learncity",
+    cover: tallFor("learncity", learncity278),
     summary: "Landing site for an education platform.",
     challenge:
       "The interface needed to communicate learning value quickly while keeping navigation and program discovery simple for prospective students.",
@@ -792,7 +1233,8 @@ export const projectCaseStudies = [
           "The interface keeps navigation practical for repeat use instead of treating the product as only a landing page.",
       },
     ],
-    gallery: learncityScreens,
+    gallery: withTall("learncity", learncityScreens),
+    mobile: mobileFor("learncity"),
   },
   {
     slug: "nachie-maridadi",
@@ -800,8 +1242,8 @@ export const projectCaseStudies = [
     eyebrow: "Commerce Landing",
     role: "Frontend Developer",
     liveUrl: "https://nachiemaridadi.vercel.app/",
-    githubUrl: "https://github.com/TosinISOGUN/nachie_maridadi",
-    cover: nachie271,
+    // githubUrl: "https://github.com/TosinISOGUN/nachie_maridadi",
+    cover: tallFor("nachie-maridadi", nachie271),
     summary:
       "Online storefront for bespoke African fashion, with a clear book-a-consultation button.",
     challenge:
@@ -828,7 +1270,8 @@ export const projectCaseStudies = [
           "The interface stays visually polished while keeping the frontend direct, responsive, and easy to maintain.",
       },
     ],
-    gallery: nachieScreens,
+    gallery: withTall("nachie-maridadi", nachieScreens),
+    mobile: mobileFor("nachie-maridadi"),
   },
 ];
 
@@ -841,6 +1284,12 @@ const showcaseFiles = import.meta.glob("../assets/product_showcase/*/*.webp", {
 }) as ScreenshotModule;
 
 const heroSources: Record<string, { folder: string; primary: string; extra?: string[] }> = {
+  "velora-beauty": { folder: "velora-beauty", primary: "01-home.webp" },
+  "hearthline-realty": { folder: "hearthline-realty", primary: "01-home.webp" },
+  "juniper-ember": { folder: "juniper-ember", primary: "01-home.webp" },
+  everwell: { folder: "everwell", primary: "01-home.webp" },
+  "alder-rowe": { folder: "alder-rowe", primary: "01-home.webp" },
+  "gloria-may-byron": { folder: "gloria-may-byron", primary: "01-home.webp" },
   "nachie-maridadi": { folder: "nachie maridadi", primary: "Screenshot (271).webp" },
   "open-school-field": {
     folder: "open school field",

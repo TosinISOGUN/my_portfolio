@@ -1,4 +1,4 @@
-const CACHE_NAME = "oluwatomisin-portfolio-v4";
+const CACHE_NAME = "oluwatomisin-portfolio-v5";
 const APP_SHELL = [
   "/",
   "/favicon.svg",
@@ -8,7 +8,7 @@ const APP_SHELL = [
   "/icon-192.png",
   "/icon-512.png",
   "/manifest.webmanifest",
-  "/og-image.jpg",
+  "/og-image-v2.jpg",
 ];
 
 self.addEventListener("install", (event) => {
@@ -62,7 +62,7 @@ self.addEventListener("fetch", (event) => {
     url.pathname === "/apple-touch-icon.png" ||
     url.pathname === "/icon-192.png" ||
     url.pathname === "/icon-512.png" ||
-    url.pathname === "/og-image.jpg" ||
+    url.pathname === "/og-image-v2.jpg" ||
     url.pathname.endsWith(".css") ||
     url.pathname.endsWith(".js") ||
     url.pathname.endsWith(".woff2") ||

@@ -415,8 +415,18 @@ function ViewSwitcher({
     <div
       role="tablist"
       aria-label="Portfolio sections"
-      className="relative flex h-[28px] w-fit min-w-[300px] max-w-full items-center overflow-hidden rounded-full bg-[#ededed] p-0 sm:h-[30px] max-[520px]:min-w-0 max-[520px]:w-full"
+      className="relative grid h-[28px] w-fit min-w-[300px] max-w-full items-center overflow-hidden rounded-full bg-[#ededed] p-0 sm:h-[30px] max-[520px]:min-w-0 max-[520px]:w-full"
+      style={{ gridTemplateColumns: `repeat(${viewOrder.length}, minmax(0, 1fr))` }}
     >
+      {/* The dark pill slides to the chosen tab; the tabs are equal-width, so it moves in whole steps. */}
+      <span
+        aria-hidden
+        className="absolute inset-y-0 left-0 rounded-full bg-[#1a1a1a] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+        style={{
+          width: `${100 / viewOrder.length}%`,
+          transform: `translateX(${viewOrder.indexOf(value) * 100}%)`,
+        }}
+      />
       {viewOrder.map((item) => {
         const active = value === item;
 
@@ -429,8 +439,8 @@ function ViewSwitcher({
             aria-selected={active}
             aria-controls="portfolio-panel"
             onClick={() => onChange(item)}
-            className={`relative h-full flex-1 whitespace-nowrap rounded-full px-2 text-[0.68rem] font-medium max-[359px]:px-1 max-[359px]:text-[0.62rem] tracking-[-0.035em] sm:px-4 sm:text-[0.74rem] ${
-              active ? "bg-[#1a1a1a] text-white" : "text-[#111111]/50 hover:text-[#111111]/80"
+            className={`relative z-10 h-full whitespace-nowrap rounded-full px-2 text-[0.68rem] font-medium max-[359px]:px-1 max-[359px]:text-[0.62rem] tracking-[-0.035em] sm:px-4 sm:text-[0.74rem] transition-colors duration-300 ${
+              active ? "text-white" : "text-[#111111]/50 hover:text-[#111111]/80"
             }`}
           >
             {item === "websites" ? (
@@ -896,7 +906,7 @@ function CaseStudyCover({
         onClick={rememberCaseStudyReturn}
         aria-hidden
         tabIndex={-1}
-        className="group block overflow-hidden rounded-[26px] border border-[color-mix(in_oklab,var(--accent)_26%,white)] bg-[color-mix(in_oklab,var(--accent)_10%,white)] px-5 pt-7 text-center sm:px-10 sm:pt-10"
+        className="group block overflow-hidden border border-[#e4dccb] bg-[#f6f1e7] px-5 pt-7 text-center sm:px-10 sm:pt-10"
       >
         {concept ? (
           <span className="mb-4 inline-block rounded-full bg-white/80 px-3 py-1 text-[0.74rem] font-semibold tracking-[-0.01em] text-[var(--accent)]">
@@ -922,14 +932,6 @@ function CaseStudyCover({
         <div className="pb-7 pt-6 sm:pb-9">
           <p className="text-[clamp(2.4rem,9vw,6rem)] font-extrabold uppercase leading-[0.88] tracking-[-0.06em] text-[var(--accent)] [overflow-wrap:anywhere]">
             {project.title}
-          </p>
-          <p className="sam-handwritten mt-4 flex items-center justify-center gap-2 text-[1.2rem] text-[#111111]/70">
-            <img
-              src={profilePhoto}
-              alt="Oluwatomisin Isogun"
-              className="h-7 w-7 rounded-full object-cover"
-            />
-            -by Oluwatomisin
           </p>
         </div>
       </Link>

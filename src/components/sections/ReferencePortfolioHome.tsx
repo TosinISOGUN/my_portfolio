@@ -346,9 +346,11 @@ function IdentityPanel() {
           >
             <Facebook className="h-4 w-4" aria-hidden />
           </a>
+          {/* The LinkedIn link is hidden for now. To show it again, uncomment this link.
           <a href={profile.linkedin} target="_blank" rel="noreferrer" className="sam-social-pill">
             LinkedIn
           </a>
+          */}
           <a href={profile.upwork} target="_blank" rel="noreferrer" className="sam-social-pill">
             Upwork
           </a>

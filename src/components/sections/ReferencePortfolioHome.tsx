@@ -1,11 +1,20 @@
 import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion, useInView, useReducedMotion, type MotionStyle } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Calendar, Facebook, Github, MessageCircle } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Calendar,
+  Facebook,
+  Github,
+  Mail,
+  MessageCircle,
+} from "lucide-react";
 // The resume link is hidden for now. To show it again, uncomment this import, add
 // ArrowDownToLine to the lucide-react import, and uncomment the Resume link in IdentityPanel.
 // import resumePdf from "@/assets/OLUWATOMISIN_ISOGUN_RESUME.pdf";
 import { PhoneStage } from "@/components/PhoneStage";
+import { ThreadsIcon } from "@/components/ThreadsIcon";
 import { SkeletonImage } from "@/components/SkeletonImage";
 import { CtaBlock, Faq } from "@/components/sections/BusinessSections";
 import { SiteFooter } from "@/components/sections/SiteFooter";
@@ -346,6 +355,15 @@ function IdentityPanel() {
           >
             <Facebook className="h-4 w-4" aria-hidden />
           </a>
+          <a
+            href={profile.threads}
+            target="_blank"
+            rel="noreferrer"
+            className="sam-social-pill"
+            aria-label="Threads"
+          >
+            <ThreadsIcon className="h-4 w-4" />
+          </a>
           {/* The LinkedIn link is hidden for now. To show it again, uncomment this link.
           <a href={profile.linkedin} target="_blank" rel="noreferrer" className="sam-social-pill">
             LinkedIn
@@ -354,8 +372,8 @@ function IdentityPanel() {
           <a href={profile.upwork} target="_blank" rel="noreferrer" className="sam-social-pill">
             Upwork
           </a>
-          <a href={`mailto:${profile.email}`} className="sam-social-pill">
-            Email
+          <a href={`mailto:${profile.email}`} className="sam-social-pill" aria-label="Email">
+            <Mail className="h-4 w-4" aria-hidden />
           </a>
         </div>
       </div>

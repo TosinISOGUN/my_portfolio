@@ -12,7 +12,8 @@ type PhoneStageProps = {
  * Phone screenshots of a site in phone frames, side by side on a light grey background, built
  * the way samwrks.in shows the mobile view of its projects: a white phone with a thin outline and
  * very round corners, a status bar (time and signal icons) at the top, and a screen that runs
- * to the bottom edge with only the thin home indicator floating over it, as on current phones.
+ * to the bottom edge with only the thin home indicator floating over it, and a Dynamic Island
+ * pill at the top, as on current phones.
  * The status bar takes the colour of the screenshot's top edge, and the home indicator is dark or
  * light depending on the screenshot's bottom edge (both sampled in scripts/optimize-images.mjs).
  *
@@ -43,8 +44,13 @@ export function PhoneStage({ screens, title, className = "" }: PhoneStageProps) 
             <div
               aria-hidden
               style={{ background: screen.top, color: screen.topLight ? "#111111" : "#ffffff" }}
-              className="flex items-end justify-between px-[10%] pb-[2.5%]"
+              className="relative flex items-center justify-between px-[10%] pb-[2.6%]"
             >
+              {/* The Dynamic Island: a black pill centred at the top of the status bar. */}
+              <span
+                aria-hidden
+                className="absolute left-1/2 top-[18%] h-[46%] w-[32%] -translate-x-1/2 rounded-full bg-black"
+              />
               <span className="text-[0.6rem] font-semibold leading-none tracking-tight sm:text-[0.74rem] lg:text-[0.92rem]">
                 9:41
               </span>

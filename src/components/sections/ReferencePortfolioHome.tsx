@@ -6,7 +6,7 @@ import {
   ArrowUpRight,
   Calendar,
   Facebook,
-  Github,
+  // Github, // the GitHub button in IdentityPanel is commented out; restore this with it
   Mail,
   MessageCircle,
 } from "lucide-react";
@@ -338,6 +338,7 @@ function IdentityPanel() {
           Need a website that brings in more customers? Let's talk.
         </p>
         <div className="mt-5 flex flex-wrap gap-3 lg:mt-2 lg:gap-2 xl:mt-3">
+          {/* The GitHub link is hidden for now. To show it again, uncomment this link and the Github import.
           <a
             href={profile.github}
             target="_blank"
@@ -347,6 +348,7 @@ function IdentityPanel() {
           >
             <Github className="h-4 w-4 text-[#181717]" aria-hidden />
           </a>
+          */}
           <a
             href={profile.facebook}
             target="_blank"

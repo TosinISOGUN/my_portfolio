@@ -415,8 +415,18 @@ function ViewSwitcher({
     <div
       role="tablist"
       aria-label="Portfolio sections"
-      className="relative flex h-[28px] w-fit min-w-[300px] max-w-full items-center overflow-hidden rounded-full bg-[#ededed] p-0 sm:h-[30px] max-[520px]:min-w-0 max-[520px]:w-full"
+      className="relative grid h-[28px] w-fit min-w-[300px] max-w-full items-center overflow-hidden rounded-full bg-[#ededed] p-0 sm:h-[30px] max-[520px]:min-w-0 max-[520px]:w-full"
+      style={{ gridTemplateColumns: `repeat(${viewOrder.length}, minmax(0, 1fr))` }}
     >
+      {/* The dark pill slides to the chosen tab; the tabs are equal-width, so it moves in whole steps. */}
+      <span
+        aria-hidden
+        className="absolute inset-y-0 left-0 rounded-full bg-[#1a1a1a] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+        style={{
+          width: `${100 / viewOrder.length}%`,
+          transform: `translateX(${viewOrder.indexOf(value) * 100}%)`,
+        }}
+      />
       {viewOrder.map((item) => {
         const active = value === item;
 
@@ -429,8 +439,8 @@ function ViewSwitcher({
             aria-selected={active}
             aria-controls="portfolio-panel"
             onClick={() => onChange(item)}
-            className={`relative h-full flex-1 whitespace-nowrap rounded-full px-2 text-[0.68rem] font-medium max-[359px]:px-1 max-[359px]:text-[0.62rem] tracking-[-0.035em] sm:px-4 sm:text-[0.74rem] ${
-              active ? "bg-[#1a1a1a] text-white" : "text-[#111111]/50 hover:text-[#111111]/80"
+            className={`relative z-10 h-full whitespace-nowrap rounded-full px-2 text-[0.68rem] font-medium max-[359px]:px-1 max-[359px]:text-[0.62rem] tracking-[-0.035em] sm:px-4 sm:text-[0.74rem] transition-colors duration-300 ${
+              active ? "text-white" : "text-[#111111]/50 hover:text-[#111111]/80"
             }`}
           >
             {item === "websites" ? (

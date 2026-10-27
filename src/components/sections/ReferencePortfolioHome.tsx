@@ -344,7 +344,7 @@ function IdentityPanel() {
             className="sam-social-pill"
             aria-label="GitHub"
           >
-            <Github className="h-4 w-4" aria-hidden />
+            <Github className="h-4 w-4 text-[#181717]" aria-hidden />
           </a>
           <a
             href={profile.facebook}
@@ -353,7 +353,7 @@ function IdentityPanel() {
             className="sam-social-pill"
             aria-label="Facebook"
           >
-            <Facebook className="h-4 w-4" aria-hidden />
+            <Facebook className="h-4 w-4 text-[#1877F2]" aria-hidden />
           </a>
           <a
             href={profile.threads}
@@ -362,7 +362,7 @@ function IdentityPanel() {
             className="sam-social-pill"
             aria-label="Threads"
           >
-            <ThreadsIcon className="h-4 w-4" />
+            <ThreadsIcon className="h-4 w-4 text-black" />
           </a>
           {/* The LinkedIn link is hidden for now. To show it again, uncomment this link.
           <a href={profile.linkedin} target="_blank" rel="noreferrer" className="sam-social-pill">
@@ -373,7 +373,7 @@ function IdentityPanel() {
             Upwork
           </a>
           <a href={`mailto:${profile.email}`} className="sam-social-pill" aria-label="Email">
-            <Mail className="h-4 w-4" aria-hidden />
+            <Mail className="h-4 w-4 text-[#EA4335]" aria-hidden />
           </a>
         </div>
       </div>

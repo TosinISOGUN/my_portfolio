@@ -1,11 +1,20 @@
 import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion, useInView, useReducedMotion, type MotionStyle } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Calendar, Facebook, Github, MessageCircle } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Calendar,
+  Facebook,
+  Github,
+  Mail,
+  MessageCircle,
+} from "lucide-react";
 // The resume link is hidden for now. To show it again, uncomment this import, add
 // ArrowDownToLine to the lucide-react import, and uncomment the Resume link in IdentityPanel.
 // import resumePdf from "@/assets/OLUWATOMISIN_ISOGUN_RESUME.pdf";
 import { PhoneStage } from "@/components/PhoneStage";
+import { ThreadsIcon } from "@/components/ThreadsIcon";
 import { SkeletonImage } from "@/components/SkeletonImage";
 import { CtaBlock, Faq } from "@/components/sections/BusinessSections";
 import { SiteFooter } from "@/components/sections/SiteFooter";
@@ -114,21 +123,22 @@ export function ReferencePortfolioHome() {
   };
 
   // The new tab replaces the old one in a single step (no fade-out and no empty gap, which made
-  // the page flicker and the scrollbar jump). The jump to the top happens in the same frame,
-  // before anything is painted. It only runs for a tab the visitor picked, so a tab restored
-  // after returning from a case study keeps its restored scroll position.
+  // the page flicker and the scrollbar jump), then the page glides to the top of it. It only runs
+  // for a tab the visitor picked, so a tab restored after returning from a case study keeps its
+  // restored scroll position. With reduced motion the glide is an instant jump.
   useIsomorphicLayoutEffect(() => {
     if (!switchedByVisitor.current) return;
     switchedByVisitor.current = false;
 
+    const behavior = reduce ? "instant" : "smooth";
     // The whole page scrolls, so a new tab starts at the top of the page on wide screens and at
     // the top of the tab content on phones, where the profile sits above it.
     if (window.innerWidth < 1024) {
-      contentScrollRef.current?.scrollIntoView({ block: "start", behavior: "instant" });
+      contentScrollRef.current?.scrollIntoView({ block: "start", behavior });
     } else {
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      window.scrollTo({ top: 0, left: 0, behavior });
     }
-  }, [view]);
+  }, [view, reduce]);
 
   return (
     <main className="sam-page min-h-screen bg-white text-[#111111]">
@@ -335,7 +345,7 @@ function IdentityPanel() {
             className="sam-social-pill"
             aria-label="GitHub"
           >
-            <Github className="h-4 w-4" aria-hidden />
+            <Github className="h-4 w-4 text-[#181717]" aria-hidden />
           </a>
           <a
             href={profile.facebook}
@@ -344,16 +354,27 @@ function IdentityPanel() {
             className="sam-social-pill"
             aria-label="Facebook"
           >
-            <Facebook className="h-4 w-4" aria-hidden />
+            <Facebook className="h-4 w-4 text-[#1877F2]" aria-hidden />
           </a>
+          <a
+            href={profile.threads}
+            target="_blank"
+            rel="noreferrer"
+            className="sam-social-pill"
+            aria-label="Threads"
+          >
+            <ThreadsIcon className="h-4 w-4 text-black" />
+          </a>
+          {/* The LinkedIn link is hidden for now. To show it again, uncomment this link.
           <a href={profile.linkedin} target="_blank" rel="noreferrer" className="sam-social-pill">
             LinkedIn
           </a>
+          */}
           <a href={profile.upwork} target="_blank" rel="noreferrer" className="sam-social-pill">
             Upwork
           </a>
-          <a href={`mailto:${profile.email}`} className="sam-social-pill">
-            Email
+          <a href={`mailto:${profile.email}`} className="sam-social-pill" aria-label="Email">
+            <Mail className="h-4 w-4 text-[#EA4335]" aria-hidden />
           </a>
         </div>
       </div>

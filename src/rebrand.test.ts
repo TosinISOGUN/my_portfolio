@@ -42,6 +42,7 @@ describe("client-facing copy rules", () => {
     expect(allText).toContain("upwork.com/freelancers");
     expect(allText).toContain("wa.me/2348164376172");
     expect(allText).toContain("facebook.com/profile.php?id=61595720432735");
+    expect(allText).toContain("threads.com/@isogunlabs");
   });
 
   it("uses the rebrand headline, buttons and footer line", () => {

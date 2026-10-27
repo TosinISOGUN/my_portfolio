@@ -38,7 +38,8 @@ const structuredData = [
     url: siteUrl,
     sameAs: [
       "https://github.com/TosinISOGUN",
-      "https://www.linkedin.com/in/oluwatomisin-isogun-a38740356/",
+      // LinkedIn is hidden for now: "https://www.linkedin.com/in/oluwatomisin-isogun-a38740356/",
+      "https://www.threads.com/@isogunlabs",
       "https://www.upwork.com/freelancers/~0136c2f689158ada21",
     ],
     knowsAbout: [

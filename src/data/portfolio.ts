@@ -369,6 +369,7 @@ export const profile = {
   linkedin: "https://www.linkedin.com/in/oluwatomisin-isogun-a38740356/",
   upwork: "https://www.upwork.com/freelancers/~0136c2f689158ada21?mp_source=share",
   facebook: "https://www.facebook.com/profile.php?id=61595720432735",
+  threads: "https://www.threads.com/@isogunlabs",
 };
 
 /** Opens WhatsApp with a short starter message. Number is in international format, no plus or zeros. */

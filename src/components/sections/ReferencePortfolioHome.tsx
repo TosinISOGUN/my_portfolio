@@ -123,21 +123,22 @@ export function ReferencePortfolioHome() {
   };
 
   // The new tab replaces the old one in a single step (no fade-out and no empty gap, which made
-  // the page flicker and the scrollbar jump). The jump to the top happens in the same frame,
-  // before anything is painted. It only runs for a tab the visitor picked, so a tab restored
-  // after returning from a case study keeps its restored scroll position.
+  // the page flicker and the scrollbar jump), then the page glides to the top of it. It only runs
+  // for a tab the visitor picked, so a tab restored after returning from a case study keeps its
+  // restored scroll position. With reduced motion the glide is an instant jump.
   useIsomorphicLayoutEffect(() => {
     if (!switchedByVisitor.current) return;
     switchedByVisitor.current = false;
 
+    const behavior = reduce ? "instant" : "smooth";
     // The whole page scrolls, so a new tab starts at the top of the page on wide screens and at
     // the top of the tab content on phones, where the profile sits above it.
     if (window.innerWidth < 1024) {
-      contentScrollRef.current?.scrollIntoView({ block: "start", behavior: "instant" });
+      contentScrollRef.current?.scrollIntoView({ block: "start", behavior });
     } else {
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      window.scrollTo({ top: 0, left: 0, behavior });
     }
-  }, [view]);
+  }, [view, reduce]);
 
   return (
     <main className="sam-page min-h-screen bg-white text-[#111111]">

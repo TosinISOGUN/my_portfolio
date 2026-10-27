@@ -86,46 +86,49 @@ export function PhoneStage({ screens, title, className = "" }: PhoneStageProps) 
         {screens.map((screen, index) => (
           <div
             key={screen.src}
-            className={`grid aspect-[270/585] grid-rows-[41fr_544fr] ${
+            className={`aspect-[270/585] ${
               three ? "w-[31%] max-w-[300px]" : "w-[46%] max-w-[360px]"
-            } overflow-hidden rounded-[15%/7%] border border-black/15 bg-white shadow-[0_36px_60px_-40px_rgb(0_0_0/0.5)]`}
+            } rounded-[15%/7%] border border-black/30 bg-[#121214] p-[2px] sm:p-[3px] shadow-[0_36px_60px_-40px_rgb(0_0_0/0.5)]`}
           >
-            <div
-              aria-hidden
-              style={{ background: screen.top, color: screen.topLight ? "#111111" : "#ffffff" }}
-              className="relative flex items-center justify-between px-[10%] pb-[2.6%]"
-            >
-              {/* The Dynamic Island: a black pill centred at the top of the status bar. */}
-              <span
+            {/* The screen sits inside a thin black bezel; its corners are the phone's, less the bezel. */}
+            <div className="grid h-full grid-rows-[41fr_544fr] overflow-hidden rounded-[14.3%/6.6%] bg-white">
+              <div
                 aria-hidden
-                className="absolute left-1/2 top-[18%] h-[46%] w-[30%] -translate-x-1/2 rounded-full bg-black"
-              />
-              <span className="text-[0.6rem] font-semibold leading-none tracking-tight sm:text-[0.74rem] lg:text-[0.92rem]">
-                9:41
-              </span>
-              {/* The icons are sized as a share of the phone, so they keep a gap from the island at any size. */}
-              <span className="flex w-[23%] items-center justify-between">
-                <SignalBars className="h-auto w-[27%]" />
-                <WifiFan className="h-auto w-[25%]" />
-                <BatteryFull className="h-auto w-[40%]" />
-              </span>
-            </div>
+                style={{ background: screen.top, color: screen.topLight ? "#111111" : "#ffffff" }}
+                className="relative flex items-center justify-between px-[10%] pb-[2.6%]"
+              >
+                {/* The Dynamic Island: a black pill centred at the top of the status bar. */}
+                <span
+                  aria-hidden
+                  className="absolute left-1/2 top-[18%] h-[46%] w-[30%] -translate-x-1/2 rounded-full bg-black"
+                />
+                <span className="text-[0.6rem] font-semibold leading-none tracking-tight sm:text-[0.74rem] lg:text-[0.92rem]">
+                  9:41
+                </span>
+                {/* The icons are sized as a share of the phone, so they keep a gap from the island at any size. */}
+                <span className="flex w-[23%] items-center justify-between">
+                  <SignalBars className="h-auto w-[27%]" />
+                  <WifiFan className="h-auto w-[25%]" />
+                  <BatteryFull className="h-auto w-[40%]" />
+                </span>
+              </div>
 
-            <div className="relative min-h-0 overflow-hidden">
-              <img
-                src={screen.src}
-                alt={`${title} on a phone, screen ${index + 1} of ${screens.length}`}
-                className="h-full w-full object-cover object-top"
-                loading="lazy"
-                decoding="async"
-                width={390}
-                height={844}
-              />
-              <span
-                aria-hidden
-                style={{ background: screen.bottomLight ? "#111111" : "#ffffff" }}
-                className="absolute bottom-[2.4%] left-1/2 h-[3px] w-[38%] -translate-x-1/2 rounded-full sm:h-1 lg:h-[5px]"
-              />
+              <div className="relative min-h-0 overflow-hidden">
+                <img
+                  src={screen.src}
+                  alt={`${title} on a phone, screen ${index + 1} of ${screens.length}`}
+                  className="h-full w-full object-cover object-top"
+                  loading="lazy"
+                  decoding="async"
+                  width={390}
+                  height={844}
+                />
+                <span
+                  aria-hidden
+                  style={{ background: screen.bottomLight ? "#111111" : "#ffffff" }}
+                  className="absolute bottom-[2.4%] left-1/2 h-[3px] w-[38%] -translate-x-1/2 rounded-full sm:h-1 lg:h-[5px]"
+                />
+              </div>
             </div>
           </div>
         ))}

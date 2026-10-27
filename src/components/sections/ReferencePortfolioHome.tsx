@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { motion, useInView, useReducedMotion, type MotionStyle } from "framer-motion";
+import { LazyMotion, m, useInView, useReducedMotion, type MotionStyle } from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -58,6 +58,9 @@ const viewLabels: Record<ViewMode, string> = {
   samples: "Work samples",
   certifications: "Certifications",
 };
+
+// Loads the animation code after the first paint (see src/lib/motion-features.ts).
+const loadMotionFeatures = () => import("@/lib/motion-features").then((module) => module.default);
 
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
@@ -141,101 +144,103 @@ export function ReferencePortfolioHome() {
   }, [view, reduce]);
 
   return (
-    <main className="sam-page min-h-screen bg-white text-[#111111]">
-      <div className="grid min-h-screen lg:grid-cols-[clamp(280px,24vw,330px)_minmax(0,1fr)] xl:grid-cols-[380px_minmax(0,1fr)]">
-        <IdentityPanel />
+    <LazyMotion features={loadMotionFeatures} strict>
+      <main className="sam-page min-h-screen bg-white text-[#111111]">
+        <div className="grid min-h-screen lg:grid-cols-[clamp(280px,24vw,330px)_minmax(0,1fr)] xl:grid-cols-[380px_minmax(0,1fr)]">
+          <IdentityPanel />
 
-        <section
-          ref={contentScrollRef}
-          id="portfolio-panel"
-          role="tabpanel"
-          aria-labelledby={`tab-${view}`}
-          tabIndex={0}
-          data-case-study-scroll-root="home-work"
-          data-case-study-return-view={view}
-          className="min-w-0 border-[#111111]/10 lg:border-l"
-        >
-          <div className="sticky top-0 z-20 border-b border-[#111111]/10 bg-white px-3 py-2.5 sm:px-8 sm:py-3 lg:px-5">
-            <ViewSwitcher value={view} onChange={handleViewChange} />
-          </div>
+          <section
+            ref={contentScrollRef}
+            id="portfolio-panel"
+            role="tabpanel"
+            aria-labelledby={`tab-${view}`}
+            tabIndex={0}
+            data-case-study-scroll-root="home-work"
+            data-case-study-return-view={view}
+            className="min-w-0 border-[#111111]/10 lg:border-l"
+          >
+            <div className="sticky top-0 z-20 border-b border-[#111111]/10 bg-white px-3 py-2.5 sm:px-8 sm:py-3 lg:px-5">
+              <ViewSwitcher value={view} onChange={handleViewChange} />
+            </div>
 
-          <div className="px-3 py-4 sm:px-8 sm:py-5 lg:px-5">
-            <h2 className="sr-only">{viewLabels[view]}</h2>
-            <>
-              {view === "samples" ? (
-                <motion.div key="samples" className="grid gap-7" initial={false}>
-                  {sampleScreens.map((sample) => (
-                    <WorkSampleCard key={`${sample.title}-${sample.image}`} sample={sample} />
-                  ))}
-                </motion.div>
-              ) : view === "websites" ? (
-                <motion.div key="websites" className="grid gap-8" initial={false}>
-                  {workSamples.map((project, index) => (
-                    <Fragment key={project.slug}>
-                      {index > 0 ? <hr className="my-2 h-px border-0 bg-[#111111]/10" /> : null}
-                      <div className="grid gap-8">
-                        <WebsiteFrame project={project} animateIn={animateIn} index={index} />
-                        {websiteCollages[project.slug] ? (
-                          <WebsiteFrame
-                            project={project}
-                            animateIn={animateIn}
-                            index={index}
-                            picture={websiteCollages[project.slug]}
-                          />
-                        ) : null}
-                        <WebsitePhones project={project} animateIn={animateIn} index={index} />
-                      </div>
-                    </Fragment>
-                  ))}
-                  <CtaBlock />
-                  <Faq />
-                </motion.div>
-              ) : view === "case-studies" ? (
-                <motion.div key="case-studies" className="grid gap-10" initial={false}>
-                  {workSamples.map((project, index) => (
-                    <CaseStudyCover
-                      key={project.slug}
-                      project={project}
-                      animateIn={animateIn}
-                      index={index}
-                    />
-                  ))}
-                </motion.div>
-              ) : view === "work-history" ? (
-                <motion.div key="work-history" className="grid gap-0" initial={false}>
-                  {workHistory.map((entry, index) => (
-                    <WorkHistoryCard
-                      key={`${entry.company}-${entry.role}`}
-                      entry={entry}
-                      index={index}
-                      total={workHistory.length}
-                    />
-                  ))}
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="certifications"
-                  className="grid gap-8 overflow-x-clip py-2"
-                  initial={false}
-                >
-                  <p className="max-w-2xl text-[1.05rem] font-medium leading-7 tracking-[-0.035em] text-[#111111]/58">
-                    I run projects on a clear process.
-                  </p>
-                  {orderedCertifications.map((certificate, index) => (
-                    <CertificateCard
-                      key={certificate.image}
-                      certificate={certificate}
-                      index={index}
-                    />
-                  ))}
-                </motion.div>
-              )}
-            </>
-          </div>
-        </section>
-      </div>
-      <SiteFooter />
-    </main>
+            <div className="px-3 py-4 sm:px-8 sm:py-5 lg:px-5">
+              <h2 className="sr-only">{viewLabels[view]}</h2>
+              <>
+                {view === "samples" ? (
+                  <m.div key="samples" className="grid gap-7" initial={false}>
+                    {sampleScreens.map((sample) => (
+                      <WorkSampleCard key={`${sample.title}-${sample.image}`} sample={sample} />
+                    ))}
+                  </m.div>
+                ) : view === "websites" ? (
+                  <m.div key="websites" className="grid gap-8" initial={false}>
+                    {workSamples.map((project, index) => (
+                      <Fragment key={project.slug}>
+                        {index > 0 ? <hr className="my-2 h-px border-0 bg-[#111111]/10" /> : null}
+                        <div className="grid gap-8">
+                          <WebsiteFrame project={project} animateIn={animateIn} index={index} />
+                          {websiteCollages[project.slug] ? (
+                            <WebsiteFrame
+                              project={project}
+                              animateIn={animateIn}
+                              index={index}
+                              picture={websiteCollages[project.slug]}
+                            />
+                          ) : null}
+                          <WebsitePhones project={project} animateIn={animateIn} index={index} />
+                        </div>
+                      </Fragment>
+                    ))}
+                    <CtaBlock />
+                    <Faq />
+                  </m.div>
+                ) : view === "case-studies" ? (
+                  <m.div key="case-studies" className="grid gap-10" initial={false}>
+                    {workSamples.map((project, index) => (
+                      <CaseStudyCover
+                        key={project.slug}
+                        project={project}
+                        animateIn={animateIn}
+                        index={index}
+                      />
+                    ))}
+                  </m.div>
+                ) : view === "work-history" ? (
+                  <m.div key="work-history" className="grid gap-0" initial={false}>
+                    {workHistory.map((entry, index) => (
+                      <WorkHistoryCard
+                        key={`${entry.company}-${entry.role}`}
+                        entry={entry}
+                        index={index}
+                        total={workHistory.length}
+                      />
+                    ))}
+                  </m.div>
+                ) : (
+                  <m.div
+                    key="certifications"
+                    className="grid gap-8 overflow-x-clip py-2"
+                    initial={false}
+                  >
+                    <p className="max-w-2xl text-[1.05rem] font-medium leading-7 tracking-[-0.035em] text-[#111111]/58">
+                      I run projects on a clear process.
+                    </p>
+                    {orderedCertifications.map((certificate, index) => (
+                      <CertificateCard
+                        key={certificate.image}
+                        certificate={certificate}
+                        index={index}
+                      />
+                    ))}
+                  </m.div>
+                )}
+              </>
+            </div>
+          </section>
+        </div>
+        <SiteFooter />
+      </main>
+    </LazyMotion>
   );
 }
 
@@ -243,7 +248,7 @@ function IdentityPanel() {
   const reduce = useReducedMotion();
 
   return (
-    <motion.aside
+    <m.aside
       className="sam-identity-panel flex min-h-0 flex-col gap-12 px-8 py-8 sm:px-10 sm:py-10 lg:sticky lg:top-0 lg:h-screen lg:min-h-0 lg:self-start lg:justify-between lg:gap-0 lg:overflow-hidden lg:px-8 lg:py-2 xl:px-8 xl:py-5"
       initial={reduce ? false : { opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -380,7 +385,7 @@ function IdentityPanel() {
           </a>
         </div>
       </div>
-    </motion.aside>
+    </m.aside>
   );
 }
 
@@ -471,7 +476,7 @@ function CertificateCard({
   const fromLeft = index % 2 === 0;
 
   return (
-    <motion.article
+    <m.article
       className="group overflow-hidden rounded-[26px] bg-[#ededed]"
       initial={
         reduce
@@ -484,7 +489,7 @@ function CertificateCard({
       transition={{ type: "spring", stiffness: 90, damping: 14 }}
     >
       <SkeletonImage src={certificate.image} alt={certificate.title} className="bg-white" />
-      <motion.div
+      <m.div
         className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 pb-4 pt-4 sm:px-5"
         initial={reduce ? false : { opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -498,8 +503,8 @@ function CertificateCard({
         <span className="rounded-full bg-white px-3 py-1 text-[0.74rem] font-semibold tracking-[-0.02em] text-[#111111]/55">
           {certificate.theme}
         </span>
-      </motion.div>
-    </motion.article>
+      </m.div>
+    </m.article>
   );
 }
 
@@ -526,7 +531,7 @@ function WorkSampleCard({
 
   return (
     <div ref={ref}>
-      <motion.article
+      <m.article
         className="relative rounded-[24px] bg-[#ededed]"
         initial={false}
         animate={
@@ -537,7 +542,7 @@ function WorkSampleCard({
         transition={{ duration: reduce ? 0 : 0.95, ease }}
       >
         <div className="relative overflow-hidden rounded-[24px] bg-white">
-          <motion.div
+          <m.div
             initial={false}
             animate={
               show ? { scale: 1, filter: "grayscale(0)" } : { scale: 1.14, filter: "grayscale(1)" }
@@ -545,8 +550,8 @@ function WorkSampleCard({
             transition={{ duration: reduce ? 0 : 1.2, ease }}
           >
             <SkeletonImage src={sample.image} alt={sample.title} />
-          </motion.div>
-          <motion.div
+          </m.div>
+          <m.div
             className="absolute left-3 top-3"
             initial={false}
             animate={show ? { x: 0, opacity: 1 } : { x: -24, opacity: 0 }}
@@ -564,9 +569,9 @@ function WorkSampleCard({
                 {sample.position}/{sample.total}
               </span>
             </Link>
-          </motion.div>
+          </m.div>
         </div>
-      </motion.article>
+      </m.article>
     </div>
   );
 }
@@ -606,7 +611,7 @@ function WorkHistoryCard({
       <div className="relative" aria-hidden>
         {!(isFirst && isLast) ? (
           <span className={`absolute left-1/2 w-px -translate-x-1/2 bg-[#111111]/12 ${lineSpan}`}>
-            <motion.span
+            <m.span
               className="block h-full w-full origin-top bg-[#111111]"
               initial={reduce ? false : { scaleY: 0 }}
               whileInView={{ scaleY: 1 }}
@@ -623,7 +628,7 @@ function WorkHistoryCard({
                 style={{ animation: "sam-status-breathe 1.6s ease-in-out infinite" }}
               />
             )}
-            <motion.span
+            <m.span
               className="absolute left-1/2 top-7 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#00d45a] shadow-[0_0_14px_rgb(0_240_106/0.7)]"
               initial={reduce ? false : { scale: 0.4 }}
               whileInView={{ scale: 1 }}
@@ -632,7 +637,7 @@ function WorkHistoryCard({
             />
           </>
         ) : (
-          <motion.span
+          <m.span
             className="absolute left-1/2 top-7 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#111111]"
             initial={reduce ? false : { scale: 0.6, backgroundColor: "#ffffff" }}
             whileInView={{ scale: 1, backgroundColor: "#111111" }}
@@ -642,7 +647,7 @@ function WorkHistoryCard({
         )}
       </div>
 
-      <motion.div
+      <m.div
         className="pb-8 md:pb-10"
         initial={reduce ? false : { y: 44, scale: 0.97 }}
         whileInView={{ y: 0, scale: 1 }}
@@ -669,7 +674,7 @@ function WorkHistoryCard({
           {entry.points.length ? (
             <ol className="mt-6 max-w-3xl divide-y divide-[#111111]/10 overflow-hidden rounded-[20px] bg-white px-4">
               {entry.points.map((point, pointIndex) => (
-                <motion.li
+                <m.li
                   key={point}
                   className="flex gap-4 py-3.5"
                   initial={reduce ? false : { x: -18 }}
@@ -691,7 +696,7 @@ function WorkHistoryCard({
                   <span className="text-[0.95rem] font-medium leading-6 tracking-[-0.03em] text-[#111111]/72">
                     {point}
                   </span>
-                </motion.li>
+                </m.li>
               ))}
             </ol>
           ) : null}
@@ -742,7 +747,7 @@ function WorkHistoryCard({
             </ul>
           </div>
         </div>
-      </motion.div>
+      </m.div>
     </article>
   );
 }
@@ -770,10 +775,13 @@ function WebsiteFrame({
   if (!cover) return null;
 
   const concept = project.labels.includes("Concept project");
+  // The first picture is the largest thing above the fold, so it is visible in the page as it is
+  // sent instead of waiting for the scripts to fade it in.
+  const leadPicture = index === 0 && !overview;
 
   return (
-    <motion.article
-      initial={reduce ? false : { opacity: 0, y: 36 }}
+    <m.article
+      initial={reduce || leadPicture ? false : { opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={projectInView}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: index < 3 ? index * 0.09 : 0 }}
@@ -792,11 +800,12 @@ function WebsiteFrame({
         <div className="transition-transform duration-700 group-hover:scale-[1.012] motion-reduce:transition-none">
           <SkeletonImage
             src={cover}
+            priority={leadPicture}
             alt={`${project.title}${concept ? " (concept project)" : ""} ${overview ? "whole home page, in columns" : "website preview"}`}
           />
         </div>
       </Link>
-    </motion.article>
+    </m.article>
   );
 }
 
@@ -819,7 +828,7 @@ function WebsitePhones({
   if (!phones.length) return null;
 
   return (
-    <motion.div
+    <m.div
       initial={reduce ? false : { opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={projectInView}
@@ -835,7 +844,7 @@ function WebsitePhones({
       >
         <PhoneStage screens={phones} title={project.title} />
       </Link>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -895,7 +904,7 @@ function CaseStudyCover({
   const tint = { "--accent": project.accent } as MotionStyle;
 
   return (
-    <motion.article
+    <m.article
       style={tint}
       initial={reduce ? false : { opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -939,7 +948,7 @@ function CaseStudyCover({
       </Link>
 
       <CaseStudyLink slug={project.slug} title={project.title} concept={concept} />
-    </motion.article>
+    </m.article>
   );
 }
 

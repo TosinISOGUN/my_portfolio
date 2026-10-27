@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Calendar, Check, ChevronDown, MessageCircle, Send } from "lucide-react";
 import profilePhoto from "@/assets/profile-photo.webp";
 import { bookingUrl, whatsappUrl } from "@/data/portfolio";
@@ -162,7 +162,7 @@ function FaqItem({
 
       {/* The answer stays in the page when closed (so search engines can read it); it is only
           collapsed to zero height, hidden from tab order and screen readers via inert. */}
-      <motion.div
+      <m.div
         id={`${id}-answer`}
         role="region"
         aria-labelledby={`${id}-question`}
@@ -172,7 +172,7 @@ function FaqItem({
         transition={{ duration, ease }}
         className="overflow-hidden"
       >
-        <motion.div
+        <m.div
           className="flex items-end gap-3 pt-2"
           style={{ transformOrigin: "left bottom" }}
           initial={false}
@@ -195,8 +195,8 @@ function FaqItem({
               </>
             ) : null}
           </div>
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
     </div>
   );
 }

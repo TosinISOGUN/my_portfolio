@@ -1,4 +1,4 @@
-import type { MobileScreen } from "@/data/portfolio";
+import { getImageSrcSet, type MobileScreen } from "@/data/portfolio";
 
 // The three status icons are drawn like the iPhone's (they take the status bar's text colour).
 function SignalBars({ className }: { className?: string }) {
@@ -49,6 +49,10 @@ function BatteryFull({ className }: { className?: string }) {
     </svg>
   );
 }
+
+// A phone is about a third of the width on a phone-sized screen (two or three share the row) and
+// never wider than 360px.
+const PHONE_SIZES = "(min-width: 640px) 330px, 42vw";
 
 type PhoneStageProps = {
   /** Phone screenshots, shown side by side. */
@@ -116,6 +120,9 @@ export function PhoneStage({ screens, title, className = "" }: PhoneStageProps) 
               <div className="relative min-h-0 overflow-hidden">
                 <img
                   src={screen.src}
+                  {...(getImageSrcSet(screen.src)
+                    ? { srcSet: getImageSrcSet(screen.src), sizes: PHONE_SIZES }
+                    : {})}
                   alt={`${title} on a phone, screen ${index + 1} of ${screens.length}`}
                   className="h-full w-full object-cover object-top"
                   loading="lazy"

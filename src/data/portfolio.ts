@@ -3,7 +3,7 @@ import infinitativeLogo from "@/assets/portfolio/infinitative.svg";
 import learncityLogo from "@/assets/portfolio/LC_logo.png";
 import nachieLogo from "@/assets/portfolio/nachie_maridadi_favicon.png";
 import oyoLogo from "@/assets/portfolio/oyo-state-logo-card.png";
-import { imageSizes } from "./image-sizes.generated";
+import { imageSizes, responsiveWidths } from "./image-sizes.generated";
 import { mobileTones, type MobileTone } from "./mobile-tones.generated";
 
 type ScreenshotModule = Record<string, string>;
@@ -11,17 +11,32 @@ export type ImageSize = { width: number; height: number };
 /** A phone screenshot and the colours at its top and bottom edge (see mobile-tones.generated.ts). */
 export type MobileScreen = MobileTone & { src: string };
 
-// Maps a built image URL to its pixel size, so components can reserve space before it loads.
+// Maps a built image URL to its pixel size, so components can reserve space before it loads, and to
+// its srcset (smaller copies in public/img/ plus the original), so each screen downloads only what
+// it needs. The copies' names follow a fixed pattern (see scripts/optimize-images.mjs), so no list
+// of files is needed here, only each image's version from the manifest.
 const sizeByUrl = new Map<string, ImageSize>();
+const srcSetByUrl = new Map<string, string>();
 
 const registerSizes = (modules: ScreenshotModule) => {
   for (const [path, url] of Object.entries(modules)) {
-    const size = imageSizes[path.replace("../assets/", "")];
-    if (size) sizeByUrl.set(url, size);
+    const key = path.replace("../assets/", "");
+    const size = imageSizes[key];
+    if (!size) continue;
+    sizeByUrl.set(url, size);
+
+    if (size.v) {
+      const base = encodeURI(`/img/${key.replace(/\.webp$/i, "")}`);
+      const copies = responsiveWidths
+        .filter((width) => width <= size.width * 0.9)
+        .map((width) => `${base}-${width}.${size.v}.webp ${width}w`);
+      if (copies.length) srcSetByUrl.set(url, [...copies, `${url} ${size.width}w`].join(", "));
+    }
   }
 };
 
 export const getImageSize = (src: string) => sizeByUrl.get(src);
+export const getImageSrcSet = (src: string) => srcSetByUrl.get(src);
 
 const getScreens = (modules: ScreenshotModule) => {
   registerSizes(modules);

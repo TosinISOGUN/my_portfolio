@@ -1,5 +1,54 @@
-import { BatteryFull, SignalHigh, Wifi } from "lucide-react";
 import type { MobileScreen } from "@/data/portfolio";
+
+// The three status icons are drawn like the iPhone's (they take the status bar's text colour).
+function SignalBars({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 18 12" fill="currentColor" aria-hidden className={className}>
+      <rect x="0" y="8" width="3.2" height="4" rx="1" />
+      <rect x="4.9" y="5.5" width="3.2" height="6.5" rx="1" />
+      <rect x="9.8" y="3" width="3.2" height="9" rx="1" />
+      <rect x="14.7" y="0" width="3.2" height="12" rx="1" />
+    </svg>
+  );
+}
+
+function WifiFan({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 17 12" aria-hidden className={className}>
+      <path d="M8.5 10.8 L6.38 8.68 A3 3 0 0 1 10.62 8.68 Z" fill="currentColor" />
+      <path
+        d="M4.26 6.56 A6 6 0 0 1 12.74 6.56 M2.14 4.44 A9 9 0 0 1 14.86 4.44"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function BatteryFull({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 27 13" aria-hidden className={className}>
+      <rect
+        x="0.5"
+        y="0.5"
+        width="22"
+        height="12"
+        rx="3.8"
+        fill="none"
+        stroke="currentColor"
+        strokeOpacity="0.4"
+      />
+      <rect x="2" y="2" width="19" height="9" rx="2.5" fill="currentColor" />
+      <path
+        d="M24 4.5v4c.8-.3 1.5-1.2 1.5-2s-.7-1.7-1.5-2z"
+        fill="currentColor"
+        fillOpacity="0.45"
+      />
+    </svg>
+  );
+}
 
 type PhoneStageProps = {
   /** Phone screenshots, shown side by side. */
@@ -55,18 +104,9 @@ export function PhoneStage({ screens, title, className = "" }: PhoneStageProps) 
                 9:41
               </span>
               <span className="flex items-center gap-[3px] sm:gap-1 lg:gap-1.5">
-                <SignalHigh
-                  className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 lg:h-[1.1rem] lg:w-[1.1rem]"
-                  strokeWidth={2.6}
-                />
-                <Wifi
-                  className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 lg:h-[1.1rem] lg:w-[1.1rem]"
-                  strokeWidth={2.6}
-                />
-                <BatteryFull
-                  className="h-3 w-3 sm:h-4 sm:w-4 lg:h-[1.3rem] lg:w-[1.3rem]"
-                  strokeWidth={2.2}
-                />
+                <SignalBars className="h-[0.5rem] w-auto sm:h-[0.7rem] lg:h-[0.9rem]" />
+                <WifiFan className="h-[0.5rem] w-auto sm:h-[0.7rem] lg:h-[0.9rem]" />
+                <BatteryFull className="h-[0.55rem] w-auto sm:h-[0.75rem] lg:h-[0.95rem]" />
               </span>
             </div>
 

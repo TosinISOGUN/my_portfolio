@@ -933,14 +933,6 @@ function CaseStudyCover({
           <p className="text-[clamp(2.4rem,9vw,6rem)] font-extrabold uppercase leading-[0.88] tracking-[-0.06em] text-[var(--accent)] [overflow-wrap:anywhere]">
             {project.title}
           </p>
-          <p className="sam-handwritten mt-4 flex items-center justify-center gap-2 text-[1.2rem] text-[#111111]/70">
-            <img
-              src={profilePhoto}
-              alt="Oluwatomisin Isogun"
-              className="h-7 w-7 rounded-full object-cover"
-            />
-            -by Oluwatomisin
-          </p>
         </div>
       </Link>
 

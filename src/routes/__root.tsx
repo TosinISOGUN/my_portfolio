@@ -1,8 +1,7 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
   Link,
-  createRootRouteWithContext,
+  createRootRoute,
   useLocation,
   useRouter,
   HeadContent,
@@ -11,6 +10,7 @@ import {
 import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import dmSansFont from "../assets/fonts/dm-sans-latin.woff2?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ogImageUrl, seoDescription, seoTitle, shareTitle, siteUrl } from "../lib/seo";
 import { restorePendingCaseStudyReturn } from "../lib/navigation-memory";
@@ -154,7 +154,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -213,6 +213,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
+      // The body font starts downloading with the page, not after the stylesheet has been read.
+      {
+        rel: "preload",
+        href: dmSansFont,
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
       { rel: "icon", href: "/favicon.ico", sizes: "any" },
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "icon", href: "/favicon-48x48.png", type: "image/png", sizes: "48x48" },
@@ -263,14 +271,12 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
-
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <ScrollManager />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
-    </QueryClientProvider>
+    </>
   );
 }
 

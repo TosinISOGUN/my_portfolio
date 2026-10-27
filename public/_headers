@@ -1,0 +1,6 @@
+# Cache rules for hosts that read a _headers file (Cloudflare Pages, Netlify).
+# GitHub Pages ignores this file and always sends "Cache-Control: max-age=600"; to cache longer
+# there, put Cloudflare in front of the domain and add the same rule as a Cache Rule.
+# Files in /assets/ have a content hash in their name, so a changed file always gets a new URL.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

@@ -906,7 +906,7 @@ function CaseStudyCover({
         onClick={rememberCaseStudyReturn}
         aria-hidden
         tabIndex={-1}
-        className="group block overflow-hidden rounded-[26px] border border-[color-mix(in_oklab,var(--accent)_26%,white)] bg-[color-mix(in_oklab,var(--accent)_10%,white)] px-5 pt-7 text-center sm:px-10 sm:pt-10"
+        className="group block overflow-hidden border border-[#e4dccb] bg-[#f6f1e7] px-5 pt-7 text-center sm:px-10 sm:pt-10"
       >
         {concept ? (
           <span className="mb-4 inline-block rounded-full bg-white/80 px-3 py-1 text-[0.74rem] font-semibold tracking-[-0.01em] text-[var(--accent)]">

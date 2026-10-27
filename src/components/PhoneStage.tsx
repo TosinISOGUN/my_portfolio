@@ -98,15 +98,16 @@ export function PhoneStage({ screens, title, className = "" }: PhoneStageProps) 
               {/* The Dynamic Island: a black pill centred at the top of the status bar. */}
               <span
                 aria-hidden
-                className="absolute left-1/2 top-[18%] h-[46%] w-[32%] -translate-x-1/2 rounded-full bg-black"
+                className="absolute left-1/2 top-[18%] h-[46%] w-[30%] -translate-x-1/2 rounded-full bg-black"
               />
               <span className="text-[0.6rem] font-semibold leading-none tracking-tight sm:text-[0.74rem] lg:text-[0.92rem]">
                 9:41
               </span>
-              <span className="flex items-center gap-[3px] sm:gap-1 lg:gap-1.5">
-                <SignalBars className="h-[0.5rem] w-auto sm:h-[0.7rem] lg:h-[0.9rem]" />
-                <WifiFan className="h-[0.5rem] w-auto sm:h-[0.7rem] lg:h-[0.9rem]" />
-                <BatteryFull className="h-[0.55rem] w-auto sm:h-[0.75rem] lg:h-[0.95rem]" />
+              {/* The icons are sized as a share of the phone, so they keep a gap from the island at any size. */}
+              <span className="flex w-[23%] items-center justify-between">
+                <SignalBars className="h-auto w-[27%]" />
+                <WifiFan className="h-auto w-[25%]" />
+                <BatteryFull className="h-auto w-[40%]" />
               </span>
             </div>
 

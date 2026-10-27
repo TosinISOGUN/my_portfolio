@@ -88,7 +88,7 @@ export function PhoneStage({ screens, title, className = "" }: PhoneStageProps) 
             key={screen.src}
             className={`aspect-[270/585] ${
               three ? "w-[31%] max-w-[300px]" : "w-[46%] max-w-[360px]"
-            } rounded-[15%/7%] border border-black/30 bg-[#121214] p-[2px] sm:p-[3px] shadow-[0_36px_60px_-40px_rgb(0_0_0/0.5)]`}
+            } rounded-[15%/7%] border border-black/30 bg-[#121214] p-[2px] sm:p-[3px] shadow-[0_1px_2px_rgb(0_0_0/0.1),0_10px_20px_-4px_rgb(0_0_0/0.2),0_30px_50px_-12px_rgb(0_0_0/0.32),0_60px_80px_-24px_rgb(0_0_0/0.3)]`}
           >
             {/* The screen sits inside a thin black bezel; its corners are the phone's, less the bezel. */}
             <div className="grid h-full grid-rows-[41fr_544fr] overflow-hidden rounded-[14.3%/6.6%] bg-white">

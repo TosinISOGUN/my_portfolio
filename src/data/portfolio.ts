@@ -176,6 +176,14 @@ const gloriaScreens = getScreens(
   }) as ScreenshotModule,
 );
 
+const weseeuScreens = getScreens(
+  import.meta.glob("../assets/product_showcase/weseeu/*.webp", {
+    eager: true,
+    import: "default",
+    query: "?url",
+  }) as ScreenshotModule,
+);
+
 // A tall capture of each older site's home page, in product_showcase/_tall/<slug>.webp. It is the
 // cover and the first gallery picture, so every project is shown the same way.
 const tallModules = import.meta.glob("../assets/product_showcase/_tall/*.webp", {
@@ -371,6 +379,7 @@ const juniperHome = screenAt(juniperScreens, 0);
 const everwellHome = screenAt(everwellScreens, 0);
 const alderHome = screenAt(alderScreens, 0);
 const gloriaHome = screenAt(gloriaScreens, 0);
+const weseeuHome = screenAt(weseeuScreens, 0);
 
 // The Websites tab normally shows each project's tall home-page capture. A project listed here
 // shows this picture there instead (the tall capture is still used on its other pages).
@@ -523,8 +532,9 @@ export const certifications = certificationModules.map(([path, image], index) =>
 
 // Repository links ("github" here, "githubUrl" on the case studies) are commented out on purpose;
 // uncomment them, and the block in src/routes/projects/$slug.tsx, to show them again.
-// The first four are concept sites built for fictional businesses. They lead the list so a
-// business owner sees them first; each says "Concept project" so nobody mistakes them for clients.
+// Velora Beauty leads, then Gloria May Byron (a real artist website), then the other concept sites
+// built for fictional businesses, so a business owner sees them first. Each concept says "Concept
+// project" so nobody mistakes them for clients. weSEEu, a product in development, follows them.
 export const featuredProjects = [
   {
     title: "Velora Beauty",
@@ -540,6 +550,20 @@ export const featuredProjects = [
       "A concept brief for a fictional beauty label that needed to feel colour-forward and confident while keeping shopping simple.",
     result:
       "A demo storefront with collections, product pages, a routine builder, a bag and a checkout.",
+  },
+  {
+    title: "Gloria May Byron",
+    slug: "gloria-may-byron",
+    accent: "#1F5C6B",
+    studio: "Singer and songwriter website",
+    tags: ["React 19", "TanStack Start", "Tailwind CSS", "Scroll-driven motion"],
+    labels: ["Artist website", "Music and videos", "Mobile-friendly"],
+    signals: ["Music and videos", "News and announcements", "Awards"],
+    link: "https://gloriamaybyron.com/",
+    problem:
+      "An independent artist needed one place that shows her music, news, photos and awards and makes it easy to get in touch.",
+    result:
+      "A photography-led artist website with music and video pages, news, a photo gallery, an awards page and a contact page.",
   },
   {
     title: "Hearthline Realty",
@@ -602,18 +626,18 @@ export const featuredProjects = [
       "A demo site with five practice area pages, three articles, a firm and process page, and a consultation form that sends nothing.",
   },
   {
-    title: "Gloria May Byron",
-    slug: "gloria-may-byron",
-    accent: "#1F5C6B",
-    studio: "Singer and songwriter website",
-    tags: ["React 19", "TanStack Start", "Tailwind CSS", "Scroll-driven motion"],
-    labels: ["Artist website", "Music and videos", "Mobile-friendly"],
-    signals: ["Music and videos", "News and announcements", "Awards"],
-    link: "https://gloriamaybyron.com/",
+    title: "weSEEu",
+    slug: "weseeu",
+    accent: "#0A4AA6",
+    studio: "Therapy and special-needs marketplace",
+    tags: ["Next.js 16", "React 19", "Supabase", "Tailwind CSS"],
+    labels: ["In development", "Marketplace", "Mobile-friendly"],
+    signals: ["Verified providers", "Request, then pay", "Country by country"],
+    link: "https://weseeu.vercel.app",
     problem:
-      "An independent artist needed one place that shows her music, news, photos and awards and makes it easy to get in touch.",
+      "Finding the right therapist or special-needs support often depends on who you know, and families want clear prices and terms before they ask for anything.",
     result:
-      "A photography-led artist website with music and video pages, news, a photo gallery, an awards page and a contact page.",
+      "A live site with a landing page, accounts for clients, practitioners and organisations, and the first practitioner onboarding screens. Booking and payments come next.",
   },
   {
     title: "Thomason",
@@ -791,6 +815,41 @@ export const projectCaseStudies = [
     mobile: mobileFor("velora-beauty"),
   },
   {
+    slug: "gloria-may-byron",
+    title: "Gloria May Byron",
+    eyebrow: "Artist Website",
+    role: "Design and development",
+    liveUrl: "https://gloriamaybyron.com/",
+    cover: gloriaHome,
+    summary: "Website for an independent singer and songwriter, with music, news and awards.",
+    challenge:
+      "An independent artist needed one place that shows her music, news, photos and awards, and makes it easy for people to book or contact her.",
+    approach:
+      "I rebuilt her site as seven pages: home, about, music, announcements, gallery, awards and contact. Every page opens on a full-bleed photograph, pages fade into each other, and a floating glass navigation bar stays in reach as you scroll.",
+    outcome:
+      "A fast, photography-led site with a light and a dark theme, built from her own words, credits and links. Platform and press logos keep their brand colours.",
+    metrics: ["Artist website", "7 pages", "Light and dark themes", "Scroll-driven motion"],
+    decisions: [
+      {
+        label: "Photography First",
+        value:
+          "Each page opens on a large photograph of her, so visitors meet the artist before they read a word.",
+      },
+      {
+        label: "Her Own Content",
+        value:
+          "All copy, credits, awards, videos and links come from her own website, so nothing about her is invented.",
+      },
+      {
+        label: "Motion That Respects Settings",
+        value:
+          "Scroll animation is done in CSS and shows its finished state for visitors who prefer reduced motion.",
+      },
+    ],
+    gallery: gloriaScreens,
+    mobile: mobileFor("gloria-may-byron"),
+  },
+  {
     slug: "hearthline-realty",
     title: "Hearthline Realty",
     eyebrow: "Real Estate Concept",
@@ -935,39 +994,39 @@ export const projectCaseStudies = [
     mobile: mobileFor("alder-rowe"),
   },
   {
-    slug: "gloria-may-byron",
-    title: "Gloria May Byron",
-    eyebrow: "Artist Website",
-    role: "Design and development",
-    liveUrl: "https://gloriamaybyron.com/",
-    cover: gloriaHome,
-    summary: "Website for an independent singer and songwriter, with music, news and awards.",
+    slug: "weseeu",
+    title: "weSEEu",
+    eyebrow: "Marketplace Product",
+    role: "Product, design and development",
+    liveUrl: "https://weseeu.vercel.app",
+    cover: weseeuHome,
+    summary: "Therapy and special-needs marketplace, in development: site, accounts and sign-up.",
     challenge:
-      "An independent artist needed one place that shows her music, news, photos and awards, and makes it easy for people to book or contact her.",
+      "Families looking for therapy or special-needs support often rely on word of mouth. The product has to show who is verified, what a session costs and what happens next, before anyone is asked to pay or share details.",
     approach:
-      "I rebuilt her site as seven pages: home, about, music, announcements, gallery, awards and contact. Every page opens on a full-bleed photograph, pages fade into each other, and a floating glass navigation bar stays in reach as you scroll.",
+      "I am building it in phases. The first phase is the public site and accounts: a landing page that explains booking, verification and the country-by-country launch, sign-up for clients, practitioners and organisations, email confirmation and password reset with branded emails, and a practitioner dashboard with a profile and a document checklist. Booking, reviews and payments come next.",
     outcome:
-      "A fast, photography-led site with a light and a dark theme, built from her own words, credits and links. Platform and press logos keep their brand colours.",
-    metrics: ["Artist website", "7 pages", "Light and dark themes", "Scroll-driven motion"],
+      "A live, installable site on Vercel with working accounts and the start of practitioner onboarding. Booking and payments are not built yet, and the site says so under 'Where we are today'.",
+    metrics: ["In development", "Accounts and sign-up", "Installable app", "Country by country"],
     decisions: [
       {
-        label: "Photography First",
+        label: "Trust Before Payment",
         value:
-          "Each page opens on a large photograph of her, so visitors meet the artist before they read a word.",
+          "Price, length and terms are shown before a request, and nothing is charged until a provider says yes.",
       },
       {
-        label: "Her Own Content",
+        label: "Verification Built In",
         value:
-          "All copy, credits, awards, videos and links come from her own website, so nothing about her is invented.",
+          "Practitioners follow a checklist of documents for their country, and the plan is that a person reviews them before any listing goes live.",
       },
       {
-        label: "Motion That Respects Settings",
+        label: "Private by Default",
         value:
-          "Scroll animation is done in CSS and shows its finished state for visitors who prefer reduced motion.",
+          "The database sits behind the server with row-level security on, and the offline app never stores signed-in pages.",
       },
     ],
-    gallery: gloriaScreens,
-    mobile: mobileFor("gloria-may-byron"),
+    gallery: weseeuScreens,
+    mobile: mobileFor("weseeu"),
   },
   {
     slug: "open-school-field",
@@ -1306,6 +1365,7 @@ const heroSources: Record<string, { folder: string; primary: string; extra?: str
   everwell: { folder: "everwell", primary: "01-home.webp" },
   "alder-rowe": { folder: "alder-rowe", primary: "01-home.webp" },
   "gloria-may-byron": { folder: "gloria-may-byron", primary: "01-home.webp" },
+  weseeu: { folder: "weseeu", primary: "01-home.webp" },
   "nachie-maridadi": { folder: "nachie maridadi", primary: "Screenshot (271).webp" },
   "open-school-field": {
     folder: "open school field",

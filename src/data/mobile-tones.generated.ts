@@ -84,4 +84,16 @@ export const mobileTones: Record<string, MobileTone> = {
     bottom: "#221f34",
     bottomLight: false,
   },
+  "product_showcase/_mobile/weseeu-1.webp": {
+    top: "#f2f6fc",
+    topLight: true,
+    bottom: "#edf2fa",
+    bottomLight: true,
+  },
+  "product_showcase/_mobile/weseeu-2.webp": {
+    top: "#e1eaf7",
+    topLight: true,
+    bottom: "#dbe4ec",
+    bottomLight: true,
+  },
 };

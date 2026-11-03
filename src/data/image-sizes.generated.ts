@@ -37,6 +37,8 @@ export const imageSizes: Record<string, { width: number; height: number; v?: str
   "product_showcase/_mobile/juniper-ember-2.webp": { width: 780, height: 1688, v: "7cff4a23" },
   "product_showcase/_mobile/velora-beauty-1.webp": { width: 780, height: 1688, v: "d97c9b08" },
   "product_showcase/_mobile/velora-beauty-2.webp": { width: 780, height: 1688, v: "2444f69f" },
+  "product_showcase/_mobile/weseeu-1.webp": { width: 780, height: 1688, v: "8fd7af0b" },
+  "product_showcase/_mobile/weseeu-2.webp": { width: 780, height: 1688, v: "799daba5" },
   "product_showcase/_tall/c-homes.webp": { width: 1600, height: 2444, v: "cb10b249" },
   "product_showcase/_tall/infinitative.webp": { width: 1440, height: 2200, v: "21e95e65" },
   "product_showcase/_tall/learncity.webp": { width: 1440, height: 2200, v: "4b1d2bc4" },
@@ -369,4 +371,14 @@ export const imageSizes: Record<string, { width: number; height: number; v?: str
     v: "4f15fdf1",
   },
   "product_showcase/velora-beauty/06-our-story.webp": { width: 1440, height: 1400, v: "6b422a4e" },
+  "product_showcase/weseeu/01-home.webp": { width: 1440, height: 2200, v: "71dc6bd1" },
+  "product_showcase/weseeu/02-how-it-works.webp": { width: 1440, height: 1400, v: "8c9f9684" },
+  "product_showcase/weseeu/03-reviewed-providers.webp": {
+    width: 1440,
+    height: 1400,
+    v: "c176da93",
+  },
+  "product_showcase/weseeu/04-every-need.webp": { width: 1440, height: 1400, v: "d0ff853b" },
+  "product_showcase/weseeu/05-where-we-are.webp": { width: 1440, height: 1400, v: "8f6d405d" },
+  "product_showcase/weseeu/06-sign-up.webp": { width: 1440, height: 900, v: "458de9b5" },
 };

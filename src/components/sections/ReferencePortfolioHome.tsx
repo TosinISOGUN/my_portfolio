@@ -245,15 +245,10 @@ export function ReferencePortfolioHome() {
 }
 
 function IdentityPanel() {
-  const reduce = useReducedMotion();
-
+  // The panel is in the page from the first paint. Its short fade-in is plain CSS (sam-panel-in), so
+  // it never waits for the animation code, which loads later and left the panel invisible until then.
   return (
-    <m.aside
-      className="sam-identity-panel flex min-h-0 flex-col gap-12 px-8 py-8 sm:px-10 sm:py-10 lg:sticky lg:top-0 lg:h-screen lg:min-h-0 lg:self-start lg:justify-between lg:gap-0 lg:overflow-hidden lg:px-8 lg:py-2 xl:px-8 xl:py-5"
-      initial={reduce ? false : { opacity: 0, scale: 0.96 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.75, type: "spring", bounce: 0, stiffness: 90 }}
-    >
+    <aside className="sam-identity-panel flex min-h-0 flex-col gap-12 px-8 py-8 sm:px-10 sm:py-10 lg:sticky lg:top-0 lg:h-screen lg:min-h-0 lg:self-start lg:justify-between lg:gap-0 lg:overflow-hidden lg:px-8 lg:py-2 xl:px-8 xl:py-5">
       <div>
         <div className="sam-status-wrap flex justify-end">
           <StatusBadge />
@@ -383,7 +378,7 @@ function IdentityPanel() {
           </a>
         </div>
       </div>
-    </m.aside>
+    </aside>
   );
 }
 

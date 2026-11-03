@@ -886,3 +886,19 @@ button:focus-visible,
   left: -9px;
   clip-path: polygon(100% 0, 100% 100%, 0 100%);
 }
+
+/* The profile panel fades in on its own, with no script, so it shows with the first paint. */
+@keyframes sam-panel-in {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+}
+.sam-identity-panel {
+  animation: sam-panel-in 0.45s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sam-identity-panel {
+    animation: none;
+  }
+}

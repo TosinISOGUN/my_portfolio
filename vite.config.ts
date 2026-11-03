@@ -24,6 +24,7 @@ export default defineConfig({
       { path: "/projects/everwell" },
       { path: "/projects/alder-rowe" },
       { path: "/projects/gloria-may-byron" },
+      { path: "/projects/weseeu" },
       { path: "/projects/open-school-field" },
       { path: "/projects/oyobooking" },
       { path: "/projects/infinitative" },

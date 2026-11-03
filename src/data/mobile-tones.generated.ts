@@ -37,15 +37,15 @@ export const mobileTones: Record<string, MobileTone> = {
     bottomLight: true,
   },
   "product_showcase/_mobile/gloria-may-byron-1.webp": {
-    top: "#514840",
+    top: "#574f48",
     topLight: false,
     bottom: "#3d3b37",
     bottomLight: false,
   },
   "product_showcase/_mobile/gloria-may-byron-2.webp": {
-    top: "#040b0c",
-    topLight: false,
-    bottom: "#c7cfcf",
+    top: "#dde6e3",
+    topLight: true,
+    bottom: "#b6b4b0",
     bottomLight: true,
   },
   "product_showcase/_mobile/hearthline-realty-1.webp": {
@@ -83,5 +83,17 @@ export const mobileTones: Record<string, MobileTone> = {
     topLight: false,
     bottom: "#221f34",
     bottomLight: false,
+  },
+  "product_showcase/_mobile/weseeu-1.webp": {
+    top: "#f2f6fc",
+    topLight: true,
+    bottom: "#edf2fa",
+    bottomLight: true,
+  },
+  "product_showcase/_mobile/weseeu-2.webp": {
+    top: "#e1eaf7",
+    topLight: true,
+    bottom: "#dbe4ec",
+    bottomLight: true,
   },
 };

@@ -22,14 +22,15 @@ describe("portfolio data", () => {
     expect(caseStudies).toEqual(featured);
   });
 
-  it("leads with the five concept sites and Gloria May Byron, then orders the rest from closest-to-a-local-business to most technical", () => {
+  it("leads with Velora, then Gloria May Byron and the other concept sites, then weSEEu, then orders the rest from closest-to-a-local-business to most technical", () => {
     expect(featuredProjects.map((project) => project.slug)).toEqual([
       "velora-beauty",
+      "gloria-may-byron",
       "hearthline-realty",
       "juniper-ember",
       "everwell",
       "alder-rowe",
-      "gloria-may-byron",
+      "weseeu",
       "thomason",
       "nachie-maridadi",
       "c-homes",

@@ -439,7 +439,7 @@ function ViewSwitcher({
             aria-selected={active}
             aria-controls="portfolio-panel"
             onClick={() => onChange(item)}
-            className={`relative z-10 h-full whitespace-nowrap rounded-full px-2 text-[0.68rem] font-medium max-[359px]:px-1 max-[359px]:text-[0.62rem] tracking-[-0.035em] sm:px-4 sm:text-[0.74rem] transition-colors duration-300 ${
+            className={`relative z-10 h-full cursor-pointer whitespace-nowrap rounded-full px-2 text-[0.68rem] font-medium max-[359px]:px-1 max-[359px]:text-[0.62rem] tracking-[-0.035em] sm:px-4 sm:text-[0.74rem] transition-colors duration-300 ${
               active ? "text-white" : "text-[#111111]/50 hover:text-[#111111]/80"
             }`}
           >

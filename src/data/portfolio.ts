@@ -609,7 +609,7 @@ export const featuredProjects = [
     tags: ["React 19", "TanStack Start", "Tailwind CSS", "Scroll-driven motion"],
     labels: ["Artist website", "Music and videos", "Mobile-friendly"],
     signals: ["Music and videos", "News and announcements", "Awards"],
-    link: "https://gloriamaybyron.vercel.app",
+    link: "https://gloriamaybyron.com/",
     problem:
       "An independent artist needed one place that shows her music, news, photos and awards and makes it easy to get in touch.",
     result:
@@ -939,7 +939,7 @@ export const projectCaseStudies = [
     title: "Gloria May Byron",
     eyebrow: "Artist Website",
     role: "Design and development",
-    liveUrl: "https://gloriamaybyron.vercel.app",
+    liveUrl: "https://gloriamaybyron.com/",
     cover: gloriaHome,
     summary: "Website for an independent singer and songwriter, with music, news and awards.",
     challenge:

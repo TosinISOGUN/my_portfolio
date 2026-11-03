@@ -37,13 +37,13 @@ export const mobileTones: Record<string, MobileTone> = {
     bottomLight: true,
   },
   "product_showcase/_mobile/gloria-may-byron-1.webp": {
-    top: "#514840",
+    top: "#574f48",
     topLight: false,
     bottom: "#3d3b37",
     bottomLight: false,
   },
   "product_showcase/_mobile/gloria-may-byron-2.webp": {
-    top: "#040b0c",
+    top: "#101719",
     topLight: false,
     bottom: "#c7cfcf",
     bottomLight: true,

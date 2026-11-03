@@ -945,7 +945,7 @@ export const projectCaseStudies = [
     challenge:
       "An independent artist needed one place that shows her music, news, photos and awards, and makes it easy for people to book or contact her.",
     approach:
-      "I rebuilt her site as seven pages: home, about, music, announcements, gallery, awards and contact. Every page opens on a full-bleed photograph, pages fade into each other, and the home page has a pinned statement whose words light up as you scroll.",
+      "I rebuilt her site as seven pages: home, about, music, announcements, gallery, awards and contact. Every page opens on a full-bleed photograph, pages fade into each other, and a floating glass navigation bar stays in reach as you scroll.",
     outcome:
       "A fast, photography-led site with a light and a dark theme, built from her own words, credits and links. Platform and press logos keep their brand colours.",
     metrics: ["Artist website", "7 pages", "Light and dark themes", "Scroll-driven motion"],
